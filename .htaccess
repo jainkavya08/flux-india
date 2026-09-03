@@ -1,0 +1,43 @@
+# ==============================================================================
+# FLUX India — Root Apache Configuration (.htaccess)
+# Designed for Static Next.js Export + PHP API on InfinityFree (Apache)
+# ==============================================================================
+
+# Set default directory index files
+DirectoryIndex index.html index.php
+
+# Disable directory browsing
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # --------------------------------------------------------------------------
+    # 1. Allow existing files and directories to be served directly
+    #    (Passes through all static JS/CSS, images, /api/*.php, /admin/, etc.)
+    # --------------------------------------------------------------------------
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # --------------------------------------------------------------------------
+    # 2. Map extensionless routes to their corresponding directory index.html
+    #    e.g. /about -> /about/index.html, /contact -> /contact/index.html,
+    #         /bom -> /bom/index.html, /solutions -> /solutions/index.html
+    # --------------------------------------------------------------------------
+    RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+    RewriteRule ^(.*)/?$ $1/index.html [L,QSA]
+
+    # --------------------------------------------------------------------------
+    # 3. Fallback: Map extensionless route to .html file if present
+    #    e.g. /about -> /about.html
+    # --------------------------------------------------------------------------
+    RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+    RewriteRule ^(.*)/?$ $1.html [L,QSA]
+
+</IfModule>
+
+# Custom 404 page
+ErrorDocument 404 /404.html
+ErrorDocument 403 /404.html
