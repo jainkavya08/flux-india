@@ -44,6 +44,7 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
   const [submittedRef, setSubmittedRef] = useState<string | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const {
     register,
@@ -62,6 +63,7 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setSelectedFile(file);
       setSelectedFileName(file.name);
       // Auto-populate helper text in part numbers box if empty
       setValue(
@@ -69,6 +71,9 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
         `[Attached BOM File: ${file.name} (${(file.size / 1024).toFixed(1)} KB)]\n` +
           `Project: Multi-brand electrical component inquiry.\nPlease refer to attached line-items for MCCB, ACB, contactors, PLCs and terminal counts.`
       );
+    } else {
+      setSelectedFile(null);
+      setSelectedFileName(null);
     }
   };
 
@@ -77,19 +82,26 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
     setServerError(null);
 
     try {
-      const response = await fetch("/api/bom", {
+      const formData = new FormData();
+      formData.append("contact_name", data.name);
+      formData.append("company_name", data.company);
+      formData.append("business_email", data.email);
+      formData.append("phone", data.phone);
+      formData.append("requirements", data.partNumbers);
+
+      if (selectedFile) {
+        formData.append("bom_file", selectedFile);
+      }
+
+      const response = await fetch("/api/submit-bom.php", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...data,
-          fileName: selectedFileName,
-        }),
+        body: formData,
       });
 
       const result = await response.json();
 
       if (response.ok && result.success) {
-        setSubmittedRef(result.referenceNumber);
+        setSubmittedRef(result.referenceNumber || (result.id ? `BOM-${result.id}` : "BOM-ACK"));
         try {
           confetti({
             particleCount: 80,
@@ -100,6 +112,8 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
           // ignore confetti issues
         }
         reset();
+        setSelectedFile(null);
+        setSelectedFileName(null);
       } else {
         setServerError(result.message || "Failed to submit BOM. Please check fields.");
       }

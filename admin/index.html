@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FLUX India — BOM & Sourcing Admin Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --flux-navy-deep: #0d2b4e;
+      --flux-navy: #1b3b64;
+      --flux-blue: #1a56b0;
+      --flux-blue-light: #5b9bd5;
+      --flux-bg: #f4f8fc;
+      --pastel-50: #f4f8fd;
+      --pastel-100: #eaf3fc;
+      --pastel-200: #d6e8fa;
+      --pastel-300: #bcdbf7;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --white: #ffffff;
+      
+      --status-new-bg: #e0f2fe;
+      --status-new-text: #0369a1;
+      --status-new-border: #bae6fd;
+      
+      --status-reviewed-bg: #fef3c7;
+      --status-reviewed-text: #92400e;
+      --status-reviewed-border: #fde68a;
+      
+      --status-quoted-bg: #dcfce7;
+      --status-quoted-text: #15803d;
+      --status-quoted-border: #bbf7d0;
+      
+      --status-closed-bg: #f1f5f9;
+      --status-closed-text: #475569;
+      --status-closed-border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--flux-bg);
+      color: var(--slate-800);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Poppins', sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    /* Common Components */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--flux-blue);
+      color: var(--white);
+      box-shadow: 0 2px 8px rgba(26, 86, 176, 0.25);
+    }
+    .btn-primary:hover {
+      background-color: var(--flux-navy-deep);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background-color: var(--white);
+      color: var(--flux-navy-deep);
+      border-color: var(--pastel-300);
+    }
+    .btn-outline:hover {
+      background-color: var(--pastel-100);
+      border-color: var(--flux-blue);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 8px;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* Login Screen */
+    #login-view {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--white);
+      border-radius: 24px;
+      border: 1px solid var(--pastel-200);
+      box-shadow: 0 12px 40px -10px rgba(13, 43, 78, 0.08);
+      padding: 36px 32px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, #0d2b4e, #1a56b0);
+      color: white;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      box-shadow: 0 4px 12px rgba(26, 86, 176, 0.3);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--slate-600);
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 11px 14px;
+      font-size: 14px;
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      outline: none;
+      transition: all 0.2s;
+      background: #fafcff;
+    }
+    .form-control:focus {
+      border-color: var(--flux-blue);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(26, 86, 176, 0.12);
+    }
+
+    .alert {
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .alert-danger {
+      background-color: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    .alert-success {
+      background-color: #f0fdf4;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    /* Dashboard Layout */
+    #dashboard-view {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .admin-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--pastel-200);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-pill {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--flux-navy-deep);
+      background: var(--pastel-100);
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--pastel-300);
+    }
+
+    .main-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--pastel-200);
+      border-radius: 18px;
+      padding: 18px 20px;
+      box-shadow: 0 2px 10px rgba(13, 43, 78, 0.03);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(26, 86, 176, 0.08);
+      border-color: var(--flux-blue-light);
+    }
+    .stat-card.active {
+      border-color: var(--flux-blue);
+      box-shadow: 0 0 0 2px var(--flux-blue);
+    }
+
+    .stat-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--slate-500);
+      margin-bottom: 6px;
+    }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+      color: var(--flux-navy-deep);
+    }
+
+    /* Toolbar / Filters */
+    .toolbar {
+      background: var(--white);
+      border: 1px solid var(--pastel-200);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 260px;
+      max-width: 480px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 9px 14px 9px 36px;
+      font-size: 13px;
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      outline: none;
+      background: var(--slate-50);
+    }
+    .search-input:focus {
+      border-color: var(--flux-blue);
+      background: var(--white);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 11px;
+      top: 10px;
+      width: 16px;
+      height: 16px;
+      color: var(--slate-400);
+    }
+
+    .status-filters {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--slate-200);
+      background: var(--white);
+      color: var(--slate-600);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover {
+      background: var(--pastel-100);
+      color: var(--flux-navy-deep);
+    }
+    .filter-btn.active {
+      background: var(--flux-navy-deep);
+      color: var(--white);
+      border-color: var(--flux-navy-deep);
+    }
+
+    /* Submissions Table */
+    .table-container {
+      background: var(--white);
+      border: 1px solid var(--pastel-200);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(13, 43, 78, 0.03);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    thead th {
+      background: #f8fafc;
+      padding: 14px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--slate-500);
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--slate-100);
+      transition: background-color 0.15s;
+    }
+    tbody tr:hover {
+      background-color: var(--pastel-50);
+    }
+
+    tbody td {
+      padding: 14px 16px;
+      vertical-align: middle;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border: 1px solid transparent;
+    }
+    .status-New {
+      background: var(--status-new-bg);
+      color: var(--status-new-text);
+      border-color: var(--status-new-border);
+    }
+    .status-Reviewed {
+      background: var(--status-reviewed-bg);
+      color: var(--status-reviewed-text);
+      border-color: var(--status-reviewed-border);
+    }
+    .status-Quoted {
+      background: var(--status-quoted-bg);
+      color: var(--status-quoted-text);
+      border-color: var(--status-quoted-border);
+    }
+    .status-Closed {
+      background: var(--status-closed-bg);
+      color: var(--status-closed-text);
+      border-color: var(--status-closed-border);
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .file-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--flux-blue);
+      background: var(--pastel-100);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--pastel-300);
+    }
+
+    /* Pagination */
+    .pagination-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: #fafcff;
+      border-top: 1px solid var(--slate-200);
+      font-size: 12px;
+      color: var(--slate-600);
+    }
+
+    .pagination-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 43, 78, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-container {
+      background: var(--white);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid var(--pastel-300);
+      box-shadow: 0 20px 60px rgba(13, 43, 78, 0.2);
+      animation: modalSlide 0.25s ease-out;
+    }
+
+    @keyframes modalSlide {
+      from { transform: translateY(16px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fafcff;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .detail-item label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--slate-400);
+      margin-bottom: 4px;
+    }
+    .detail-item .value {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--slate-800);
+    }
+
+    .req-box {
+      background: #f8fafc;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--slate-800);
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 240px;
+      overflow-y: auto;
+      margin-top: 6px;
+    }
+
+    .status-updater-box {
+      background: var(--pastel-50);
+      border: 1px solid var(--pastel-300);
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .detail-grid { grid-template-columns: 1fr; }
+      .header-container { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .header-right { width: 100%; justify-content: space-between; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      .search-box { max-width: 100%; }
+      .table-container { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== 1. LOGIN VIEW ==================== -->
+  <div id="login-view">
+    <div class="login-card">
+      <div class="brand-logo">
+        <div class="brand-badge">FLUX</div>
+        <div>
+          <h2 style="font-size: 18px; color: var(--flux-navy-deep); font-weight: 800;">Sourcing Admin</h2>
+          <p style="font-size: 12px; color: var(--slate-500);">FLUX Industrial Power Solutions</p>
+        </div>
+      </div>
+
+      <div id="login-alert" class="alert alert-danger" style="display: none;"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label>Admin Username</label>
+          <input type="text" id="login-username" class="form-control" placeholder="admin" required autofocus>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="login-password" class="form-control" placeholder="••••••••••••" required>
+        </div>
+        <button type="submit" id="login-btn" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
+          <span>Sign In to Dashboard</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== 2. DASHBOARD VIEW ==================== -->
+  <div id="dashboard-view">
+    <header class="admin-header">
+      <div class="header-container">
+        <div class="header-left">
+          <div class="brand-badge">FLUX</div>
+          <div>
+            <h1 style="font-size: 16px; color: var(--flux-navy-deep); font-weight: 800;">FLUX INDIA &bull; Procurement Desk</h1>
+            <p style="font-size: 11px; color: var(--slate-500);">BOM Intake Management System</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <a href="/" target="_blank" class="btn btn-outline btn-sm">
+            <span>&nearr; View Public Website</span>
+          </a>
+          <span class="user-pill" id="current-user-display">Admin</span>
+          <button id="logout-btn" class="btn btn-outline btn-sm" style="color: #dc2626; border-color: #fecaca;">
+            <span>Log Out</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- Summary Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card active" onclick="setFilterStatus('')" id="stat-card-total">
+          <div class="stat-title">Total Requests</div>
+          <div class="stat-number" id="stat-total">0</div>
+        </div>
+        <div class="stat-card" onclick="setFilterStatus('New')" id="stat-card-new">
+          <div class="stat-title" style="color: var(--status-new-text);">New Unreviewed</div>
+          <div class="stat-number" style="color: var(--status-new-text);" id="stat-new">0</div>
+        </div>
+        <div class="stat-card" onclick="setFilterStatus('Reviewed')" id="stat-card-reviewed">
+          <div class="stat-title" style="color: var(--status-reviewed-text);">In Review</div>
+          <div class="stat-number" style="color: var(--status-reviewed-text);" id="stat-reviewed">0</div>
+        </div>
+        <div class="stat-card" onclick="setFilterStatus('Quoted')" id="stat-card-quoted">
+          <div class="stat-title" style="color: var(--status-quoted-text);">Quotation Sent</div>
+          <div class="stat-number" style="color: var(--status-quoted-text);" id="stat-quoted">0</div>
+        </div>
+        <div class="stat-card" onclick="setFilterStatus('Closed')" id="stat-card-closed">
+          <div class="stat-title" style="color: var(--status-closed-text);">Closed / Won</div>
+          <div class="stat-number" style="color: var(--status-closed-text);" id="stat-closed">0</div>
+        </div>
+      </div>
+
+      <!-- Controls Toolbar -->
+      <div class="toolbar">
+        <div class="search-box">
+          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input type="text" id="search-input" class="search-input" placeholder="Search by name, company, email, phone, or part spec...">
+        </div>
+
+        <div class="status-filters">
+          <button class="filter-btn active" onclick="setFilterStatus('')" data-status="">All</button>
+          <button class="filter-btn" onclick="setFilterStatus('New')" data-status="New">New</button>
+          <button class="filter-btn" onclick="setFilterStatus('Reviewed')" data-status="Reviewed">Reviewed</button>
+          <button class="filter-btn" onclick="setFilterStatus('Quoted')" data-status="Quoted">Quoted</button>
+          <button class="filter-btn" onclick="setFilterStatus('Closed')" data-status="Closed">Closed</button>
+        </div>
+
+        <button onclick="loadSubmissions()" class="btn btn-outline btn-sm" title="Refresh Table">
+          <span>&circlearrowright; Refresh</span>
+        </button>
+      </div>
+
+      <!-- Submissions Table -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 80px;">Ref #</th>
+              <th>Contact Name</th>
+              <th>Company</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>BOM File</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="submissions-tbody">
+            <tr>
+              <td colspan="9" style="text-align: center; padding: 40px; color: var(--slate-500);">
+                Loading submissions...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination-bar">
+          <div id="pagination-info">Showing 0 of 0 submissions</div>
+          <div class="pagination-actions">
+            <button id="prev-page-btn" class="btn btn-outline btn-sm" onclick="changePage(-1)" disabled>&larr; Previous</button>
+            <button id="next-page-btn" class="btn btn-outline btn-sm" onclick="changePage(1)" disabled>Next &rarr;</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==================== 3. DETAIL MODAL ==================== -->
+  <div id="detail-modal" class="modal-backdrop">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div>
+          <h3 id="modal-ref-code" style="font-size: 16px; color: var(--flux-navy-deep); font-weight: 800;">BOM Submission Details</h3>
+          <p id="modal-sub-date" style="font-size: 12px; color: var(--slate-500);"></p>
+        </div>
+        <button onclick="closeDetailModal()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: var(--slate-400);">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="detail-grid">
+          <div class="detail-item">
+            <label>Contact Name</label>
+            <div class="value" id="modal-contact-name">-</div>
+          </div>
+          <div class="detail-item">
+            <label>Company / Panel Shop</label>
+            <div class="value" id="modal-company-name">-</div>
+          </div>
+          <div class="detail-item">
+            <label>Business Email</label>
+            <div class="value">
+              <a id="modal-email-link" href="#" style="color: var(--flux-blue); text-decoration: none;">-</a>
+            </div>
+          </div>
+          <div class="detail-item">
+            <label>Phone / WhatsApp</label>
+            <div class="value">
+              <a id="modal-phone-link" href="#" style="color: var(--slate-800); text-decoration: none;">-</a>
+              <a id="modal-whatsapp-link" href="#" target="_blank" style="margin-left: 8px; font-size: 11px; color: #16a34a; font-weight: 700;">[WhatsApp]</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOM File Attachment Row -->
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--slate-400); margin-bottom: 6px;">
+            Attached Bill of Materials (BOM)
+          </label>
+          <div id="modal-file-box" style="background: var(--pastel-50); border: 1px dashed var(--pastel-300); border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="font-size: 13px; font-weight: 600; color: var(--flux-navy-deep);" id="modal-file-name">
+              No file attached
+            </div>
+            <a id="modal-file-download-btn" href="#" target="_blank" class="btn btn-primary btn-sm" style="display: none;">
+              &darr; Download BOM Attachment
+            </a>
+          </div>
+        </div>
+
+        <!-- Line Item Requirements -->
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--slate-400); margin-bottom: 4px;">
+            Part Numbers / Quantities / Requirements
+          </label>
+          <div id="modal-requirements" class="req-box">-</div>
+        </div>
+
+        <!-- Status Change Box -->
+        <div class="status-updater-box">
+          <div>
+            <div style="font-size: 12px; font-weight: 700; color: var(--flux-navy-deep);">Current Sourcing Status</div>
+            <div style="font-size: 11px; color: var(--slate-500);">Update status as your team processes the BOM</div>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <select id="modal-status-select" class="form-control" style="width: auto; padding: 7px 12px; font-size: 13px; font-weight: 600;">
+              <option value="New">New</option>
+              <option value="Reviewed">Reviewed</option>
+              <option value="Quoted">Quoted</option>
+              <option value="Closed">Closed</option>
+            </select>
+            <button id="modal-save-status-btn" onclick="saveModalStatus()" class="btn btn-primary btn-sm">
+              Save Status
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    const API_BASE = '/api';
+    let currentPage = 1;
+    let currentStatus = '';
+    let currentSearch = '';
+    let currentViewingId = null;
+    let searchDebounceTimer = null;
+
+    // Check session on startup
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+
+      // Setup Search Listener
+      const searchInput = document.getElementById('search-input');
+      searchInput.addEventListener('input', (e) => {
+        clearTimeout(searchDebounceTimer);
+        searchDebounceTimer = setTimeout(() => {
+          currentSearch = e.target.value.trim();
+          currentPage = 1;
+          loadSubmissions();
+        }, 350);
+      });
+
+      // Setup Login Form
+      document.getElementById('login-form').addEventListener('submit', handleLogin);
+      document.getElementById('logout-btn').addEventListener('click', handleLogout);
+    });
+
+    async function checkAuth() {
+      try {
+        const res = await fetch(`${API_BASE}/admin-login.php`, { credentials: 'include' });
+        const data = await res.json();
+        if (data.success && data.authenticated) {
+          showDashboard(data.username);
+        } else {
+          showLogin();
+        }
+      } catch (err) {
+        showLogin();
+      }
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('login-username').value.trim();
+      const pass = document.getElementById('login-password').value;
+      const alertEl = document.getElementById('login-alert');
+      const submitBtn = document.getElementById('login-btn');
+
+      alertEl.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Verifying...';
+
+      try {
+        const res = await fetch(`${API_BASE}/admin-login.php`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ username: user, password: pass })
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showDashboard(data.username);
+        } else {
+          alertEl.innerText = data.message || 'Invalid username or password.';
+          alertEl.style.display = 'block';
+        }
+      } catch (err) {
+        alertEl.innerText = 'Network error connecting to API.';
+        alertEl.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Sign In to Dashboard';
+      }
+    }
+
+    async function handleLogout() {
+      try {
+        await fetch(`${API_BASE}/admin-logout.php`, {
+          method: 'POST',
+          credentials: 'include'
+        });
+      } catch (err) {}
+      showLogin();
+    }
+
+    function showLogin() {
+      document.getElementById('login-view').style.display = 'flex';
+      document.getElementById('dashboard-view').style.display = 'none';
+    }
+
+    function showDashboard(username) {
+      document.getElementById('login-view').style.display = 'none';
+      document.getElementById('dashboard-view').style.display = 'flex';
+      if (username) {
+        document.getElementById('current-user-display').innerText = username;
+      }
+      loadSubmissions();
+    }
+
+    function setFilterStatus(status) {
+      currentStatus = status;
+      currentPage = 1;
+
+      // Update Toolbar Buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-status') === status);
+      });
+
+      // Update Stat Cards Highlight
+      document.querySelectorAll('.stat-card').forEach(card => card.classList.remove('active'));
+      if (!status) document.getElementById('stat-card-total').classList.add('active');
+      if (status === 'New') document.getElementById('stat-card-new').classList.add('active');
+      if (status === 'Reviewed') document.getElementById('stat-card-reviewed').classList.add('active');
+      if (status === 'Quoted') document.getElementById('stat-card-quoted').classList.add('active');
+      if (status === 'Closed') document.getElementById('stat-card-closed').classList.add('active');
+
+      loadSubmissions();
+    }
+
+    async function loadSubmissions() {
+      const tbody = document.getElementById('submissions-tbody');
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 40px; color: var(--slate-500);">Loading submissions...</td></tr>`;
+
+      const params = new URLSearchParams({
+        page: currentPage,
+        limit: 20
+      });
+
+      if (currentStatus) params.append('status', currentStatus);
+      if (currentSearch) params.append('search', currentSearch);
+
+      try {
+        const res = await fetch(`${API_BASE}/admin-submissions.php?${params.toString()}`, {
+          credentials: 'include'
+        });
+
+        if (res.status === 401) {
+          showLogin();
+          return;
+        }
+
+        const data = await res.json();
+        if (data.success) {
+          renderStats(data.stats);
+          renderSubmissions(data.submissions);
+          renderPagination(data.pagination);
+        } else {
+          tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 30px; color: #dc2626;">${data.message}</td></tr>`;
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 30px; color: #dc2626;">Failed to load submissions from server.</td></tr>`;
+      }
+    }
+
+    function renderStats(stats) {
+      if (!stats) return;
+      document.getElementById('stat-total').innerText = stats.total || 0;
+      document.getElementById('stat-new').innerText = stats.new || 0;
+      document.getElementById('stat-reviewed').innerText = stats.reviewed || 0;
+      document.getElementById('stat-quoted').innerText = stats.quoted || 0;
+      document.getElementById('stat-closed').innerText = stats.closed || 0;
+    }
+
+    function renderSubmissions(list) {
+      const tbody = document.getElementById('submissions-tbody');
+
+      if (!list || list.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="9" style="text-align: center; padding: 60px 20px;">
+              <div style="font-size: 14px; font-weight: 700; color: var(--slate-700);">No BOM submissions found</div>
+              <div style="font-size: 12px; color: var(--slate-500); margin-top: 4px;">Submissions made by customers on the website will appear here in real-time.</div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = list.map(item => `
+        <tr>
+          <td><strong style="color: var(--flux-navy-deep);">${item.referenceCode}</strong></td>
+          <td style="font-weight: 600;">${item.contact_name}</td>
+          <td>${item.company_name}</td>
+          <td><a href="mailto:${item.business_email}" style="color: var(--flux-blue); text-decoration: none;">${item.business_email}</a></td>
+          <td>${item.phone}</td>
+          <td style="white-space: nowrap; font-size: 12px; color: var(--slate-500);">${item.formatted_date}</td>
+          <td>
+            <span class="status-badge status-${item.status}">
+              <span class="badge-dot"></span>
+              ${item.status}
+            </span>
+          </td>
+          <td>
+            ${item.has_bom_file ? `
+              <span class="file-pill" title="${item.bom_filename}">
+                &darr; ${item.bom_filename ? (item.bom_filename.length > 18 ? item.bom_filename.slice(0,15) + '...' : item.bom_filename) : 'Attached'}
+              </span>
+            ` : '<span style="color: var(--slate-400); font-size: 11px;">None</span>'}
+          </td>
+          <td style="text-align: right;">
+            <button class="btn btn-outline btn-sm" onclick="openDetailModal(${item.id})">
+              View
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderPagination(pagination) {
+      if (!pagination) return;
+      const { page, limit, totalFiltered, totalPages } = pagination;
+      currentPage = page;
+
+      const start = totalFiltered === 0 ? 0 : (page - 1) * limit + 1;
+      const end = Math.min(page * limit, totalFiltered);
+
+      document.getElementById('pagination-info').innerText = `Showing ${start} - ${end} of ${totalFiltered} submissions`;
+      document.getElementById('prev-page-btn').disabled = page <= 1;
+      document.getElementById('next-page-btn').disabled = page >= totalPages;
+    }
+
+    function changePage(delta) {
+      currentPage += delta;
+      loadSubmissions();
+    }
+
+    async function openDetailModal(id) {
+      currentViewingId = id;
+      const modal = document.getElementById('detail-modal');
+      modal.classList.add('open');
+
+      try {
+        const res = await fetch(`${API_BASE}/admin-submission.php?id=${id}`, { credentials: 'include' });
+        const data = await res.json();
+
+        if (data.success && data.submission) {
+          const s = data.submission;
+          document.getElementById('modal-ref-code').innerText = `${s.referenceCode} • ${s.company_name}`;
+          document.getElementById('modal-sub-date').innerText = `Submitted on ${s.formatted_date}`;
+          document.getElementById('modal-contact-name').innerText = s.contact_name;
+          document.getElementById('modal-company-name').innerText = s.company_name;
+          
+          const emailLink = document.getElementById('modal-email-link');
+          emailLink.innerText = s.business_email;
+          emailLink.href = `mailto:${s.business_email}`;
+
+          const phoneLink = document.getElementById('modal-phone-link');
+          phoneLink.innerText = s.phone;
+          phoneLink.href = `tel:${s.phone}`;
+
+          // Clean phone for WhatsApp link
+          const cleanPhone = s.phone.replace(/[^0-9]/g, '');
+          const waLink = document.getElementById('modal-whatsapp-link');
+          waLink.href = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hello ${s.contact_name}, regarding your FLUX India BOM inquiry #${s.referenceCode}...`)}`;
+
+          document.getElementById('modal-requirements').innerText = s.requirements;
+          document.getElementById('modal-status-select').value = s.status;
+
+          // File handling
+          const fileBox = document.getElementById('modal-file-box');
+          const fileNameEl = document.getElementById('modal-file-name');
+          const downloadBtn = document.getElementById('modal-file-download-btn');
+
+          if (s.has_bom_file) {
+            fileNameEl.innerText = `Attachment: ${s.bom_filename || 'BOM File'}`;
+            downloadBtn.style.display = 'inline-flex';
+            downloadBtn.href = `${API_BASE}/download-bom.php?id=${s.id}`;
+          } else {
+            fileNameEl.innerText = 'No file attached with this submission';
+            downloadBtn.style.display = 'none';
+          }
+        }
+      } catch (err) {
+        alert('Failed to load submission details.');
+      }
+    }
+
+    function closeDetailModal() {
+      document.getElementById('detail-modal').classList.remove('open');
+      currentViewingId = null;
+    }
+
+    async function saveModalStatus() {
+      if (!currentViewingId) return;
+      const statusSelect = document.getElementById('modal-status-select');
+      const saveBtn = document.getElementById('modal-save-status-btn');
+      const newStatus = statusSelect.value;
+
+      saveBtn.disabled = true;
+      saveBtn.innerText = 'Saving...';
+
+      try {
+        const res = await fetch(`${API_BASE}/update-status.php`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ id: currentViewingId, status: newStatus })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          saveBtn.innerText = '✓ Saved!';
+          setTimeout(() => {
+            saveBtn.innerText = 'Save Status';
+            saveBtn.disabled = false;
+          }, 1500);
+          loadSubmissions(); // refresh table in background
+        } else {
+          alert(data.message || 'Could not update status.');
+          saveBtn.disabled = false;
+          saveBtn.innerText = 'Save Status';
+        }
+      } catch (err) {
+        alert('Error communicating with server.');
+        saveBtn.disabled = false;
+        saveBtn.innerText = 'Save Status';
+      }
+    }
+  </script>
+</body>
+</html>

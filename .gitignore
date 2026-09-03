@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# FLUX PHP Backend Credentials & Uploads
+api/config.php
+public/api/config.php
+uploads/bom/*
+!uploads/bom/.htaccess
+public/uploads/bom/*
+!public/uploads/bom/.htaccess
+*.sql.bak
+

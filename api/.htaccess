@@ -1,0 +1,21 @@
+# Protect configuration files from direct web access
+<Files "config.php">
+    <IfModule authz_core_module>
+        Require all denied
+    </IfModule>
+    <IfModule !authz_core_module>
+        Deny from all
+    </IfModule>
+</Files>
+
+<Files "config.example.php">
+    <IfModule authz_core_module>
+        Require all denied
+    </IfModule>
+    <IfModule !authz_core_module>
+        Deny from all
+    </IfModule>
+</Files>
+
+# Disable Directory Browsing
+Options -Indexes
