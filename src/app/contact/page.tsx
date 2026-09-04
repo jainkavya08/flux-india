@@ -225,8 +225,8 @@ export default function ContactPage() {
                     {...register("requirement")}
                     className="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 focus:border-[#1a56b0] focus:ring-1 focus:ring-[#1a56b0] outline-none bg-white"
                   >
-                    <option value="Panel Building Components">Panel Building &amp; Switchgear Components</option>
-                    <option value="Automation PLCs & VFDs">Industrial Automation (PLCs, VFDs, HMIs)</option>
+                    <option value="Panel Building Components">Panel Building Components</option>
+                    <option value="Automation Components">Automation Components (PLCs, HMIs, Relays)</option>
                     <option value="Turnkey Solutions">Solar, EV or Substation Solution Architecture</option>
                     <option value="Consolidated BOM Sourcing">Complete Multi-Vendor BOM Sourcing</option>
                     <option value="OEM Dealership Inquiry">OEM Channel &amp; Distribution Inquiry</option>

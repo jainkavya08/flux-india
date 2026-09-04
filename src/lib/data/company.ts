@@ -88,7 +88,7 @@ export const COMPANY_INFO = {
     {
       year: "2022",
       title: "Consolidated BOM Engine",
-      desc: "Introduced 24-hour technical BOM cross-referencing, onboarding Tier-1 switchgear and PLC brands.",
+      desc: "Introduced 24-hour technical BOM cross-referencing, onboarding Tier-1 panel building and automation component brands.",
     },
     {
       year: "2023",
@@ -110,7 +110,7 @@ export const COMPANY_INFO = {
     {
       title: "100% Genuine OEM Sourcing",
       description:
-        "Every single switchgear, contactor, PLC, and sensor comes directly through authorized OEM channels with full manufacturer warranties and test reports.",
+        "Every single panel building and automation component comes directly through authorized OEM channels with full manufacturer warranties and test reports.",
       icon: "ShieldCheck",
     },
     {

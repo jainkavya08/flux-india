@@ -31,9 +31,9 @@ export const BLOG_POSTS: BlogPost[] = [
       role: "Chief Application Engineer",
       avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop",
     },
-    summary: "A practical guide to replacing long-lead OEM switchgear and controllers with pin-compatible, type-tested alternatives without altering panel layout certifications.",
+    summary: "A practical guide to replacing long-lead OEM panel components and controllers with pin-compatible, type-tested alternatives without altering panel layout certifications.",
     heroImage: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?q=80&w=1200&auto=format&fit=crop",
-    tags: ["SLD", "Switchgear", "Cross-Referencing", "Panel Building", "OEM Sourcing"],
+    tags: ["SLD", "Distribution Boxes", "Cross-Referencing", "Panel Building", "OEM Sourcing"],
     content: [
       {
         heading: "The Challenge of Fragmented OEM Lead Times",
@@ -85,7 +85,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "vfd-energy-savings-industrial-motors",
-    title: "Optimizing Variable Frequency Drives (VFDs) for 30%+ Motor Energy Reduction",
+    title: "Optimizing Motor Protection Relays & Automation for 30%+ Motor Energy Reduction",
     category: "Industrial Automation",
     date: "June 14, 2026",
     readTime: "5 min read",
@@ -94,9 +94,9 @@ export const BLOG_POSTS: BlogPost[] = [
       role: "Motion & Drives Specialist",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
     },
-    summary: "How quadratic affinity laws in centrifugal pumps and fans generate exponential power savings with correctly tuned VFD vector control algorithms.",
+    summary: "How quadratic affinity laws in centrifugal pumps and fans generate exponential power savings with correctly tuned automation and control algorithms.",
     heroImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop",
-    tags: ["VFD", "Energy Efficiency", "Motors", "Automation", "Sustainability"],
+    tags: ["Relays", "Energy Efficiency", "Motors", "Automation", "Sustainability"],
     content: [
       {
         heading: "The Physics of Affinity Laws in Fluid Machinery",

@@ -38,7 +38,7 @@ export const WORK_PROJECTS: WorkProject[] = [
       { category: "Surge Protection", brand: "Phoenix Contact", rating: "Type 1+2 DC SPD" },
       { category: "String Monitoring", brand: "FLUX Smart Telemetry", rating: "16-Channel Modbus" },
     ],
-    architectureDiagram: "1500V DC PV Strings → Smart Combiner Boxes → 3.125MVA Inverter Stations → 33kV Step-Up Switchgear → SCADA Telemetry Gateway",
+    architectureDiagram: "1500V DC PV Strings → Smart Combiner Boxes → 3.125MVA Inverter Stations → 33kV Distribution Substation → SCADA Telemetry Gateway",
     galleryImages: [
       "https://images.unsplash.com/photo-1509391365360-2e959784a276?q=80&w=800&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1497440001374-f26997328c1b?q=80&w=800&auto=format&fit=crop",
@@ -107,7 +107,7 @@ export const WORK_PROJECTS: WorkProject[] = [
     summary: "Form 4b compartmentalized Power Control Centers (PCC) with 6300A Air Circuit Breakers and detuned APFC harmonic capacitor banks.",
     heroImage: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1200&auto=format&fit=crop",
     metrics: [
-      { label: "Switchgear Rating", value: "6300A / 65kA" },
+      { label: "Panel Distribution Rating", value: "6300A / 65kA" },
       { label: "Power Factor", value: "0.99 Lag" },
       { label: "Harmonic THDi", value: "< 4.5%" },
     ],
@@ -139,14 +139,14 @@ export const WORK_PROJECTS: WorkProject[] = [
       { label: "Telemetry Uptime", value: "99.95%" },
     ],
     challenge: "Water hammer pressure transients and severe pump cavitations under fluctuating hydraulic supply heads.",
-    solution: "Engineered multi-pump cascaded VFD panels with smart pipe fill algorithms, submersible hydrostatic level transmitters, and cellular RTU telemetry.",
+    solution: "Engineered multi-pump cascaded control panels with smart pipe fill algorithms, submersible hydrostatic level transmitters, and cellular RTU telemetry.",
     componentsBOM: [
-      { category: "VFD Inverters", brand: "Danfoss / ABB", rating: "VLT Aqua / ACS580 110kW" },
+      { category: "Motor Controllers", brand: "Danfoss / ABB", rating: "110kW Control" },
       { category: "RTU Controller", brand: "Schneider", rating: "ScadaPack 350E" },
       { category: "Pressure Transmitters", brand: "Danfoss / Wika", rating: "MBS 1900 0-16 bar" },
       { category: "Electromagnetic Flow", brand: "Krohne / Endress+Hauser", rating: "Waterflux 3070 DN300" },
     ],
-    architectureDiagram: "Intake Well Pumps (4x110kW VFD) → 120 MLD Rapid Sand Filters → SCADA PLC Network → Chemical Dosing → Chlorination & Distribution",
+    architectureDiagram: "Intake Well Pumps (4x110kW) → 120 MLD Rapid Sand Filters → SCADA PLC Network → Chemical Dosing → Chlorination & Distribution",
     galleryImages: [
       "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop",

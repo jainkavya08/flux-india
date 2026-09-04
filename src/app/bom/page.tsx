@@ -45,7 +45,7 @@ export default function BOMPage() {
                   Submit Bill of Materials
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Multi-brand switchgear, controllers, VFDs, and enclosures.
+                  Multi-brand panel building and automation components.
                 </p>
               </div>
               <div className="w-10 h-10 rounded-2xl bg-[#eaf3fc] text-[#1a56b0] flex items-center justify-center border border-[#bcdbf7]">

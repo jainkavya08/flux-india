@@ -55,7 +55,7 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
   } = useForm<BOMFormData>({
     resolver: zodResolver(bomFormSchema),
     defaultValues: {
-      projectType: defaultProjectType || "Panel Building & Switchgear",
+      projectType: defaultProjectType || "Panel Building Components",
       partNumbers: "",
     },
   });

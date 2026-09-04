@@ -32,13 +32,13 @@ export const metadata: Metadata = {
     template: "%s | FLUX India",
   },
   description:
-    "FLUX (est. 2021) is a premier B2B engineering & procurement partner providing solutions for all over the world in panel building components, PLCs, VFDs, switchgear, and industrial automation.",
+    "FLUX (est. 2021) is a premier B2B engineering & procurement partner providing solutions for all over the world in panel building and automation components.",
   keywords: [
     "FLUX India",
     "Panel Building Components",
     "Industrial Automation Global Solutions",
-    "Switchgear Suppliers",
-    "PLC VFD Dealers",
+    "Automation Component Suppliers",
+    "Panel Building Ecosystem",
     "BOM Consolidation Electrical",
     "Siemens Schneider ABB L&T",
     "Power Solutions Worldwide",

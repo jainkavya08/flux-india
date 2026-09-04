@@ -8,7 +8,7 @@ import { Calendar, Clock, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Engineering Insights & Technical Articles | FLUX India",
-  description: "Technical articles on switchgear cross-referencing, IEC 61439 standards, VFD energy savings, and PLC modernizations.",
+  description: "Technical articles on panel building component cross-referencing, IEC 61439 standards, motor protection energy savings, and automation modernizations.",
 };
 
 export default function BlogIndexPage() {
