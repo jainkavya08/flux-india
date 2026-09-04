@@ -805,6 +805,9 @@
             <button id="modal-save-status-btn" onclick="saveModalStatus()" class="btn btn-primary btn-sm">
               Save Status
             </button>
+            <button id="modal-delete-btn" onclick="deleteSubmission()" class="btn btn-sm" style="background-color: #ef4444; color: white; border: none; cursor: pointer; padding: 7px 12px; font-size: 13px; font-weight: 600; border-radius: 8px;">
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -1153,6 +1156,40 @@
         alert('Error communicating with server.');
         saveBtn.disabled = false;
         saveBtn.innerText = 'Save Status';
+      }
+    }
+
+    async function deleteSubmission() {
+      if (!currentViewingId) return;
+      if (!confirm("Are you sure you want to delete this submission? This action cannot be undone.")) return;
+
+      const deleteBtn = document.getElementById('modal-delete-btn');
+      deleteBtn.disabled = true;
+      deleteBtn.innerText = 'Deleting...';
+
+      try {
+        const res = await fetch(`${API_BASE}/delete-submission.php`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ id: currentViewingId })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          closeModal();
+          loadSubmissions(); // refresh table
+          deleteBtn.disabled = false;
+          deleteBtn.innerText = 'Delete';
+        } else {
+          alert(data.message || 'Could not delete submission.');
+          deleteBtn.disabled = false;
+          deleteBtn.innerText = 'Delete';
+        }
+      } catch (err) {
+        alert('Error communicating with server.');
+        deleteBtn.disabled = false;
+        deleteBtn.innerText = 'Delete';
       }
     }
   </script>
