@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && cp public/.htaccess out/.htaccess",
+    "build": "next build && cp public/.htaccess out/.htaccess && cp public/api/.htaccess out/api/.htaccess && mkdir -p out/uploads/bom && cp public/uploads/bom/.htaccess out/uploads/bom/.htaccess",
     "start": "next start",
     "lint": "eslint"
   },

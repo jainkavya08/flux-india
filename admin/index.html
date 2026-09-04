@@ -968,6 +968,16 @@
       }
     }
 
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     function renderStats(stats) {
       if (!stats) return;
       document.getElementById('stat-total').innerText = stats.total || 0;
@@ -992,34 +1002,47 @@
         return;
       }
 
-      tbody.innerHTML = list.map(item => `
-        <tr>
-          <td><strong style="color: var(--flux-navy-deep);">${item.referenceCode}</strong></td>
-          <td style="font-weight: 600;">${item.contact_name}</td>
-          <td>${item.company_name}</td>
-          <td><a href="mailto:${item.business_email}" style="color: var(--flux-blue); text-decoration: none;">${item.business_email}</a></td>
-          <td>${item.phone}</td>
-          <td style="white-space: nowrap; font-size: 12px; color: var(--slate-500);">${item.formatted_date}</td>
-          <td>
-            <span class="status-badge status-${item.status}">
-              <span class="badge-dot"></span>
-              ${item.status}
-            </span>
-          </td>
-          <td>
-            ${item.has_bom_file ? `
-              <span class="file-pill" title="${item.bom_filename}">
-                &darr; ${item.bom_filename ? (item.bom_filename.length > 18 ? item.bom_filename.slice(0,15) + '...' : item.bom_filename) : 'Attached'}
+      tbody.innerHTML = list.map(item => {
+        const id = parseInt(item.id, 10) || 0;
+        const ref = escapeHtml(item.referenceCode);
+        const name = escapeHtml(item.contact_name);
+        const comp = escapeHtml(item.company_name);
+        const email = escapeHtml(item.business_email);
+        const phone = escapeHtml(item.phone);
+        const date = escapeHtml(item.formatted_date);
+        const status = escapeHtml(item.status);
+        const filename = escapeHtml(item.bom_filename || '');
+        const shortFilename = filename.length > 18 ? filename.slice(0, 15) + '...' : filename;
+
+        return `
+          <tr>
+            <td><strong style="color: var(--flux-navy-deep);">${ref}</strong></td>
+            <td style="font-weight: 600;">${name}</td>
+            <td>${comp}</td>
+            <td><a href="mailto:${encodeURIComponent(item.business_email || '')}" style="color: var(--flux-blue); text-decoration: none;">${email}</a></td>
+            <td>${phone}</td>
+            <td style="white-space: nowrap; font-size: 12px; color: var(--slate-500);">${date}</td>
+            <td>
+              <span class="status-badge status-${status}">
+                <span class="badge-dot"></span>
+                ${status}
               </span>
-            ` : '<span style="color: var(--slate-400); font-size: 11px;">None</span>'}
-          </td>
-          <td style="text-align: right;">
-            <button class="btn btn-outline btn-sm" onclick="openDetailModal(${item.id})">
-              View
-            </button>
-          </td>
-        </tr>
-      `).join('');
+            </td>
+            <td>
+              ${item.has_bom_file ? `
+                <span class="file-pill" title="${filename}">
+                  &darr; ${shortFilename || 'Attached'}
+                </span>
+              ` : '<span style="color: var(--slate-400); font-size: 11px;">None</span>'}
+            </td>
+            <td style="text-align: right;">
+              <button class="btn btn-outline btn-sm" onclick="openDetailModal(${id})">
+                View
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
     }
 
     function renderPagination(pagination) {
@@ -1051,36 +1074,36 @@
 
         if (data.success && data.submission) {
           const s = data.submission;
-          document.getElementById('modal-ref-code').innerText = `${s.referenceCode} • ${s.company_name}`;
-          document.getElementById('modal-sub-date').innerText = `Submitted on ${s.formatted_date}`;
-          document.getElementById('modal-contact-name').innerText = s.contact_name;
-          document.getElementById('modal-company-name').innerText = s.company_name;
+          const safeId = parseInt(s.id, 10) || 0;
+          document.getElementById('modal-ref-code').innerText = `${s.referenceCode || ''} • ${s.company_name || ''}`;
+          document.getElementById('modal-sub-date').innerText = `Submitted on ${s.formatted_date || ''}`;
+          document.getElementById('modal-contact-name').innerText = s.contact_name || '';
+          document.getElementById('modal-company-name').innerText = s.company_name || '';
           
           const emailLink = document.getElementById('modal-email-link');
-          emailLink.innerText = s.business_email;
-          emailLink.href = `mailto:${s.business_email}`;
+          emailLink.innerText = s.business_email || '';
+          emailLink.href = s.business_email ? `mailto:${encodeURIComponent(s.business_email)}` : '#';
 
           const phoneLink = document.getElementById('modal-phone-link');
-          phoneLink.innerText = s.phone;
-          phoneLink.href = `tel:${s.phone}`;
+          phoneLink.innerText = s.phone || '';
+          phoneLink.href = s.phone ? `tel:${encodeURIComponent(s.phone)}` : '#';
 
           // Clean phone for WhatsApp link
-          const cleanPhone = s.phone.replace(/[^0-9]/g, '');
+          const cleanPhone = (s.phone || '').replace(/[^0-9]/g, '');
           const waLink = document.getElementById('modal-whatsapp-link');
-          waLink.href = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hello ${s.contact_name}, regarding your FLUX India BOM inquiry #${s.referenceCode}...`)}`;
+          waLink.href = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hello ${s.contact_name || ''}, regarding your FLUX India BOM inquiry #${s.referenceCode || ''}...`)}` : '#';
 
-          document.getElementById('modal-requirements').innerText = s.requirements;
-          document.getElementById('modal-status-select').value = s.status;
+          document.getElementById('modal-requirements').innerText = s.requirements || '';
+          document.getElementById('modal-status-select').value = s.status || 'New';
 
           // File handling
-          const fileBox = document.getElementById('modal-file-box');
           const fileNameEl = document.getElementById('modal-file-name');
           const downloadBtn = document.getElementById('modal-file-download-btn');
 
           if (s.has_bom_file) {
             fileNameEl.innerText = `Attachment: ${s.bom_filename || 'BOM File'}`;
             downloadBtn.style.display = 'inline-flex';
-            downloadBtn.href = `${API_BASE}/download-bom.php?id=${s.id}`;
+            downloadBtn.href = `${API_BASE}/download-bom.php?id=${safeId}`;
           } else {
             fileNameEl.innerText = 'No file attached with this submission';
             downloadBtn.style.display = 'none';

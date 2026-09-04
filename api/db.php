@@ -3,6 +3,10 @@
  * FLUX India - Database Connection & Backend Helpers
  */
 
+// Disable error display to visitors; log internally
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+
 if (!defined('FLUX_APP')) {
     define('FLUX_APP', true);
 }
@@ -26,7 +30,7 @@ function handleCors() {
     $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
     
     if (defined('ALLOWED_ORIGINS') && is_array(ALLOWED_ORIGINS)) {
-        if (in_array($origin, ALLOWED_ORIGINS)) {
+        if (in_array($origin, ALLOWED_ORIGINS, true)) {
             header("Access-Control-Allow-Origin: $origin");
             header("Access-Control-Allow-Credentials: true");
         }
@@ -109,8 +113,11 @@ function getDbConnection() {
  */
 function startAdminSession() {
     if (session_status() === PHP_SESSION_NONE) {
-        // Secure session parameters
-        $isHttps = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+        // Resilient HTTPS detection for reverse proxies, Cloudflare, and direct SSL
+        $isHttps = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1))
+            || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+            || (isset($_SERVER['SERVER_PORT']) && (int)$_SERVER['SERVER_PORT'] === 443);
+
         session_set_cookie_params([
             'lifetime' => 86400, // 24 hours
             'path'     => '/',
@@ -133,12 +140,24 @@ function requireAdminAuth() {
         sendJsonResponse(false, 'Unauthorized. Please log in to access the admin area.', [], 401);
     }
 
-    // Optional: session timeout check after 24 hours
+    // Session timeout check after 24 hours of inactivity
     if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 86400)) {
-        session_unset();
+        $_SESSION = [];
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', [
+                'expires'  => time() - 42000,
+                'path'     => $params["path"],
+                'domain'   => $params["domain"],
+                'secure'   => $params["secure"],
+                'httponly' => $params["httponly"],
+                'samesite' => $params["samesite"] ?? 'Lax',
+            ]);
+        }
         session_destroy();
         sendJsonResponse(false, 'Session expired. Please log in again.', [], 401);
     }
 
     $_SESSION['last_activity'] = time();
 }
+

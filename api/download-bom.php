@@ -7,13 +7,22 @@
 define('FLUX_APP', true);
 require_once __DIR__ . '/db.php';
 
-// Enforce admin authentication
+// Enforce admin authentication with inactivity timeout
 startAdminSession();
 
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    http_response_code(403);
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true || empty($_SESSION['admin_user'])) {
+    http_response_code(401);
     die("Access Denied: You must be an authenticated administrator to download BOM attachments.");
 }
+
+// Inactivity timeout check (24h)
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 86400)) {
+    $_SESSION = [];
+    session_destroy();
+    http_response_code(401);
+    die("Session Expired: Please log in again to download attachments.");
+}
+$_SESSION['last_activity'] = time();
 
 $id = isset($_GET['id']) ? filter_var($_GET['id'], FILTER_VALIDATE_INT) : null;
 
