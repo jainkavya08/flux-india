@@ -39,7 +39,7 @@ export function AboutSplit() {
 
             <div className="space-y-4 text-slate-600 text-base sm:text-lg leading-relaxed">
               <p>
-                Founded in 2021 in Pune&apos;s industrial hub, <strong>FLUX</strong> was built to solve the challenges of component fragmentation, extended lead times, and uncoordinated procurement faced by panel builders and automation engineers across India.
+                Founded in 2021 in Pune&apos;s industrial hub, <strong>FLUX</strong> was built to solve the challenges of component fragmentation, extended lead times, and uncoordinated procurement faced by panel builders and automation engineers all over the world.
               </p>
               <p>
                 We bridge the gap between world-class OEM manufacturers and modern production facilities. By pairing multi-brand component aggregation with dedicated electrical application engineering, we provide customized, type-tested power distribution and intelligent automation architectures that drive efficiency and zero-downtime reliability.

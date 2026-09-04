@@ -29,7 +29,7 @@ export const SOLUTIONS_DATA: SolutionItem[] = [
     impactMetrics: [
       { label: "Uptime Reliability", value: "99.98%" },
       { label: "String Fault Detection", value: "< 100ms" },
-      { label: "Pan-India Megawatts Powered", value: "350+ MW" },
+      { label: "Worldwide Megawatts Powered", value: "350+ MW" },
     ],
     keyChallenges: [
       "Harsh ambient desert and coastal temperatures exceeding 55°C",

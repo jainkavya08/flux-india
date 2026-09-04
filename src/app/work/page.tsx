@@ -9,7 +9,7 @@ import { ArrowRight, MapPin, Zap, Layers } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Engineering Projects & Case Studies | FLUX India",
-  description: "Explore turnkey electrical and automation engineering projects delivered by FLUX across India.",
+  description: "Explore turnkey electrical and automation engineering projects and solutions delivered by FLUX for clients all over the world.",
 };
 
 export default function WorkIndexPage() {

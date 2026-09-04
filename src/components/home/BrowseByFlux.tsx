@@ -70,7 +70,7 @@ export function BrowseByFlux() {
           </h2>
 
           <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
-            Engineered for panel builders, machine tool makers, and industrial automation integrators across India.
+            Engineered for panel builders, machine tool makers, and industrial automation integrators — providing solutions for all over the world.
           </p>
         </div>
 
@@ -103,12 +103,14 @@ export function BrowseByFlux() {
               {/* Product Category Tags */}
               <div className="mt-6 flex flex-wrap gap-2">
                 {[
-                  "Air Circuit Breakers (ACB)",
-                  "MCCBs & MCBs",
-                  "Magnetic Contactors",
-                  "Modular IP66 Enclosures",
-                  "Push-In Terminal Blocks",
-                  "24V DIN Power Supplies",
+                  "Cable Glands",
+                  "Support Insulators",
+                  "Lugs & Terminals",
+                  "Spiral Bands & Sleeves",
+                  "Busbar Insulators",
+                  "Flexible Conduits",
+                  "Cable Ties (SS & Nylon)",
+                  "Distribution Boxes",
                 ].map((item) => (
                   <span
                     key={item}
@@ -124,19 +126,19 @@ export function BrowseByFlux() {
               <div className="mt-8 rounded-2xl bg-[#f4f8fd] p-5 border border-[#d6e8fa]">
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div className="p-3 bg-white rounded-xl shadow-xs border border-[#e0edfa]">
-                    <Zap className="w-5 h-5 text-[#1a56b0] mx-auto mb-1" />
-                    <div className="text-[11px] font-bold text-slate-800">Switchgear</div>
-                    <div className="text-[10px] text-slate-500">Up to 6300A</div>
+                    <Layers className="w-5 h-5 text-[#1a56b0] mx-auto mb-1" />
+                    <div className="text-[11px] font-bold text-slate-800">Panel Board</div>
+                    <div className="text-[10px] text-slate-500">Integration View</div>
                   </div>
                   <div className="p-3 bg-white rounded-xl shadow-xs border border-[#e0edfa]">
-                    <Sliders className="w-5 h-5 text-[#1a56b0] mx-auto mb-1" />
-                    <div className="text-[11px] font-bold text-slate-800">Starters</div>
-                    <div className="text-[10px] text-slate-500">DOL &amp; Softstart</div>
+                    <Zap className="w-5 h-5 text-[#1a56b0] mx-auto mb-1" />
+                    <div className="text-[11px] font-bold text-slate-800">Terminals</div>
+                    <div className="text-[10px] text-slate-500">Lugs &amp; Glands</div>
                   </div>
                   <div className="p-3 bg-white rounded-xl shadow-xs border border-[#e0edfa]">
                     <ShieldCheck className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
-                    <div className="text-[11px] font-bold text-slate-800">Enclosures</div>
-                    <div className="text-[10px] text-slate-500">IP55 / IP66</div>
+                    <div className="text-[11px] font-bold text-slate-800">Insulators</div>
+                    <div className="text-[10px] text-slate-500">Busbar &amp; Support</div>
                   </div>
                 </div>
               </div>
@@ -177,18 +179,19 @@ export function BrowseByFlux() {
               </h3>
 
               <p className="mt-3 text-slate-700 text-sm sm:text-base leading-relaxed">
-                Advanced automation solutions to optimize control, monitoring and performance. Micro to enterprise PLCs, sensorless vector VFDs, HMIs, and IIoT gateways.
+                Advanced automation solutions to optimize control, monitoring and performance. Micro to modular PLCs, HMIs, digital energy meters, PID controllers, and power modules.
               </p>
 
               {/* Product Category Tags */}
               <div className="mt-6 flex flex-wrap gap-2">
                 {[
-                  "Modular PLCs & PACs",
-                  "Variable Frequency Drives",
-                  "Touchscreen HMIs (4-21\")",
-                  "Optical & Laser Sensors",
-                  "AC Servo Multi-Axis",
-                  "IIoT Edge 4G Gateways",
+                  "PLCs & PACs",
+                  "Touchscreen HMIs",
+                  "Motor Protection Relays",
+                  "Digital Energy Meters",
+                  "24V DIN Power Supplies",
+                  "PID Temp Controllers",
+                  "Control Transformers",
                 ].map((item) => (
                   <span
                     key={item}
@@ -205,18 +208,18 @@ export function BrowseByFlux() {
                 <div className="grid grid-cols-3 gap-3 text-center">
                   <div className="p-3 bg-white rounded-xl shadow-xs border border-[#e0edfa]">
                     <Cpu className="w-5 h-5 text-[#1a56b0] mx-auto mb-1" />
-                    <div className="text-[11px] font-bold text-slate-800">PLCs &amp; RTUs</div>
-                    <div className="text-[10px] text-slate-500">&lt; 10ns execution</div>
+                    <div className="text-[11px] font-bold text-slate-800">PLCs &amp; HMIs</div>
+                    <div className="text-[10px] text-slate-500">Fast Execution</div>
                   </div>
                   <div className="p-3 bg-white rounded-xl shadow-xs border border-[#e0edfa]">
-                    <Gauge className="w-5 h-5 text-[#1a56b0] mx-auto mb-1" />
-                    <div className="text-[11px] font-bold text-slate-800">VFD Inverters</div>
-                    <div className="text-[10px] text-slate-500">0.37 to 500kW</div>
+                    <Zap className="w-5 h-5 text-[#1a56b0] mx-auto mb-1" />
+                    <div className="text-[11px] font-bold text-slate-800">Power &amp; Relays</div>
+                    <div className="text-[10px] text-slate-500">24V SMPS &amp; Motor</div>
                   </div>
                   <div className="p-3 bg-white rounded-xl shadow-xs border border-[#e0edfa]">
-                    <Radio className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
-                    <div className="text-[11px] font-bold text-slate-800">IIoT Gateways</div>
-                    <div className="text-[10px] text-slate-500">MQTT / OPC UA</div>
+                    <Gauge className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
+                    <div className="text-[11px] font-bold text-slate-800">Meters &amp; PID</div>
+                    <div className="text-[10px] text-slate-500">Class 0.5s Energy</div>
                   </div>
                 </div>
               </div>

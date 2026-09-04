@@ -97,12 +97,12 @@ export function Footer() {
                 &ldquo;One Partner. Infinite Solutions&rdquo;
               </p>
               <span className="text-[11px] font-bold text-[#1a56b0] tracking-widest uppercase block mt-0.5">
-                — FLUX Industrial Power Solutions
+                — FLUX
               </span>
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed max-w-sm">
-              Empowering panel builders, machine manufacturers, and EPCs across India with genuine OEM components, technical cross-referencing, and rapid dispatch.
+              Empowering panel builders, machine manufacturers, and EPCs with genuine OEM components, technical cross-referencing, and solutions for all over the world.
             </p>
 
             <div className="flex flex-wrap justify-center gap-3 text-xs font-semibold text-[#1a56b0] pt-1">

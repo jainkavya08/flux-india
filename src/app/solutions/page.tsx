@@ -54,7 +54,7 @@ export default function SolutionsPage() {
             Industry Solutions &amp; Architectures
           </h1>
           <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
-            Proven component blueprints, switchgear configurations, and telemetry architectures engineered for India&apos;s most demanding manufacturing and clean-energy sectors.
+            Proven component blueprints, switchgear configurations, and telemetry architectures engineered for the world&apos;s most demanding manufacturing and clean-energy sectors.
           </p>
           <div className="mt-8 flex justify-center">
             <Button

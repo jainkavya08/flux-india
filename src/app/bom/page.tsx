@@ -105,7 +105,7 @@ export default function BOMPage() {
                 </div>
                 <div className="flex items-center gap-2.5">
                   <Truck className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span className="font-medium">Direct express logistics to panel shops across India</span>
+                  <span className="font-medium">Direct express logistics and solutions for panel shops all over the world</span>
                 </div>
               </div>
             </div>

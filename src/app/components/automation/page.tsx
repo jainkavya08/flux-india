@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   AUTOMATION_CATEGORIES,
-  AUTOMATION_PRODUCTS,
-  ProductItem,
+  AUTOMATION_COMPONENTS,
+  ComponentCardItem,
 } from "@/lib/data/products";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -13,33 +15,64 @@ import { BOMUploadForm } from "@/components/forms/BOMUploadForm";
 import {
   Search,
   Cpu,
+  Monitor,
+  ShieldCheck,
+  Gauge,
+  Zap,
+  Thermometer,
+  Timer,
+  Activity,
   CheckCircle2,
   FileSpreadsheet,
   ArrowRight,
-  ShieldCheck,
-  Zap,
-  Info,
   PackageCheck,
-  Radio,
-  Gauge,
+  Layers,
+  Check,
+  Component,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+// Custom Icon Renderer for Automation Component Cards
+function ComponentIcon({ name, className }: { name: string; className?: string }) {
+  switch (name) {
+    case "PLC":
+      return <Cpu className={className || "w-5 h-5 text-[#1a56b0]"} />;
+    case "HMI":
+      return <Monitor className={className || "w-5 h-5 text-[#1a56b0]"} />;
+    case "ProtectionDevice":
+      return <ShieldCheck className={className || "w-5 h-5 text-[#1a56b0]"} />;
+    case "Meter":
+      return <Gauge className={className || "w-5 h-5 text-[#1a56b0]"} />;
+    case "PowerSupply":
+      return <Zap className={className || "w-5 h-5 text-[#1a56b0]"} />;
+    case "TemperatureController":
+      return <Thermometer className={className || "w-5 h-5 text-[#1a56b0]"} />;
+    case "TimeControl":
+      return <Timer className={className || "w-5 h-5 text-[#1a56b0]"} />;
+    case "Transformer":
+      return <Activity className={className || "w-5 h-5 text-[#1a56b0]"} />;
+    default:
+      return <Component className={className || "w-5 h-5 text-[#1a56b0]"} />;
+  }
+}
+
 export default function AutomationPage() {
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");
+  const [selectedCategory, setSelectedCategory] = useState("All Components");
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeProduct, setActiveProduct] = useState<ProductItem | null>(null);
+  const [activeComponent, setActiveComponent] = useState<ComponentCardItem | null>(null);
   const [isBOMModalOpen, setIsBOMModalOpen] = useState(false);
 
-  const filteredProducts = useMemo(() => {
-    return AUTOMATION_PRODUCTS.filter((prod) => {
+  const filteredComponents = useMemo(() => {
+    return AUTOMATION_COMPONENTS.filter((item) => {
       const matchesCat =
-        selectedCategory === "All Categories" ||
-        prod.subCategory === selectedCategory;
+        selectedCategory === "All Components" ||
+        item.subCategory === selectedCategory;
       const matchesSearch =
-        prod.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        prod.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        prod.oemPartners.some((oem) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.shortLabel.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.oemPartners.some((oem) =>
           oem.toLowerCase().includes(searchQuery.toLowerCase())
         );
       return matchesCat && matchesSearch;
@@ -52,15 +85,18 @@ export default function AutomationPage() {
       <section className="bg-[#eaf3fc] border-b border-[#bcdbf7] py-12 sm:py-16 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-[#1a56b0] text-xs font-bold uppercase tracking-widest mb-4 border border-[#bcdbf7] shadow-xs">
+            {/* Breadcrumb Pill */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white text-[#1a56b0] text-xs font-bold uppercase tracking-wider mb-4 border border-[#bcdbf7] shadow-xs">
               <Cpu className="w-3.5 h-3.5 text-[#1a56b0]" />
-              <span>Catalog &bull; Category 02</span>
+              <span>Components &bull; Category 02</span>
             </div>
+
             <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-[#0d2b4e] tracking-tight">
-              Industrial Automation Components
+              Automation Components
             </h1>
+
             <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
-              Advanced controllers, deterministic motion drives, intelligent sensors, and edge gateways to optimize process control, telemetry, and machine cycle performance.
+              Industrial controllers, HMIs, power modules, digital meters, and instrumentation for precision process control and machine automation. Direct OEM partnerships with rapid turnaround.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -70,15 +106,126 @@ export default function AutomationPage() {
                 onClick={() => setIsBOMModalOpen(true)}
                 leftIcon={<FileSpreadsheet className="w-4 h-4" />}
               >
-                Request Automation BOM Pricing
+                Upload Automation BOM for Fast Quote
+              </Button>
+              <Button
+                variant="outline"
+                size="md"
+                href="#catalog"
+                rightIcon={<ArrowRight className="w-4 h-4" />}
+              >
+                Explore Component Catalog
               </Button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Catalog View */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
+      {/* ========================================================= */}
+      {/* REFERENCE COMPOSITION: SHOWCASE & COMPONENT CARDS GRID   */}
+      {/* ========================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 relative z-20">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-[#d6e8fa] shadow-card">
+          {/* Section Heading */}
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-[#0d2b4e] tracking-tight">
+              Automation Components
+            </h2>
+            <p className="mt-2 text-sm text-slate-600 max-w-2xl mx-auto">
+              Click any component line below for technical ratings, interface specifications, and immediate BOM quote consolidation.
+            </p>
+          </div>
+
+          {/* Split Reference Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+            {/* Left Column: Primary Hero Showcase */}
+            <div className="lg:col-span-5 flex flex-col justify-center">
+              <div className="group relative bg-[#f8fafc] rounded-3xl p-5 sm:p-6 border-2 border-[#1b3b64]/20 hover:border-[#1a56b0] transition-all duration-300 shadow-xs flex flex-col items-center justify-between h-full">
+                <div className="w-full flex items-center justify-between mb-3">
+                  <span className="text-[11px] font-bold text-[#1a56b0] uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200">
+                    Control Architecture
+                  </span>
+                  <span className="text-[11px] font-semibold text-slate-500">
+                    Multi-Protocol Fieldbus
+                  </span>
+                </div>
+
+                {/* Automation Hero Image: Programmable Logic Controller & HMI */}
+                <div className="relative w-full my-auto flex flex-col items-center justify-center p-4">
+                  <div className="grid grid-cols-2 gap-4 items-center justify-center w-full max-w-xs">
+                    <img
+                      src="/images/automation-components/PLC.png"
+                      alt="FLUX India - High Performance PLC Controller"
+                      className="max-h-[160px] w-auto object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300 mx-auto"
+                    />
+                    <img
+                      src="/images/automation-components/HMI.png"
+                      alt="FLUX India - Industrial Touchscreen HMI"
+                      className="max-h-[160px] w-auto object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300 mx-auto"
+                    />
+                  </div>
+                  <div className="mt-4 text-center">
+                    <span className="text-xs font-bold text-[#0d2b4e]">
+                      PLC, HMI &amp; Power Control Units
+                    </span>
+                    <p className="text-[11px] text-slate-500 mt-0.5">
+                      Deterministic real-time control &amp; industrial telemetry
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bottom Feature Badges */}
+                <div className="w-full mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-600 font-medium">
+                  <span className="flex items-center gap-1">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                    100% Genuine Sourcing
+                  </span>
+                  <span className="text-slate-300">|</span>
+                  <span>Firmware &amp; Tech Support</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Grid of 8 Component Cards matching reference layout */}
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 auto-rows-fr">
+              {AUTOMATION_COMPONENTS.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => setActiveComponent(item)}
+                  className="group relative bg-white rounded-2xl p-3.5 sm:p-4 border-2 border-[#1b3b64]/30 hover:border-[#1a56b0] hover:bg-[#f8fafc] transition-all duration-200 cursor-pointer shadow-xs hover:shadow-hover hover:-translate-y-0.5 flex items-center justify-between gap-3 overflow-hidden"
+                >
+                  {/* Left Half: Icon & Text Label */}
+                  <div className="w-1/2 flex flex-col justify-center items-center text-center pr-2 border-r border-slate-200">
+                    <div className="mb-2 p-1.5 rounded-lg bg-blue-50 group-hover:bg-[#1a56b0] text-[#1a56b0] group-hover:text-white transition-colors">
+                      <ComponentIcon name={item.iconName} className="w-5 h-5" />
+                    </div>
+
+                    <div className="w-6 h-0.5 bg-[#1a56b0]/30 mb-2 rounded-full" />
+
+                    <h3 className="text-xs font-bold font-heading text-[#0d2b4e] group-hover:text-[#1a56b0] tracking-tight leading-tight line-clamp-2">
+                      {item.shortLabel}
+                    </h3>
+                  </div>
+
+                  {/* Right Half: Clean Product Image */}
+                  <div className="w-1/2 flex items-center justify-center p-1">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="max-h-20 sm:max-h-24 w-auto object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* DETAILED TECHNICAL CATALOG VIEW & SEARCH                  */}
+      {/* ========================================================= */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14" id="catalog">
         {/* Search & Filter Bar */}
         <div className="bg-white rounded-2xl shadow-card border border-slate-200 p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Search Input */}
@@ -88,7 +235,7 @@ export default function AutomationPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search Siemens S7-1200, Danfoss VFD, Weintek HMI..."
+              placeholder="Search PLCs, HMIs, power supplies, meters, timers..."
               className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 focus:border-[#1a56b0] focus:ring-1 focus:ring-[#1a56b0] outline-none"
             />
           </div>
@@ -96,7 +243,7 @@ export default function AutomationPage() {
           {/* Quick Count */}
           <div className="text-xs font-semibold text-slate-500 flex items-center gap-2">
             <PackageCheck className="w-4 h-4 text-emerald-600" />
-            <span>Showing {filteredProducts.length} verified automation lines</span>
+            <span>Showing {filteredComponents.length} verified automation lines</span>
           </div>
         </div>
 
@@ -118,107 +265,159 @@ export default function AutomationPage() {
           ))}
         </div>
 
-        {/* Products Grid */}
+        {/* Detailed Catalog Cards Grid */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProducts.map((prod) => (
+          {filteredComponents.map((item) => (
             <div
-              key={prod.id}
-              className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200 shadow-card hover:shadow-hover hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
+              key={item.id}
+              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:shadow-card hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#1a56b0] bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">
-                    {prod.subCategory}
-                  </span>
-                  {prod.popular && (
-                    <Badge variant="accent" size="sm">
-                      Top Specified
-                    </Badge>
-                  )}
+                {/* Image Showcase */}
+                <div
+                  onClick={() => setActiveComponent(item)}
+                  className="w-full h-44 rounded-xl bg-[#f8fafc] border border-slate-100 flex items-center justify-center p-4 mb-4 cursor-pointer hover:bg-blue-50/50 transition-colors"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="max-h-36 w-auto object-contain drop-shadow-sm"
+                  />
                 </div>
 
-                <h3 className="text-lg sm:text-xl font-bold font-heading text-[#0d2b4e]">
-                  {prod.name}
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[11px] font-bold text-[#1a56b0] uppercase tracking-wider">
+                    {item.subCategory}
+                  </span>
+                  {item.popular && <Badge variant="navy">Top Specified</Badge>}
+                </div>
+
+                <h3
+                  onClick={() => setActiveComponent(item)}
+                  className="text-base font-bold font-heading text-[#0d2b4e] hover:text-[#1a56b0] cursor-pointer transition-colors"
+                >
+                  {item.name}
                 </h3>
 
-                <p className="mt-1 text-xs font-medium text-[#1a56b0]">
-                  {prod.tagline}
+                <p className="text-xs text-slate-600 mt-2 line-clamp-2 leading-relaxed">
+                  {item.description}
                 </p>
 
-                <p className="mt-3 text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed">
-                  {prod.description}
-                </p>
-
-                {/* Key Features preview */}
-                <div className="mt-4 space-y-1.5">
-                  {prod.features.slice(0, 3).map((f) => (
-                    <div key={f} className="flex items-start gap-2 text-xs text-slate-700">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
-                      <span className="line-clamp-1">{f}</span>
+                {/* Key Spec Snippets */}
+                <div className="mt-4 pt-4 border-t border-slate-100 space-y-1.5">
+                  {Object.entries(item.specs).slice(0, 3).map(([key, val]) => (
+                    <div key={key} className="flex justify-between text-[11px]">
+                      <span className="text-slate-500 font-medium">{key}:</span>
+                      <span className="text-[#0d2b4e] font-semibold text-right">{val}</span>
                     </div>
                   ))}
                 </div>
-
-                {/* OEM brands */}
-                <div className="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center gap-1 text-[11px] text-slate-500">
-                  <span className="font-semibold text-slate-700">OEM Lines:</span>
-                  {prod.oemPartners.join(", ")}
-                </div>
               </div>
 
-              {/* Actions */}
-              <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-3">
+              {/* Action Buttons */}
+              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center gap-2">
                 <button
-                  onClick={() => setActiveProduct(prod)}
-                  className="text-xs font-bold text-[#1a56b0] hover:underline flex items-center gap-1 cursor-pointer"
+                  onClick={() => setActiveComponent(item)}
+                  className="flex-1 py-2 px-3 rounded-xl border border-[#bcdbf7] text-[#1a56b0] hover:bg-blue-50 text-xs font-semibold transition-colors text-center"
                 >
-                  <Info className="w-3.5 h-3.5" />
-                  <span>Technical Specs</span>
+                  View Full Specs
                 </button>
-
-                <Button
-                  size="sm"
-                  variant="primary"
+                <button
                   onClick={() => setIsBOMModalOpen(true)}
-                  rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
-                  className="text-xs"
+                  className="py-2 px-3 rounded-xl bg-[#1a56b0] text-white hover:bg-[#0d2b4e] text-xs font-semibold transition-colors flex items-center gap-1 shadow-xs"
                 >
-                  Add to Quote
-                </Button>
+                  <FileSpreadsheet className="w-3.5 h-3.5" />
+                  <span>Inquire</span>
+                </button>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* Technical Specs Modal */}
-      {activeProduct && (
+      {/* ========================================================= */}
+      {/* TECHNICAL COMPONENT DETAIL MODAL                          */}
+      {/* ========================================================= */}
+      {activeComponent && (
         <Modal
-          isOpen={!!activeProduct}
-          onClose={() => setActiveProduct(null)}
-          title={activeProduct.name}
-          subtitle={`Category: ${activeProduct.subCategory} • 100% Genuine OEM`}
+          isOpen={!!activeComponent}
+          onClose={() => setActiveComponent(null)}
+          title={activeComponent.name}
           maxWidth="lg"
         >
-          <div className="space-y-6 text-left">
+          <div className="space-y-6">
+            {/* Header / Product Snapshot */}
+            <div className="flex flex-col sm:flex-row gap-6 items-center bg-[#f8fafc] p-5 rounded-2xl border border-slate-200">
+              <div className="w-32 h-32 shrink-0 bg-white rounded-xl border border-slate-200 flex items-center justify-center p-2">
+                <img
+                  src={activeComponent.image}
+                  alt={activeComponent.name}
+                  className="max-h-28 w-auto object-contain"
+                />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-[#1a56b0] uppercase tracking-wider">
+                  {activeComponent.subCategory}
+                </span>
+                <h3 className="text-lg sm:text-xl font-bold font-heading text-[#0d2b4e] mt-1">
+                  {activeComponent.name}
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                  {activeComponent.tagline}
+                </p>
+                <div className="mt-3 flex items-center gap-2">
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    Authorized OEM Stock Ready
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Description */}
             <div>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                {activeProduct.description}
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                Engineering Overview
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                {activeComponent.description}
               </p>
             </div>
 
-            {/* Technical Parameters Table */}
+            {/* Key Features */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">
-                Technical Specifications &amp; Interfaces
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                Key Features &amp; Quality Highlights
               </h4>
-              <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200">
-                <table className="w-full text-xs">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {activeComponent.features.map((feat, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-xs text-slate-700">
+                    <Check className="w-4 h-4 text-[#1a56b0] shrink-0 mt-0.5" />
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Technical Specifications Table */}
+            <div>
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                Technical Specifications &amp; Interface Data
+              </h4>
+              <div className="rounded-xl border border-slate-200 overflow-hidden">
+                <table className="w-full text-xs text-left">
                   <tbody>
-                    {Object.entries(activeProduct.specs).map(([k, v]) => (
-                      <tr key={k} className="border-b border-slate-200/60 last:border-0">
-                        <td className="py-2 font-semibold text-slate-700 w-1/3">{k}</td>
-                        <td className="py-2 text-slate-900 font-mono">{v}</td>
+                    {Object.entries(activeComponent.specs).map(([k, v], idx) => (
+                      <tr
+                        key={k}
+                        className={idx % 2 === 0 ? "bg-white" : "bg-slate-50"}
+                      >
+                        <td className="px-4 py-2.5 font-bold text-slate-700 w-1/3 border-r border-slate-200">
+                          {k}
+                        </td>
+                        <td className="px-4 py-2.5 text-slate-800 font-medium">
+                          {v}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -226,66 +425,64 @@ export default function AutomationPage() {
               </div>
             </div>
 
-            {/* Applications & OEM Sourcing */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-3.5 bg-blue-50/60 rounded-xl border border-blue-100">
-                <h5 className="text-xs font-bold text-[#0d2b4e] mb-1.5">Common Integrations</h5>
-                <ul className="text-xs text-slate-600 space-y-1">
-                  {activeProduct.applications.map((app) => (
-                    <li key={app}>&bull; {app}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="p-3.5 bg-blue-50/60 rounded-xl border border-blue-100">
-                <h5 className="text-xs font-bold text-[#0d2b4e] mb-1.5">OEM Series Supported</h5>
-                <p className="text-xs text-slate-600">
-                  {activeProduct.oemPartners.join(" • ")}
-                </p>
-                <div className="mt-2 text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>Includes Firmware &amp; Programming Support</span>
-                </div>
+            {/* OEM Partners */}
+            <div>
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                Supplied OEM Lines
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {activeComponent.oemPartners.map((oem) => (
+                  <span
+                    key={oem}
+                    className="px-3 py-1 bg-[#eaf3fc] text-[#1a56b0] text-xs font-bold rounded-lg border border-[#bcdbf7]"
+                  >
+                    {oem}
+                  </span>
+                ))}
               </div>
             </div>
 
-            <div className="pt-2 flex justify-end gap-3">
-              <Button
-                variant="outline"
-                size="md"
-                onClick={() => setActiveProduct(null)}
-              >
-                Close
-              </Button>
-              <Button
-                variant="primary"
-                size="md"
-                onClick={() => {
-                  setActiveProduct(null);
-                  setIsBOMModalOpen(true);
-                }}
-                leftIcon={<FileSpreadsheet className="w-4 h-4" />}
-              >
-                Request Quotation
-              </Button>
+            {/* Modal Footer Actions */}
+            <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <span className="text-xs text-slate-500">
+                Consolidated quotation delivered with OEM certification &amp; dispatch schedule.
+              </span>
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setActiveComponent(null)}
+                >
+                  Close
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => {
+                    setActiveComponent(null);
+                    setIsBOMModalOpen(true);
+                  }}
+                  leftIcon={<FileSpreadsheet className="w-4 h-4" />}
+                >
+                  Inquire in BOM
+                </Button>
+              </div>
             </div>
           </div>
         </Modal>
       )}
 
-      {/* BOM Submission Modal */}
-      <Modal
-        isOpen={isBOMModalOpen}
-        onClose={() => setIsBOMModalOpen(false)}
-        title="Automation BOM Quotation"
-        subtitle="Submit your PLC, VFD, or sensor line items for consolidated sourcing."
-        maxWidth="lg"
-      >
-        <BOMUploadForm
-          defaultProjectType="Industrial Automation & Motion"
-          onSuccess={() => setIsBOMModalOpen(false)}
-        />
-      </Modal>
+      {/* BOM Upload Modal */}
+      {isBOMModalOpen && (
+        <Modal
+          isOpen={isBOMModalOpen}
+          onClose={() => setIsBOMModalOpen(false)}
+          title="Upload Automation BOM / Part List"
+          maxWidth="lg"
+        >
+          <BOMUploadForm />
+        </Modal>
+      )}
     </div>
   );
 }

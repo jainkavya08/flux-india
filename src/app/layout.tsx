@@ -28,23 +28,23 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://fluxindia.in"),
   title: {
-    default: "FLUX — Power Solutions & Industrial Automation | Pune, India",
+    default: "FLUX — One Partner. Infinite Solutions.",
     template: "%s | FLUX India",
   },
   description:
-    "FLUX (est. 2021) is India's premier B2B engineering & procurement partner for panel building components, PLCs, VFDs, switchgear, and industrial automation solutions.",
+    "FLUX (est. 2021) is a premier B2B engineering & procurement partner providing solutions for all over the world in panel building components, PLCs, VFDs, switchgear, and industrial automation.",
   keywords: [
     "FLUX India",
-    "Panel Building Components Pune",
-    "Industrial Automation India",
-    "Switchgear Suppliers Pune",
-    "PLC VFD Dealers India",
+    "Panel Building Components",
+    "Industrial Automation Global Solutions",
+    "Switchgear Suppliers",
+    "PLC VFD Dealers",
     "BOM Consolidation Electrical",
-    "Siemens Schneider ABB L&T Pune",
-    "Power Solutions India",
-    "Chakan Industrial Automation",
+    "Siemens Schneider ABB L&T",
+    "Power Solutions Worldwide",
+    "Industrial Automation Solutions",
   ],
-  authors: [{ name: "FLUX Industrial Power Solutions" }],
+  authors: [{ name: "FLUX" }],
   creator: "FLUX India",
   publisher: "FLUX India",
   formatDetection: {
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     siteName: "FLUX India",
     title: "FLUX — One Partner. Infinite Solutions.",
     description:
-      "Full-service procurement and engineering for panel builders, system integrators, and industrial manufacturers across India.",
+      "Full-service procurement and engineering solutions for panel builders, system integrators, and industrial manufacturers all over the world.",
     images: [
       {
         url: "/og-image.png",

@@ -1,11 +1,11 @@
 export const COMPANY_INFO = {
   name: "FLUX",
-  legalName: "Flux Industrial Power Solutions Pvt. Ltd.",
+  legalName: "FLUX",
   foundedYear: 2021,
   tagline: "One Partner. Infinite Solutions",
-  subtitle: "Powering Industrial Automation Across India",
+  subtitle: "Powering Industrial Automation — Solutions for All Over the World",
   description:
-    "Founded in 2021, FLUX is a premier Indian engineering and procurement partner specializing in panel building components and advanced industrial automation solutions. We consolidate OEM supply chains, deliver deep technical review, and provide end-to-end component engineering for modern manufacturing and power infrastructure.",
+    "Founded in 2021, FLUX is a premier engineering and procurement partner providing solutions for all over the world in panel building components and advanced industrial automation. We consolidate OEM supply chains, deliver deep technical review, and provide end-to-end component engineering for modern manufacturing and power infrastructure.",
   location: {
     address: "Survey No. 42/1, Jadhawadi, Chakan Industrial Corridor",
     city: "Pune",
@@ -76,7 +76,7 @@ export const COMPANY_INFO = {
       title: "Delivery",
       description: "Inspected, safely packed and express-dispatched straight to your panel shop or site.",
       icon: "Truck",
-      highlight: "Pan-India logistics",
+      highlight: "Solutions for all over the world",
     },
   ],
   milestones: [
@@ -97,8 +97,8 @@ export const COMPANY_INFO = {
     },
     {
       year: "2024",
-      title: "Pan-India Warehousing Network",
-      desc: "Expanded express distribution hubs across Western, Southern, and Northern industrial corridors.",
+      title: "Global Warehousing & Dispatch Network",
+      desc: "Expanded express distribution hubs and freight channels to deliver solutions for all over the world.",
     },
     {
       year: "Today",
@@ -126,9 +126,9 @@ export const COMPANY_INFO = {
       icon: "Cpu",
     },
     {
-      title: "Pan-India Express Logistics",
+      title: "Solutions for All Over the World",
       description:
-        "Direct dispatch to machine shops and industrial sites in Pune, Mumbai, Ahmedabad, Bengaluru, Chennai, NCR, and beyond.",
+        "Direct dispatch and reliable component engineering solutions for industrial sites, machine builders, and panel shops all over the world.",
       icon: "Send",
     },
   ],
@@ -150,8 +150,8 @@ export const COMPANY_INFO = {
       a: "Yes! Our technical team specializes in electrical cross-referencing. If a specified breaker or drive has an extended 16-week lead time, we recommend pin-compatible, IEC-compliant drop-in alternatives from stock.",
     },
     {
-      q: "Do you ship across India?",
-      a: "Yes, we handle express surface and air-cargo logistics across all industrial zones in India including Maharashtra, Gujarat, Tamil Nadu, Karnataka, Telangana, Haryana, and Rajasthan.",
+      q: "Do you provide shipping and solutions all over the world?",
+      a: "Yes, we deliver component engineering solutions for all over the world with coordinated regional dispatch and international air and ocean cargo logistics.",
     },
   ],
 };

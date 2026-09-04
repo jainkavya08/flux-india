@@ -33,7 +33,7 @@ export function Hero() {
         {/* Top subtle category pill */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-[#1a56b0] text-xs font-bold uppercase tracking-widest mb-6 shadow-xs animate-in fade-in duration-500">
           <span className="w-2 h-2 rounded-full bg-[#1a56b0] animate-pulse" />
-          <span>India&apos;s Engineering &amp; Procurement Hub &bull; Est. 2021</span>
+          <span>Engineering &amp; Procurement Hub &bull; Est. 2021</span>
         </div>
 
         {/* Centered FLUX Logo + Wordmark */}
@@ -42,7 +42,7 @@ export function Hero() {
 
           {/* Subtitle / Value Prop */}
           <p className="text-xs sm:text-sm font-semibold tracking-widest uppercase text-slate-500 mt-4 max-w-xl mx-auto font-heading">
-            Powering Industrial Automation Across India
+            Powering Industrial Automation — Solutions for All Over the World
           </p>
 
           <h1 className="mt-4 text-3xl sm:text-5xl lg:text-6xl font-extrabold font-heading text-[#0d2b4e] tracking-tight max-w-4xl mx-auto leading-[1.15]">
@@ -53,7 +53,7 @@ export function Hero() {
           </h1>
 
           <p className="mt-5 text-base sm:text-lg text-slate-700 max-w-2xl mx-auto leading-relaxed">
-            Consolidate your multi-vendor electrical and automation BOM. We source 100% genuine OEM components, provide deep technical review, and deliver pan-India.
+            Consolidate your multi-vendor electrical and automation BOM. We source 100% genuine OEM components, provide deep technical review, and deliver solutions for all over the world.
           </p>
         </div>
 

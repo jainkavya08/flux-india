@@ -49,7 +49,7 @@ export default function AboutPage() {
             Engineering Sourcing Built for Modern Industry
           </h1>
           <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
-            Founded in 2021 in Pune, FLUX is on a mission to consolidate India&apos;s electrical and automation supply chain under one agile, engineering-first roof.
+            Founded in 2021 in Pune, FLUX is on a mission to provide seamless electrical and automation solutions for all over the world under one agile, engineering-first roof.
           </p>
         </div>
       </section>
@@ -87,7 +87,7 @@ export default function AboutPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>Pan-India Express Dispatch</span>
+                  <span>Solutions for All Over the World</span>
                 </div>
               </div>
             </div>
@@ -178,7 +178,7 @@ export default function AboutPage() {
               Growth Journey
             </Badge>
             <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-[#0d2b4e]">
-              From 2021 Inception to Pan-India Network
+              From 2021 Inception to Solutions for All Over the World
             </h2>
           </div>
 

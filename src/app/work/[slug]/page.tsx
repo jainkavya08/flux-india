@@ -192,7 +192,7 @@ export default async function WorkDetailPage({
                 <span>100% Authorized OEM Genuine</span>
               </div>
               <p className="text-slate-600 leading-relaxed">
-                All components delivered with original manufacturer test certificates, warranty registrations, and consolidated pan-India delivery tracking.
+                All components delivered with original manufacturer test certificates, warranty registrations, and consolidated delivery tracking with solutions for all over the world.
               </p>
             </div>
           </div>
