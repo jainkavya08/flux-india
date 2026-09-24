@@ -97,4 +97,5 @@ jobs:
           protocol: ftp
           local-dir: ./api/
           server-dir: ./api/
+          dangerous-clean-slate: true
           timeout: 60000
