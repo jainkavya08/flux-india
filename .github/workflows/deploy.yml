@@ -84,7 +84,7 @@ jobs:
           port: 21
           protocol: ftp
           local-dir: ./out/
-          server-dir: ./
+          server-dir: public_html/
           dangerous-clean-slate: true
           timeout: 60000
 
@@ -97,5 +97,5 @@ jobs:
           port: 21
           protocol: ftp
           local-dir: ./api/
-          server-dir: ./api/
+          server-dir: public_html/api/
           timeout: 60000
