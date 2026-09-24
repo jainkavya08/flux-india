@@ -84,7 +84,7 @@ jobs:
           port: 21
           protocol: ftp
           local-dir: ./out/
-          server-dir: public_html/
+          server-dir: ./
           timeout: 60000
 
       - name: Deploy PHP API to Hostinger
@@ -96,5 +96,5 @@ jobs:
           port: 21
           protocol: ftp
           local-dir: ./api/
-          server-dir: public_html/api/
+          server-dir: ./api/
           timeout: 60000
