@@ -30,6 +30,51 @@ jobs:
       - name: Build static website
         run: npm run build
 
+      # Create production config.php without committing database credentials
+      - name: Create production PHP config
+        env:
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          DB_PASSWORD_B64=$(printf '%s' "$DB_PASSWORD" | base64 -w 0)
+
+          cat > api/config.php <<PHP
+          <?php
+
+          if (!defined('FLUX_APP')) {
+              define('FLUX_APP', true);
+          }
+
+          // -------------------------------------------------------------
+          // Hostinger MySQL Database
+          // -------------------------------------------------------------
+          define('DB_HOST', 'localhost');
+          define('DB_NAME', 'u797413374_flux');
+          define('DB_USER', 'u797413374_flux');
+          define('DB_PASS', base64_decode('$DB_PASSWORD_B64'));
+          define('DB_PORT', '3306');
+
+          // -------------------------------------------------------------
+          // Application & Security Settings
+          // -------------------------------------------------------------
+          define('APP_ENV', 'production');
+
+          define('ADMIN_EMAIL', 'sales@fluxindia.in');
+
+          define('FROM_EMAIL', 'noreply@fluxindia.rf.gd');
+
+          define('UPLOAD_DIR', dirname(__DIR__) . '/uploads/bom/');
+
+          define('MAX_FILE_SIZE', 10 * 1024 * 1024);
+
+          define('ALLOWED_ORIGINS', [
+              'https://fluxindia.co.in',
+              'https://www.fluxindia.co.in',
+              'http://localhost:3000',
+              'http://127.0.0.1:3000',
+              'http://localhost:8000',
+          ]);
+          PHP
+
       - name: Deploy Next.js website to Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
