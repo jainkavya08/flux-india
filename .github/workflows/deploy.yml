@@ -77,7 +77,6 @@ jobs:
           protocol: ftp
           local-dir: ./out/
           server-dir: public_html/
-          dangerous-clean-slate: true
           state-name: .flux-hostinger-sync-state.json
           timeout: 60000
 

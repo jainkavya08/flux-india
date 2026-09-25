@@ -58,7 +58,7 @@ export function ProcessStrip() {
   };
 
   return (
-    <section className="bg-white border-b border-slate-200/70 py-2 sm:py-2.5 relative z-20 shadow-xs overflow-hidden">
+    <section className="bg-white border-b border-slate-200/70 py-2 sm:py-2.5 sticky top-[60px] lg:top-[96px] z-30 shadow-xs overflow-hidden">
       {/* Desktop View (>= md): Static horizontal process strip */}
       <div className="hidden md:block max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="overflow-x-auto scrollbar-none py-1">
