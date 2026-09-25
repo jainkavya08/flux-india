@@ -85,7 +85,6 @@ jobs:
           protocol: ftp
           local-dir: ./out/
           server-dir: public_html/
-          dangerous-clean-slate: true
           timeout: 60000
 
       - name: Deploy PHP API to Hostinger
