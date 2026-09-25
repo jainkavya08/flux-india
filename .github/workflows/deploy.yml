@@ -45,7 +45,7 @@ jobs:
           define('DB_HOST', 'localhost');
           define('DB_NAME', 'u797413374_flux');
           define('DB_USER', 'u797413374_flux');
-          define('DB_PASS', base64_decode('$DB_PASSWORD_B64'));
+          define('DB_PASS', base64_decode('\$DB_PASSWORD_B64'));
           define('DB_PORT', '3306');
 
           define('APP_ENV', 'production');
@@ -68,8 +68,8 @@ jobs:
           ]);
           PHP
 
-      - name: Deploy Next.js website to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy Frontend to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.HOSTINGER_FTP_SERVER }}
           username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
@@ -78,11 +78,11 @@ jobs:
           protocol: ftp
           local-dir: ./out/
           server-dir: public_html/
-          state-name: .flux-hostinger-sync-state.json
+          state-name: .flux-frontend-sync-v2.json
           timeout: 60000
 
       - name: Deploy PHP API to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.HOSTINGER_FTP_SERVER }}
           username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
@@ -91,5 +91,5 @@ jobs:
           protocol: ftp
           local-dir: ./api/
           server-dir: public_html/api/
-          state-name: .flux-api-sync-state.json
+          state-name: .flux-api-sync-v2.json
           timeout: 60000
