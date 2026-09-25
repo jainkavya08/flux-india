@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
 permissions:
@@ -30,7 +29,6 @@ jobs:
       - name: Build static website
         run: npm run build
 
-      # Create production config.php without committing database credentials
       - name: Create production PHP config
         env:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -44,18 +42,12 @@ jobs:
               define('FLUX_APP', true);
           }
 
-          // -------------------------------------------------------------
-          // Hostinger MySQL Database
-          // -------------------------------------------------------------
           define('DB_HOST', 'localhost');
           define('DB_NAME', 'u797413374_flux');
           define('DB_USER', 'u797413374_flux');
           define('DB_PASS', base64_decode('$DB_PASSWORD_B64'));
           define('DB_PORT', '3306');
 
-          // -------------------------------------------------------------
-          // Application & Security Settings
-          // -------------------------------------------------------------
           define('APP_ENV', 'production');
 
           define('ADMIN_EMAIL', 'sales@fluxindia.in');
@@ -85,6 +77,8 @@ jobs:
           protocol: ftp
           local-dir: ./out/
           server-dir: public_html/
+          dangerous-clean-slate: true
+          state-name: .flux-hostinger-sync-state.json
           timeout: 60000
 
       - name: Deploy PHP API to Hostinger
@@ -97,4 +91,5 @@ jobs:
           protocol: ftp
           local-dir: ./api/
           server-dir: public_html/api/
+          state-name: .flux-api-sync-state.json
           timeout: 60000
