@@ -15,10 +15,10 @@ if (!defined('FLUX_APP')) {
 // -------------------------------------------------------------
 // Database Credentials (from InfinityFree vPanel -> MySQL)
 // -------------------------------------------------------------
-define('DB_HOST', 'sqlxxx.infinityfree.com'); // e.g. sql100.infinityfree.com (DO NOT USE localhost on InfinityFree)
-define('DB_NAME', 'if0_xxxxxx_flux');        // e.g. if0_12345678_flux
-define('DB_USER', 'if0_xxxxxx');             // e.g. if0_12345678
-define('DB_PASS', 'your_infinityfree_password'); // Your vPanel Account Password
+define('DB_HOST', 'localhost'); // e.g. sql100.infinityfree.com (DO NOT USE localhost on InfinityFree)
+define('DB_NAME', 'u797413374_flux');        // e.g. if0_12345678_flux
+define('DB_USER', 'u797413374_flux');             // e.g. if0_12345678
+define('DB_PASS', 'Fluxindia@2021'); // Your vPanel Account Password
 define('DB_PORT', '3306');
 
 // -------------------------------------------------------------
@@ -40,7 +40,8 @@ define('MAX_FILE_SIZE', 10 * 1024 * 1024);
 
 // Allowed Frontend Origins for CORS validation
 define('ALLOWED_ORIGINS', [
-    'https://fluxindia.rf.gd',
+    'https://fluxindia.co.in',
+    'https://www.fluxindia.co.in',
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     'http://localhost:8000',
