@@ -52,6 +52,7 @@ jobs:
 
           define('ADMIN_EMAIL', 'sales@fluxindia.in');
 
+          // TODO: Update this when Hostinger/domain email is configured.
           define('FROM_EMAIL', 'noreply@fluxindia.rf.gd');
 
           define('UPLOAD_DIR', dirname(__DIR__) . '/uploads/bom/');

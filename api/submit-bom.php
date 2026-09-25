@@ -230,6 +230,7 @@ try {
     // 5. Send Admin Notification Email (Optional / Fail-safe)
     // -------------------------------------------------------------
     $adminEmail = defined('ADMIN_EMAIL') ? ADMIN_EMAIL : 'sales@fluxindia.in';
+    // TODO: Update this when Hostinger/domain email is configured.
     $fromEmail  = defined('FROM_EMAIL') ? FROM_EMAIL : 'noreply@fluxindia.rf.gd';
 
     if (!empty($adminEmail)) {
@@ -253,7 +254,7 @@ try {
             $message .= $requirements . "\n";
             $message .= "--------------------------------------------------\n\n";
             $message .= "Manage this inquiry in the Admin Panel:\n";
-            $message .= "https://fluxindia.rf.gd/admin/\n";
+            $message .= "https://fluxindia.co.in/admin/\n";
 
             $headers = "From: FLUX India System <{$fromEmail}>\r\n"
                      . "Reply-To: {$businessEmail}\r\n"

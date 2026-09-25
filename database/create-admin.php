@@ -53,14 +53,11 @@ $dbInserted = false;
 $dbError = null;
 
 $configFile = __DIR__ . '/../api/config.php';
-if (!file_exists($configFile)) {
-    $configFile = __DIR__ . '/../public/api/config.php';
-}
 
 if (file_exists($configFile)) {
     try {
         require_once $configFile;
-        if (defined('DB_HOST') && defined('DB_NAME') && defined('DB_USER') && defined('DB_PASS') && DB_HOST !== 'sqlxxx.infinityfree.com') {
+        if (defined('DB_HOST') && defined('DB_NAME') && defined('DB_USER') && defined('DB_PASS') && DB_PASS !== 'your_hostinger_database_password') {
             $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
             $pdo = new PDO($dsn, DB_USER, DB_PASS, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
