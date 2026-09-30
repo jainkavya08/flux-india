@@ -71,12 +71,6 @@ export default function PanelBuildingPage() {
       <section className="bg-[#eaf3fc] border-b border-[#bcdbf7] py-12 sm:py-16 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl">
-            {/* Breadcrumb Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white text-[#1a56b0] text-xs font-bold uppercase tracking-wider mb-4 border border-[#bcdbf7] shadow-xs">
-              <Layers className="w-3.5 h-3.5 text-[#1a56b0]" />
-              <span>Components &bull; Category 01</span>
-            </div>
-
             <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-[#0d2b4e] tracking-tight">
               Panel Building Components
             </h1>
@@ -85,16 +79,6 @@ export default function PanelBuildingPage() {
               High-quality, type-tested components for reliable, safe, and efficient control panels and power distribution switchboards. Sourced directly from premier OEM partners with full batch traceability.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button
-                variant="primary"
-                size="md"
-                onClick={() => setIsBOMModalOpen(true)}
-                leftIcon={<FileSpreadsheet className="w-4 h-4" />}
-              >
-                Upload Panel BOM for Fast Quote
-              </Button>
-            </div>
           </div>
         </div>
       </section>
@@ -104,18 +88,8 @@ export default function PanelBuildingPage() {
       {/* ========================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 relative z-20">
         <div className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-[#d6e8fa] shadow-card">
-          {/* Section Heading */}
-          <div className="text-center mb-8 sm:mb-10">
-            <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-[#0d2b4e] tracking-tight">
-              Panel Building Components
-            </h2>
-            <p className="mt-2 text-sm text-slate-600 max-w-2xl mx-auto">
-              Click any component line below for technical ratings, dimension charts, and immediate BOM quote consolidation.
-            </p>
-          </div>
-
           {/* Component Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-fr">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
             {PANEL_BUILDING_COMPONENTS.map((item) => (
               <div
                 key={item.id}
@@ -126,27 +100,27 @@ export default function PanelBuildingPage() {
                     setActiveComponent(item);
                   }
                 }}
-                className="group relative bg-white rounded-2xl p-3.5 sm:p-4 border-2 border-[#1b3b64]/30 hover:border-[#1a56b0] hover:bg-[#f8fafc] transition-all duration-200 cursor-pointer shadow-xs hover:shadow-hover hover:-translate-y-0.5 flex items-center justify-between gap-3 overflow-hidden"
+                className="group relative bg-white rounded-2xl p-4 sm:p-6 border-2 border-[#1b3b64]/30 hover:border-[#1a56b0] hover:bg-[#f8fafc] transition-all duration-200 cursor-pointer shadow-xs hover:shadow-hover hover:-translate-y-0.5 flex items-center justify-between gap-4 overflow-hidden min-h-[160px]"
               >
                 {/* Left Half: Icon & Text Label */}
-                <div className="w-1/2 flex flex-col justify-center items-center text-center pr-2 border-r border-slate-200">
-                  <div className="mb-2 p-1.5 rounded-lg bg-blue-50 group-hover:bg-[#1a56b0] text-[#1a56b0] group-hover:text-white transition-colors">
-                    <ComponentIcon name={item.iconName} className="w-5 h-5" />
+                <div className="w-1/2 flex flex-col justify-center items-center text-center pr-4 border-r border-slate-200 h-full">
+                  <div className="mb-3 p-2 rounded-lg bg-blue-50 group-hover:bg-[#1a56b0] text-[#1a56b0] group-hover:text-white transition-colors">
+                    <ComponentIcon name={item.iconName} className="w-6 h-6" />
                   </div>
 
-                  <div className="w-6 h-0.5 bg-[#1a56b0]/30 mb-2 rounded-full" />
+                  <div className="w-8 h-0.5 bg-[#1a56b0]/30 mb-3 rounded-full" />
 
-                  <h3 className="text-xs font-bold font-heading text-[#0d2b4e] group-hover:text-[#1a56b0] tracking-tight leading-tight line-clamp-2">
+                  <h3 className="text-sm sm:text-base font-bold font-heading text-[#0d2b4e] group-hover:text-[#1a56b0] tracking-tight leading-tight line-clamp-2">
                     {item.shortLabel}
                   </h3>
                 </div>
 
                 {/* Right Half: Clean Product Image */}
-                <div className="w-1/2 flex items-center justify-center p-1">
+                <div className="w-1/2 flex items-center justify-center p-2 h-full">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="max-h-20 sm:max-h-24 w-auto object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200"
+                    className="max-h-24 sm:max-h-32 w-auto object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200"
                   />
                 </div>
               </div>
@@ -219,48 +193,7 @@ export default function PanelBuildingPage() {
               </ul>
             </div>
 
-            {/* Technical Specifications Table */}
-            <div>
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                Technical Specifications
-              </h4>
-              <div className="rounded-xl border border-slate-200 overflow-hidden">
-                <table className="w-full text-xs text-left">
-                  <tbody>
-                    {Object.entries(activeComponent.specs).map(([k, v], idx) => (
-                      <tr
-                        key={k}
-                        className={idx % 2 === 0 ? "bg-white" : "bg-slate-50"}
-                      >
-                        <td className="px-4 py-2.5 font-bold text-slate-700 w-1/3 border-r border-slate-200">
-                          {k}
-                        </td>
-                        <td className="px-4 py-2.5 text-slate-800 font-medium">
-                          {v}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
 
-            {/* OEM Partners */}
-            <div>
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                Supplied OEM Brands
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {activeComponent.oemPartners.map((oem) => (
-                  <span
-                    key={oem}
-                    className="px-3 py-1 bg-[#eaf3fc] text-[#1a56b0] text-xs font-bold rounded-lg border border-[#bcdbf7]"
-                  >
-                    {oem}
-                  </span>
-                ))}
-              </div>
-            </div>
 
             {/* Modal Footer Actions */}
             <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">

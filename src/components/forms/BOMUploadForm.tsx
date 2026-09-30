@@ -266,7 +266,7 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
             <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
             <input
               {...register("phone")}
-              placeholder="+91 98220 00000"
+              placeholder="+91 9665587346"
               className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 focus:border-[#1a56b0] focus:ring-1 focus:ring-[#1a56b0] outline-none"
             />
           </div>

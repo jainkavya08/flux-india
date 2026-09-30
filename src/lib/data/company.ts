@@ -17,13 +17,13 @@ export const COMPANY_INFO = {
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120974.88720894759!2d73.78442387522588!3d18.756312480603244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b6f123456789%3A0x1234567890abcdef!2sChakan%2C%20Pune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
   },
   contact: {
-    phone: "+91 98220 84920",
-    phoneDisplay: "+91 98220 84920",
+    phone: "+91 9665587346",
+    phoneDisplay: "+91 9665587346",
     landline: "+91 20 2712 4490",
     email: "sales@fluxindia.in",
     supportEmail: "contact@fluxindia.in",
-    whatsapp: "919822084920",
-    whatsappUrl: "https://wa.me/919822084920?text=Hi%20FLUX%20Team%2C%20I%20would%20like%20to%20request%20a%20quotation%20for%20industrial%20components.",
+    whatsapp: "919665587346",
+    whatsappUrl: "https://wa.me/919665587346?text=Hi%20FLUX%20Team%2C%20I%20would%20like%20to%20request%20a%20quotation%20for%20industrial%20components.",
   },
   openingHours: {
     weekdays: "Mon - Fri: 9:00 AM – 8:00 PM",
@@ -32,7 +32,7 @@ export const COMPANY_INFO = {
   },
   socials: {
     linkedin: "https://linkedin.com/company/flux-india-solutions",
-    whatsapp: "https://wa.me/919822084920",
+    whatsapp: "https://wa.me/919665587346",
     instagram: "https://instagram.com/flux.india",
     twitter: "https://twitter.com/flux_india",
   },

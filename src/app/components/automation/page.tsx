@@ -399,48 +399,7 @@ export default function AutomationPage() {
               </ul>
             </div>
 
-            {/* Technical Specifications Table */}
-            <div>
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                Technical Specifications &amp; Interface Data
-              </h4>
-              <div className="rounded-xl border border-slate-200 overflow-hidden">
-                <table className="w-full text-xs text-left">
-                  <tbody>
-                    {Object.entries(activeComponent.specs).map(([k, v], idx) => (
-                      <tr
-                        key={k}
-                        className={idx % 2 === 0 ? "bg-white" : "bg-slate-50"}
-                      >
-                        <td className="px-4 py-2.5 font-bold text-slate-700 w-1/3 border-r border-slate-200">
-                          {k}
-                        </td>
-                        <td className="px-4 py-2.5 text-slate-800 font-medium">
-                          {v}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
 
-            {/* OEM Partners */}
-            <div>
-              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                Supplied OEM Lines
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {activeComponent.oemPartners.map((oem) => (
-                  <span
-                    key={oem}
-                    className="px-3 py-1 bg-[#eaf3fc] text-[#1a56b0] text-xs font-bold rounded-lg border border-[#bcdbf7]"
-                  >
-                    {oem}
-                  </span>
-                ))}
-              </div>
-            </div>
 
             {/* Modal Footer Actions */}
             <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
