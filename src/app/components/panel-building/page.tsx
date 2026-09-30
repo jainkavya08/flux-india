@@ -89,7 +89,7 @@ export default function PanelBuildingPage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 relative z-20">
         <div className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-[#d6e8fa] shadow-card">
           {/* Component Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 auto-rows-fr">
             {PANEL_BUILDING_COMPONENTS.map((item) => (
               <div
                 key={item.id}
@@ -100,28 +100,22 @@ export default function PanelBuildingPage() {
                     setActiveComponent(item);
                   }
                 }}
-                className="group relative bg-white rounded-2xl p-4 sm:p-6 border-2 border-[#1b3b64]/30 hover:border-[#1a56b0] hover:bg-[#f8fafc] transition-all duration-200 cursor-pointer shadow-xs hover:shadow-hover hover:-translate-y-0.5 flex items-center justify-between gap-4 overflow-hidden min-h-[160px]"
+                className="group relative bg-white rounded-2xl p-4 sm:p-5 border-2 border-[#1b3b64]/30 hover:border-[#1a56b0] hover:bg-[#f8fafc] transition-all duration-200 cursor-pointer shadow-xs hover:shadow-hover hover:-translate-y-0.5 flex flex-col items-center justify-center gap-3 overflow-hidden min-h-[160px]"
               >
-                {/* Left Half: Icon & Text Label */}
-                <div className="w-1/2 flex flex-col justify-center items-center text-center pr-4 border-r border-slate-200 h-full">
-                  <div className="mb-3 p-2 rounded-lg bg-blue-50 group-hover:bg-[#1a56b0] text-[#1a56b0] group-hover:text-white transition-colors">
-                    <ComponentIcon name={item.iconName} className="w-6 h-6" />
-                  </div>
-
-                  <div className="w-8 h-0.5 bg-[#1a56b0]/30 mb-3 rounded-full" />
-
-                  <h3 className="text-sm sm:text-base font-bold font-heading text-[#0d2b4e] group-hover:text-[#1a56b0] tracking-tight leading-tight line-clamp-2">
-                    {item.shortLabel}
-                  </h3>
-                </div>
-
-                {/* Right Half: Clean Product Image */}
-                <div className="w-1/2 flex items-center justify-center p-2 h-full">
+                {/* Product Image */}
+                <div className="w-full flex items-center justify-center p-2 flex-1">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="max-h-24 sm:max-h-32 w-auto object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200"
+                    className="max-h-24 sm:max-h-28 w-auto object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200"
                   />
+                </div>
+
+                {/* Text Label */}
+                <div className="w-full flex flex-col justify-center items-center text-center">
+                  <h3 className="text-sm sm:text-base font-bold font-heading text-[#0d2b4e] group-hover:text-[#1a56b0] tracking-tight leading-tight">
+                    {item.shortLabel}
+                  </h3>
                 </div>
               </div>
             ))}
