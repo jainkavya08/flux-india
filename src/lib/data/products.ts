@@ -393,8 +393,8 @@ export const AUTOMATION_COMPONENTS: ComponentCardItem[] = [
 export const METERING_CONTROL_COMPONENTS: ComponentCardItem[] = [
   {
     id: "auto-protection-devices",
-    name: "Motor Protection & Electronic Monitoring Devices",
-    shortLabel: "MOTOR PROTECTION DEVICES",
+    name: "Protection Relay",
+    shortLabel: "PROTECTION RELAY",
     category: "metering-control",
     subCategory: "Protection & Monitoring",
     tagline: "Comprehensive phase failure, unbalance & thermal overload protection",
@@ -452,14 +452,14 @@ export const METERING_CONTROL_COMPONENTS: ComponentCardItem[] = [
   },
   {
     id: "auto-power-supplies",
-    name: "Industrial DIN-Rail Power Supplies (SMPS)",
-    shortLabel: "SWITCHED MODE POWER SUPPLIES",
+    name: "Power supply",
+    shortLabel: "POWER SUPPLY",
     category: "metering-control",
     subCategory: "Power & Conversion",
     tagline: "Ultra-slim 24V DC power modules with active PFC and >94% efficiency",
     description:
       "Heavy-duty regulated Switched Mode Power Supplies (SMPS) engineered for stable 24V DC / 12V DC power to PLCs, HMIs, sensors, and actuators with power boost capacity and short-circuit protection.",
-    image: "/images/automation-components/power_supply.png",
+    image: "/images/automation-components/Power_Supply.png",
     iconName: "PowerSupply",
     features: [
       "Universal AC input: 85V to 264V AC / 120V to 370V DC with active PFC",
@@ -489,7 +489,7 @@ export const METERING_CONTROL_COMPONENTS: ComponentCardItem[] = [
     tagline: "Autotuning dual-display PID control for industrial thermal processes",
     description:
       "Microprocessor-based PID temperature and process controllers with dual 4-digit display, universal sensor input (Thermocouple J/K/T/E/R/S & RTD Pt100), autotuning algorithms, and multi-mode relay/SSR/4-20mA control outputs.",
-    image: "/images/automation-components/temperature_controller.png",
+    image: "/images/automation-components/temp_controller.png",
     iconName: "TemperatureController",
     features: [
       "Universal input: Thermocouples (J, K, T, E, R, S, B, N) & RTD Pt100/Cu50",
@@ -511,14 +511,14 @@ export const METERING_CONTROL_COMPONENTS: ComponentCardItem[] = [
   },
   {
     id: "auto-transformers",
-    name: "Step-Down Control & Isolation Transformers",
-    shortLabel: "CONTROL TRANSFORMERS",
+    name: "Transformers",
+    shortLabel: "TRANSFORMERS",
     category: "metering-control",
     subCategory: "Power & Conversion",
     tagline: "Low-loss copper wound dry-type transformers for panel control circuits",
     description:
       "Dry-type resin-impregnated control transformers and galvanic isolation units converting 415V / 230V mains to safe 110V, 24V, and 12V auxiliary power with electrostatic shielding between primary and secondary windings.",
-    image: "/images/automation-components/transformer.png",
+    image: "/images/automation-components/transformers.png",
     iconName: "Transformer",
     features: [
       "Class F / Class H high-grade copper insulation (155°C / 180°C rating)",
