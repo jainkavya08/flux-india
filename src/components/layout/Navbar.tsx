@@ -21,6 +21,7 @@ import {
   CheckCircle2,
   Boxes,
   Activity,
+  Lightbulb,
 } from "lucide-react";
 import { LinkedinIcon, InstagramIcon } from "@/components/ui/SocialIcons";
 import { cn } from "@/lib/utils";
@@ -276,6 +277,24 @@ export function Navbar() {
                         </div>
                       </Link>
 
+                      {/* Signaling and Indication */}
+                      <Link
+                        href="/components/signaling-and-indication"
+                        className="group p-3.5 rounded-xl hover:bg-blue-50/70 border border-transparent hover:border-blue-100 transition-all flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="flex items-center gap-2 mb-2 text-[#0d2b4e] font-bold group-hover:text-[#1a56b0]">
+                            <div className="w-8 h-8 rounded-lg bg-blue-100/80 text-[#1a56b0] flex items-center justify-center shrink-0">
+                              <Lightbulb className="w-4 h-4" />
+                            </div>
+                            <span className="text-sm font-heading">Signaling & Indication</span>
+                          </div>
+                          <p className="text-xs text-slate-500 leading-relaxed">
+                            Pilot lamps, tower lights, and audible signaling.
+                          </p>
+                        </div>
+                      </Link>
+
                       {/* Dropdown Footer Banner */}
                       <div className="col-span-2 bg-slate-50 rounded-xl p-3 flex items-center justify-between border border-slate-100">
                         <div className="flex items-center gap-2 text-xs text-slate-600 font-medium">
@@ -521,6 +540,23 @@ export function Navbar() {
                   <div>
                     <div className="font-semibold text-slate-900">Metering &amp; Control</div>
                     <div className="text-xs text-slate-500">Metering &amp; Control instruments</div>
+                  </div>
+                </Link>
+                <Link
+                  href="/components/signaling-and-indication"
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-800 font-medium text-sm transition-all mt-1 border",
+                    normalizedPath === "/components/signaling-and-indication"
+                      ? "bg-blue-50/90 text-[#1a56b0] border-[#bcdbf7] font-bold shadow-xs"
+                      : "hover:bg-blue-50 border-transparent"
+                  )}
+                >
+                  <div className="w-7 h-7 rounded-lg bg-blue-100 text-[#1a56b0] flex items-center justify-center">
+                    <Lightbulb className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-slate-900">Signaling & Indication</div>
+                    <div className="text-xs text-slate-500">Lamps, Tower Lights & Sirens</div>
                   </div>
                 </Link>
               </motion.div>

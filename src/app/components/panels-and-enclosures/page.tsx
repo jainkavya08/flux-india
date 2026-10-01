@@ -43,21 +43,21 @@ export default function PanelsAndEnclosuresPage() {
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 relative z-20">
         <div className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-[#d6e8fa] shadow-card">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 auto-rows-fr">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 auto-rows-fr">
             {enclosuresProduct && (
               <div
                 onClick={() => setIsEnclosureSelectionOpen(true)}
-                className="group relative bg-white rounded-2xl p-4 sm:p-5 border-2 border-[#1b3b64]/30 hover:border-[#1a56b0] hover:bg-[#f8fafc] transition-all duration-200 cursor-pointer shadow-xs hover:shadow-hover hover:-translate-y-0.5 flex flex-col items-center justify-center gap-3 overflow-hidden min-h-[160px]"
+                className="group relative bg-white rounded-xl p-3 sm:p-4 border-2 border-[#1b3b64]/30 hover:border-[#1a56b0] hover:bg-[#f8fafc] transition-all duration-200 cursor-pointer shadow-xs hover:shadow-hover hover:-translate-y-0.5 flex flex-col items-center justify-center gap-2 overflow-hidden min-h-[140px]"
               >
-                <div className="w-full flex items-center justify-center p-2 flex-1">
+                <div className="w-full flex items-center justify-center p-1.5 flex-1">
                   <img
                     src={enclosuresProduct.image}
                     alt={enclosuresProduct.name}
-                    className="max-h-24 sm:max-h-28 w-auto object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200"
+                    className="max-h-20 sm:max-h-24 w-auto object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200"
                   />
                 </div>
                 <div className="w-full flex flex-col justify-center items-center text-center">
-                  <h3 className="text-sm sm:text-base font-bold font-heading text-[#0d2b4e] group-hover:text-[#1a56b0] tracking-tight leading-tight">
+                  <h3 className="text-xs sm:text-sm font-bold font-heading text-[#0d2b4e] group-hover:text-[#1a56b0] tracking-tight leading-tight">
                     {enclosuresProduct.shortLabel}
                   </h3>
                 </div>
