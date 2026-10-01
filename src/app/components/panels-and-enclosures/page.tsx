@@ -1,69 +1,29 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import React, { useState } from "react";
 import {
-  PANEL_BUILDING_CATEGORIES,
   PANEL_BUILDING_COMPONENTS,
   ComponentCardItem,
   METAL_ENCLOSURES,
   NON_METAL_ENCLOSURES,
 } from "@/lib/data/products";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { BOMUploadForm } from "@/components/forms/BOMUploadForm";
 import {
-  Search,
-  Layers,
   CheckCircle2,
   FileSpreadsheet,
-  ArrowRight,
-  ShieldCheck,
-  Zap,
-  Info,
-  PackageCheck,
-  Boxes,
-  Cable,
-  Component,
-  SlidersHorizontal,
-  ChevronRight,
-  Sliders,
   Check,
-  Phone,
-  Tag,
+  Boxes,
+  Component,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 
-// Custom Icon Renderer for Component Cards
-function ComponentIcon({ name, className }: { name: string; className?: string }) {
-  switch (name) {
-    case "CableGland":
-      return <Cable className={className || "w-5 h-5 text-[#1a56b0]"} />;
-    case "SupportInsulator":
-      return <ShieldCheck className={className || "w-5 h-5 text-[#1a56b0]"} />;
-    case "LugsTerminals":
-      return <Zap className={className || "w-5 h-5 text-[#1a56b0]"} />;
-    case "SpiralBand":
-      return <Sliders className={className || "w-5 h-5 text-[#1a56b0]"} />;
-    case "BusbarInsulator":
-      return <Layers className={className || "w-5 h-5 text-[#1a56b0]"} />;
-    case "FlexibleConduit":
-      return <Component className={className || "w-5 h-5 text-[#1a56b0]"} />;
-    case "CableTie":
-      return <Tag className={className || "w-5 h-5 text-[#1a56b0]"} />;
-    case "DistributionBox":
-      return <Boxes className={className || "w-5 h-5 text-[#1a56b0]"} />;
-    default:
-      return <Component className={className || "w-5 h-5 text-[#1a56b0]"} />;
-  }
-}
-
-export default function PanelBuildingPage() {
+export default function PanelsAndEnclosuresPage() {
   const [activeComponent, setActiveComponent] = useState<ComponentCardItem | null>(null);
   const [isBOMModalOpen, setIsBOMModalOpen] = useState(false);
   const [isEnclosureSelectionOpen, setIsEnclosureSelectionOpen] = useState(false);
+
+  const enclosuresProduct = PANEL_BUILDING_COMPONENTS.find(item => item.id === "pb-distribution-boxes");
 
   return (
     <div className="min-h-screen bg-[#f4f7fa] pb-24">
@@ -72,60 +32,41 @@ export default function PanelBuildingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl">
             <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-[#0d2b4e] tracking-tight">
-              Panel Building Components
+              Panels and Enclosures
             </h1>
-
             <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
-              High-quality, type-tested components for reliable, safe, and efficient control panels and power distribution switchboards. Sourced directly from premier OEM partners with full batch traceability.
+              High-quality enclosures for reliable, safe, and efficient control panels and power distribution switchboards.
             </p>
-
           </div>
         </div>
       </section>
 
-      {/* ========================================================= */}
-      {/* REFERENCE COMPOSITION: COMPONENT CARDS GRID              */}
-      {/* ========================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 relative z-20">
         <div className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-[#d6e8fa] shadow-card">
-          {/* Component Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 auto-rows-fr">
-            {PANEL_BUILDING_COMPONENTS.map((item) => (
+            {enclosuresProduct && (
               <div
-                key={item.id}
-                onClick={() => {
-                  if (item.id === "pb-distribution-boxes") {
-                    setIsEnclosureSelectionOpen(true);
-                  } else {
-                    setActiveComponent(item);
-                  }
-                }}
+                onClick={() => setIsEnclosureSelectionOpen(true)}
                 className="group relative bg-white rounded-2xl p-4 sm:p-5 border-2 border-[#1b3b64]/30 hover:border-[#1a56b0] hover:bg-[#f8fafc] transition-all duration-200 cursor-pointer shadow-xs hover:shadow-hover hover:-translate-y-0.5 flex flex-col items-center justify-center gap-3 overflow-hidden min-h-[160px]"
               >
-                {/* Product Image */}
                 <div className="w-full flex items-center justify-center p-2 flex-1">
                   <img
-                    src={item.image}
-                    alt={item.name}
+                    src={enclosuresProduct.image}
+                    alt={enclosuresProduct.name}
                     className="max-h-24 sm:max-h-28 w-auto object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200"
                   />
                 </div>
-
-                {/* Text Label */}
                 <div className="w-full flex flex-col justify-center items-center text-center">
                   <h3 className="text-sm sm:text-base font-bold font-heading text-[#0d2b4e] group-hover:text-[#1a56b0] tracking-tight leading-tight">
-                    {item.shortLabel}
+                    {enclosuresProduct.shortLabel}
                   </h3>
                 </div>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
 
-      {/* ========================================================= */}
-      {/* TECHNICAL COMPONENT DETAIL MODAL                          */}
-      {/* ========================================================= */}
       {activeComponent && (
         <Modal
           isOpen={!!activeComponent}
@@ -134,7 +75,6 @@ export default function PanelBuildingPage() {
           maxWidth="lg"
         >
           <div className="space-y-6">
-            {/* Header / Product Snapshot */}
             <div className="flex flex-col sm:flex-row gap-6 items-center bg-[#f8fafc] p-5 rounded-2xl border border-slate-200">
               <div className="w-32 h-32 shrink-0 bg-white rounded-xl border border-slate-200 flex items-center justify-center p-2">
                 <img
@@ -162,7 +102,6 @@ export default function PanelBuildingPage() {
               </div>
             </div>
 
-            {/* Description */}
             <div>
               <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
                 Engineering Overview
@@ -172,10 +111,9 @@ export default function PanelBuildingPage() {
               </p>
             </div>
 
-            {/* Key Features */}
             <div>
               <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                Key Features &amp; Quality Highlights
+                Key Features & Quality Highlights
               </h4>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {activeComponent.features.map((feat, idx) => (
@@ -187,9 +125,6 @@ export default function PanelBuildingPage() {
               </ul>
             </div>
 
-
-
-            {/* Modal Footer Actions */}
             <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
               <span className="text-xs text-slate-500">
                 Quotes delivered with consolidated delivery schedule in &lt; 24h.
@@ -219,19 +154,17 @@ export default function PanelBuildingPage() {
         </Modal>
       )}
 
-      {/* BOM Upload Modal */}
       {isBOMModalOpen && (
         <Modal
           isOpen={isBOMModalOpen}
           onClose={() => setIsBOMModalOpen(false)}
-          title="Upload Panel Building BOM / Requirements"
+          title="Upload BOM / Requirements"
           maxWidth="lg"
         >
           <BOMUploadForm />
         </Modal>
       )}
 
-      {/* Enclosure Selection Modal */}
       {isEnclosureSelectionOpen && (
         <Modal
           isOpen={isEnclosureSelectionOpen}
