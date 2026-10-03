@@ -91,12 +91,7 @@ export default function SignalingAndIndicationPage() {
                 <p className="text-xs sm:text-sm text-slate-600 mt-1">
                   {activeComponent.tagline}
                 </p>
-                <div className="mt-3 flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                    Authorized OEM Stock Ready
-                  </span>
-                </div>
+
               </div>
             </div>
 
@@ -144,7 +139,7 @@ export default function SignalingAndIndicationPage() {
                   }}
                   leftIcon={<FileSpreadsheet className="w-4 h-4" />}
                 >
-                  Inquire in BOM
+                  Inquire Now
                 </Button>
               </div>
             </div>

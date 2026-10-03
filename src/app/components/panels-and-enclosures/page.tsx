@@ -6,6 +6,8 @@ import {
   ComponentCardItem,
   METAL_ENCLOSURES,
   NON_METAL_ENCLOSURES,
+  SOCKET_BOXES,
+  JUNCTION_BOXES,
 } from "@/lib/data/products";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
@@ -21,9 +23,6 @@ import {
 export default function PanelsAndEnclosuresPage() {
   const [activeComponent, setActiveComponent] = useState<ComponentCardItem | null>(null);
   const [isBOMModalOpen, setIsBOMModalOpen] = useState(false);
-  const [isEnclosureSelectionOpen, setIsEnclosureSelectionOpen] = useState(false);
-
-  const enclosuresProduct = PANEL_BUILDING_COMPONENTS.find(item => item.id === "pb-distribution-boxes");
 
   return (
     <div className="min-h-screen bg-[#f4f7fa] pb-24">
@@ -44,25 +43,26 @@ export default function PanelsAndEnclosuresPage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 sm:-mt-8 relative z-20">
         <div className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-[#d6e8fa] shadow-card">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 auto-rows-fr">
-            {enclosuresProduct && (
+            {[METAL_ENCLOSURES, NON_METAL_ENCLOSURES, SOCKET_BOXES, JUNCTION_BOXES].map((product, idx) => (
               <div
-                onClick={() => setIsEnclosureSelectionOpen(true)}
+                key={idx}
+                onClick={() => setActiveComponent(product)}
                 className="group relative bg-white rounded-xl p-3 sm:p-4 border-2 border-[#1b3b64]/30 hover:border-[#1a56b0] hover:bg-[#f8fafc] transition-all duration-200 cursor-pointer shadow-xs hover:shadow-hover hover:-translate-y-0.5 flex flex-col items-center justify-center gap-2 overflow-hidden min-h-[140px]"
               >
                 <div className="w-full flex items-center justify-center p-1.5 flex-1">
                   <img
-                    src={enclosuresProduct.image}
-                    alt={enclosuresProduct.name}
+                    src={product.image}
+                    alt={product.name}
                     className="max-h-20 sm:max-h-24 w-auto object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-200"
                   />
                 </div>
                 <div className="w-full flex flex-col justify-center items-center text-center">
                   <h3 className="text-xs sm:text-sm font-bold font-heading text-[#0d2b4e] group-hover:text-[#1a56b0] tracking-tight leading-tight">
-                    {enclosuresProduct.shortLabel}
+                    {product.name}
                   </h3>
                 </div>
               </div>
-            )}
+            ))}
           </div>
         </div>
       </section>
@@ -93,12 +93,7 @@ export default function PanelsAndEnclosuresPage() {
                 <p className="text-xs sm:text-sm text-slate-600 mt-1">
                   {activeComponent.tagline}
                 </p>
-                <div className="mt-3 flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                    Authorized OEM Stock Ready
-                  </span>
-                </div>
+
               </div>
             </div>
 
@@ -146,7 +141,7 @@ export default function PanelsAndEnclosuresPage() {
                   }}
                   leftIcon={<FileSpreadsheet className="w-4 h-4" />}
                 >
-                  Inquire in BOM
+                  Inquire Now
                 </Button>
               </div>
             </div>
@@ -162,42 +157,6 @@ export default function PanelsAndEnclosuresPage() {
           maxWidth="lg"
         >
           <BOMUploadForm />
-        </Modal>
-      )}
-
-      {isEnclosureSelectionOpen && (
-        <Modal
-          isOpen={isEnclosureSelectionOpen}
-          onClose={() => setIsEnclosureSelectionOpen(false)}
-          title="Choose between the two what you want :"
-          maxWidth="md"
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 p-2">
-            <div
-              onClick={() => {
-                setIsEnclosureSelectionOpen(false);
-                setActiveComponent(METAL_ENCLOSURES);
-              }}
-              className="group cursor-pointer bg-white border border-slate-200 hover:border-[#1a56b0] hover:shadow-md transition-all duration-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center gap-4 min-h-[200px]"
-            >
-              <img src="/images/panel-components/metal_enclosure_group.png" alt="Metal Enclosure" className="h-28 w-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm" />
-              <h3 className="text-lg font-extrabold font-heading text-[#0d2b4e] group-hover:text-[#1a56b0] transition-colors">
-                Metal Enclosure
-              </h3>
-            </div>
-            <div
-              onClick={() => {
-                setIsEnclosureSelectionOpen(false);
-                setActiveComponent(NON_METAL_ENCLOSURES);
-              }}
-              className="group cursor-pointer bg-white border border-slate-200 hover:border-[#1a56b0] hover:shadow-md transition-all duration-200 rounded-2xl p-6 flex flex-col items-center justify-center text-center gap-4 min-h-[200px]"
-            >
-              <img src="/images/panel-components/nonmetal_enclosure_group.png" alt="Non-Metal Enclosure" className="h-28 w-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-sm" />
-              <h3 className="text-lg font-extrabold font-heading text-[#0d2b4e] group-hover:text-[#1a56b0] transition-colors">
-                Non - Metal Enclosure
-              </h3>
-            </div>
-          </div>
         </Modal>
       )}
     </div>

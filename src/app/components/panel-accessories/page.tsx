@@ -31,6 +31,7 @@ import {
   Check,
   Phone,
   Tag,
+  Download,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -136,22 +137,29 @@ export default function PanelAccessoriesPage() {
                   className="max-h-28 w-auto object-contain"
                 />
               </div>
-              <div>
+              <div className="flex-1 w-full text-center sm:text-left">
                 <span className="text-xs font-bold text-[#1a56b0] uppercase tracking-wider">
                   {activeComponent.subCategory}
                 </span>
-                <h3 className="text-lg sm:text-xl font-bold font-heading text-[#0d2b4e] mt-1">
+                <h3 className="text-lg sm:text-xl font-bold font-heading text-[#0d2b4e] mt-1 mb-1.5">
                   {activeComponent.name}
                 </h3>
+                {activeComponent.id === "pb-lugs-terminals" && (
+                  <div className="mb-3 mt-1">
+                    <a
+                      href="/catalog/flux_catalog_lugs%26terminals.pdf"
+                      download
+                      className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-[#1a56b0] to-indigo-600 hover:from-[#154690] hover:to-indigo-700 shadow-sm hover:shadow-md shadow-[#1a56b0]/20 hover:-translate-y-0.5 rounded-lg transition-all duration-200 ring-1 ring-white/20"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>Download Catalog</span>
+                    </a>
+                  </div>
+                )}
                 <p className="text-xs sm:text-sm text-slate-600 mt-1">
                   {activeComponent.tagline}
                 </p>
-                <div className="mt-3 flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                    Authorized OEM Stock Ready
-                  </span>
-                </div>
+
               </div>
             </div>
 
@@ -204,7 +212,7 @@ export default function PanelAccessoriesPage() {
                   }}
                   leftIcon={<FileSpreadsheet className="w-4 h-4" />}
                 >
-                  Inquire in BOM
+                  Inquire Now
                 </Button>
               </div>
             </div>
