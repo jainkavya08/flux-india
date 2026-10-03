@@ -18,11 +18,28 @@ import {
   Check,
   Boxes,
   Component,
+  Download,
+  X,
 } from "lucide-react";
+
+const getCatalogDetails = (id: string) => {
+  switch (id) {
+    case "pb-enclosures-non-metal":
+    case "pb-distribution-boxes":
+      return { title: "Distribution Boxes", url: "/catalog/distributionboxes_catalog_flux.pdf" };
+    case "pb-socket-boxes":
+      return { title: "Socket Boxes", url: "/catalog/socket boxes.pdf" };
+    case "pb-junction-boxes":
+      return { title: "Junction Boxes", url: "/catalog/junction boxes.pdf" };
+    default:
+      return null;
+  }
+};
 
 export default function PanelsAndEnclosuresPage() {
   const [activeComponent, setActiveComponent] = useState<ComponentCardItem | null>(null);
   const [isBOMModalOpen, setIsBOMModalOpen] = useState(false);
+  const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#f4f7fa] pb-24">
@@ -90,6 +107,17 @@ export default function PanelsAndEnclosuresPage() {
                 <h3 className="text-lg sm:text-xl font-bold font-heading text-[#0d2b4e] mt-1">
                   {activeComponent.name}
                 </h3>
+                {getCatalogDetails(activeComponent.id) && (
+                  <div className="mb-3 mt-1">
+                    <button
+                      onClick={() => setIsPdfViewerOpen(true)}
+                      className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-[#1a56b0] to-indigo-600 hover:from-[#154690] hover:to-indigo-700 shadow-sm hover:shadow-md shadow-[#1a56b0]/20 hover:-translate-y-0.5 rounded-lg transition-all duration-200 ring-1 ring-white/20"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>Download Catalog</span>
+                    </button>
+                  </div>
+                )}
                 <p className="text-xs sm:text-sm text-slate-600 mt-1">
                   {activeComponent.tagline}
                 </p>
@@ -158,6 +186,46 @@ export default function PanelsAndEnclosuresPage() {
         >
           <BOMUploadForm />
         </Modal>
+      )}
+
+      {/* Full Screen PDF Viewer */}
+      {isPdfViewerOpen && activeComponent && getCatalogDetails(activeComponent.id) && (
+        <div className="fixed inset-0 z-[100] flex flex-col bg-slate-900/95 backdrop-blur-sm">
+          {/* Toolbar */}
+          <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-white border-b border-slate-200 shadow-sm">
+            <h2 className="text-sm sm:text-base font-bold text-[#0d2b4e] truncate">
+              FLUX Catalog: {getCatalogDetails(activeComponent.id)!.title}
+            </h2>
+            <div className="flex items-center gap-3">
+              <a
+                href={getCatalogDetails(activeComponent.id)!.url}
+                download
+                className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-white bg-[#1a56b0] hover:bg-[#154690] rounded-lg transition-colors"
+              >
+                <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Download</span>
+              </a>
+              <button
+                onClick={() => setIsPdfViewerOpen(false)}
+                className="p-1.5 sm:p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                aria-label="Close viewer"
+              >
+                <X className="w-5 h-5 sm:w-6 sm:h-6" />
+              </button>
+            </div>
+          </div>
+          
+          {/* PDF Container */}
+          <div className="flex-1 w-full p-2 sm:p-6 overflow-hidden flex justify-center">
+            <div className="w-full max-w-5xl h-full bg-white rounded-lg sm:rounded-xl shadow-2xl overflow-hidden">
+              <iframe 
+                src={`${getCatalogDetails(activeComponent.id)!.url}#toolbar=0`} 
+                className="w-full h-full border-0"
+                title={`${getCatalogDetails(activeComponent.id)!.title} Catalog PDF`}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

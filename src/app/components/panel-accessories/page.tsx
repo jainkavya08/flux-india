@@ -32,6 +32,7 @@ import {
   Phone,
   Tag,
   Download,
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -59,9 +60,25 @@ function ComponentIcon({ name, className }: { name: string; className?: string }
   }
 }
 
+const getCatalogDetails = (id: string) => {
+  switch (id) {
+    case "pb-lugs-terminals":
+      return { title: "Lugs & Terminals", url: "/catalog/flux_catalog_lugs%26terminals.pdf" };
+    case "pb-air-vents":
+      return { title: "Air Vents", url: "/catalog/airvents_catalog_flux.pdf" };
+    case "pb-cable-ties":
+      return { title: "Cable Ties", url: "/catalog/cableties_catalog_flux.pdf" };
+    case "pb-flexible-conduits":
+      return { title: "Flexible Conduits", url: "/catalog/flexibleconduit_catalog_flux.pdf" };
+    default:
+      return null;
+  }
+};
+
 export default function PanelAccessoriesPage() {
   const [activeComponent, setActiveComponent] = useState<ComponentCardItem | null>(null);
   const [isBOMModalOpen, setIsBOMModalOpen] = useState(false);
+  const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#f4f7fa] pb-24">
@@ -144,16 +161,15 @@ export default function PanelAccessoriesPage() {
                 <h3 className="text-lg sm:text-xl font-bold font-heading text-[#0d2b4e] mt-1 mb-1.5">
                   {activeComponent.name}
                 </h3>
-                {activeComponent.id === "pb-lugs-terminals" && (
+                {getCatalogDetails(activeComponent.id) && (
                   <div className="mb-3 mt-1">
-                    <a
-                      href="/catalog/flux_catalog_lugs%26terminals.pdf"
-                      download
+                    <button
+                      onClick={() => setIsPdfViewerOpen(true)}
                       className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-[#1a56b0] to-indigo-600 hover:from-[#154690] hover:to-indigo-700 shadow-sm hover:shadow-md shadow-[#1a56b0]/20 hover:-translate-y-0.5 rounded-lg transition-all duration-200 ring-1 ring-white/20"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>Download Catalog</span>
-                    </a>
+                    </button>
                   </div>
                 )}
                 <p className="text-xs sm:text-sm text-slate-600 mt-1">
@@ -230,6 +246,46 @@ export default function PanelAccessoriesPage() {
         >
           <BOMUploadForm />
         </Modal>
+      )}
+
+      {/* Full Screen PDF Viewer */}
+      {isPdfViewerOpen && activeComponent && getCatalogDetails(activeComponent.id) && (
+        <div className="fixed inset-0 z-[100] flex flex-col bg-slate-900/95 backdrop-blur-sm">
+          {/* Toolbar */}
+          <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-white border-b border-slate-200 shadow-sm">
+            <h2 className="text-sm sm:text-base font-bold text-[#0d2b4e] truncate">
+              FLUX Catalog: {getCatalogDetails(activeComponent.id)!.title}
+            </h2>
+            <div className="flex items-center gap-3">
+              <a
+                href={getCatalogDetails(activeComponent.id)!.url}
+                download
+                className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-white bg-[#1a56b0] hover:bg-[#154690] rounded-lg transition-colors"
+              >
+                <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Download</span>
+              </a>
+              <button
+                onClick={() => setIsPdfViewerOpen(false)}
+                className="p-1.5 sm:p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                aria-label="Close viewer"
+              >
+                <X className="w-5 h-5 sm:w-6 sm:h-6" />
+              </button>
+            </div>
+          </div>
+          
+          {/* PDF Container */}
+          <div className="flex-1 w-full p-2 sm:p-6 overflow-hidden flex justify-center">
+            <div className="w-full max-w-5xl h-full bg-white rounded-lg sm:rounded-xl shadow-2xl overflow-hidden">
+              <iframe 
+                src={`${getCatalogDetails(activeComponent.id)!.url}#toolbar=0`} 
+                className="w-full h-full border-0"
+                title={`${getCatalogDetails(activeComponent.id)!.title} Catalog PDF`}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

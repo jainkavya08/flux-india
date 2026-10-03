@@ -12,15 +12,77 @@ import {
   ArrowUpRight,
   ShieldCheck,
   Zap,
+  CheckCircle2,
+  Send,
 } from "lucide-react";
 import {
   LinkedinIcon,
   InstagramIcon,
   WhatsAppIcon,
 } from "@/components/ui/SocialIcons";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Button } from "@/components/ui/Button";
+import confetti from "canvas-confetti";
+
+const subscribeSchema = z.object({
+  email: z.string().email("Please enter a valid business email"),
+});
+
+type SubscribeData = z.infer<typeof subscribeSchema>;
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<SubscribeData>({
+    resolver: zodResolver(subscribeSchema),
+  });
+
+  const onSubmit = async (data: SubscribeData) => {
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const json = await res.json();
+
+      if (res.ok && json.success) {
+        setIsSuccess(true);
+        try {
+          confetti({
+            particleCount: 50,
+            spread: 50,
+            origin: { y: 0.8 },
+          });
+        } catch {
+          // ignore
+        }
+        reset();
+      } else {
+        setErrorMessage(json.message || "Could not subscribe. Please try again.");
+      }
+    } catch {
+      setErrorMessage("Network error. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <footer className="bg-[#e9f3fc] text-[#0d2b4e] border-t border-[#bcdbf7] relative overflow-hidden">
@@ -88,11 +150,55 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Centered Tagline & Brand Narrative */}
           <div className="flex flex-col items-center text-center space-y-4 md:px-4">
             <FluxLogo size="lg" />
 
-            <div className="relative py-1">
+            <div className="w-full max-w-sm mt-4">
+              {isSuccess ? (
+                <div className="p-3 rounded-xl bg-[#eaf3fc] border border-emerald-400/50 text-[#0d2b4e] flex items-center justify-center gap-3 shadow-sm animate-in fade-in duration-300">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+                  <div className="text-left text-xs sm:text-sm">
+                    <span className="font-bold block">You're Subscribed!</span>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+                  <div className="flex flex-col sm:flex-row gap-2 bg-white p-1 rounded-full border border-blue-200 shadow-sm">
+                    <div className="relative flex-grow flex items-center pl-3">
+                      <Mail className="w-4 h-4 text-slate-400 shrink-0" />
+                      <input
+                        type="email"
+                        {...register("email")}
+                        placeholder="Enter email..."
+                        className="w-full bg-transparent px-2 py-1.5 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="sm"
+                      isLoading={isSubmitting}
+                      rightIcon={<Send className="w-3 h-3" />}
+                      className="rounded-full px-4 py-1.5 text-xs font-bold shrink-0"
+                    >
+                      Subscribe
+                    </Button>
+                  </div>
+                  {errors.email && (
+                    <p className="text-xs text-red-500 font-medium text-left px-4">
+                      {errors.email.message}
+                    </p>
+                  )}
+                  {errorMessage && (
+                    <p className="text-xs text-red-500 font-medium text-left px-4">
+                      {errorMessage}
+                    </p>
+                  )}
+                </form>
+              )}
+            </div>
+
+            <div className="relative py-1 mt-4">
               <p className="text-base lg:text-lg font-bold font-heading text-[#0d2b4e] italic tracking-wide">
                 &ldquo;One Partner. Infinite Solutions&rdquo;
               </p>

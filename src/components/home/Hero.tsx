@@ -98,21 +98,6 @@ export function Hero() {
               </div>
             ))}
           </div>
-
-          {/* OEM Trust Bar */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-medium text-slate-500">
-            <span className="text-slate-400 font-semibold uppercase tracking-wider">
-              Authorized OEM Channels:
-            </span>
-            <span className="text-[#0d2b4e] font-bold">Siemens</span>
-            <span className="text-[#0d2b4e] font-bold">Schneider Electric</span>
-            <span className="text-[#0d2b4e] font-bold">ABB</span>
-            <span className="text-[#0d2b4e] font-bold">L&amp;T Electrical</span>
-            <span className="text-[#0d2b4e] font-bold">Danfoss</span>
-            <span className="text-[#0d2b4e] font-bold">Phoenix Contact</span>
-            <span className="text-[#0d2b4e] font-bold">Rittal</span>
-            <span className="text-[#0d2b4e] font-bold">Omron</span>
-          </div>
         </div>
       </div>
 
