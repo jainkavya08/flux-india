@@ -198,36 +198,7 @@ export function Footer() {
               )}
             </div>
 
-            <div className="relative py-1 mt-4">
-              <p className="text-base lg:text-lg font-bold font-heading text-[#0d2b4e] italic tracking-wide">
-                &ldquo;One Partner. Infinite Solutions&rdquo;
-              </p>
-              <span className="text-[11px] font-bold text-[#1a56b0] tracking-widest uppercase block mt-0.5">
-                — FLUX
-              </span>
-            </div>
 
-            <p className="text-xs text-slate-600 leading-relaxed max-w-sm">
-              Empowering panel builders, machine manufacturers, and EPCs with genuine OEM components, technical cross-referencing, and solutions for all over the world.
-            </p>
-
-            <div className="flex flex-wrap justify-center gap-3 text-xs font-semibold text-[#1a56b0] pt-1">
-              <Link href="/components/panel-building" className="hover:text-[#0d2b4e] hover:underline">
-                Panel Building
-              </Link>
-              <span className="text-slate-300">•</span>
-              <Link href="/components/automation" className="hover:text-[#0d2b4e] hover:underline">
-                Automation
-              </Link>
-              <span className="text-slate-300">•</span>
-              <Link href="/solutions" className="hover:text-[#0d2b4e] hover:underline">
-                Solutions
-              </Link>
-              <span className="text-slate-300">•</span>
-              <Link href="/bom" className="hover:text-[#0d2b4e] hover:underline">
-                BOM Engine
-              </Link>
-            </div>
           </div>
 
           {/* Column 3: Contact Info & Pune Location */}
@@ -269,13 +240,7 @@ export function Footer() {
               </div>
             </div>
 
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-1 text-xs font-bold text-[#1a56b0] hover:text-[#0d2b4e] transition-colors"
-            >
-              <span>Get driving directions to Pune office</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
+
           </div>
         </div>
 

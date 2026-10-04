@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { BOMUploadForm } from "@/components/forms/BOMUploadForm";
+import { ProcessStrip } from "@/components/home/ProcessStrip";
 import {
   Sun,
   BatteryCharging,
@@ -44,6 +45,7 @@ export default function SolutionsPage() {
 
   return (
     <div className="min-h-screen bg-[#f4f7fa] pb-24">
+      <ProcessStrip />
       {/* Header Banner */}
       <section className="bg-[#eaf3fc] border-b border-[#bcdbf7] py-6 sm:py-8 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">

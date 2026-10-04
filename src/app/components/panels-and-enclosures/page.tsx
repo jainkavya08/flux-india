@@ -40,6 +40,7 @@ export default function PanelsAndEnclosuresPage() {
   const [activeComponent, setActiveComponent] = useState<ComponentCardItem | null>(null);
   const [isBOMModalOpen, setIsBOMModalOpen] = useState(false);
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
+  const [isPdfLoading, setIsPdfLoading] = useState(true);
 
   return (
     <div className="min-h-screen bg-[#f4f7fa] pb-24">
@@ -110,7 +111,10 @@ export default function PanelsAndEnclosuresPage() {
                 {getCatalogDetails(activeComponent.id) && (
                   <div className="mb-3 mt-1">
                     <button
-                      onClick={() => setIsPdfViewerOpen(true)}
+                      onClick={() => {
+                        setIsPdfLoading(true);
+                        setIsPdfViewerOpen(true);
+                      }}
                       className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-[#1a56b0] to-indigo-600 hover:from-[#154690] hover:to-indigo-700 shadow-sm hover:shadow-md shadow-[#1a56b0]/20 hover:-translate-y-0.5 rounded-lg transition-all duration-200 ring-1 ring-white/20"
                     >
                       <Download className="w-3.5 h-3.5" />
@@ -190,7 +194,7 @@ export default function PanelsAndEnclosuresPage() {
 
       {/* Full Screen PDF Viewer */}
       {isPdfViewerOpen && activeComponent && getCatalogDetails(activeComponent.id) && (
-        <div className="fixed inset-0 z-[100] flex flex-col bg-slate-900/95 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[100] flex flex-col bg-slate-900/95 backdrop-blur-sm h-[100dvh]">
           {/* Toolbar */}
           <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-white border-b border-slate-200 shadow-sm">
             <h2 className="text-sm sm:text-base font-bold text-[#0d2b4e] truncate">
@@ -216,12 +220,22 @@ export default function PanelsAndEnclosuresPage() {
           </div>
           
           {/* PDF Container */}
-          <div className="flex-1 w-full p-2 sm:p-6 overflow-hidden flex justify-center">
-            <div className="w-full max-w-5xl h-full bg-white rounded-lg sm:rounded-xl shadow-2xl overflow-hidden">
+          <div className="flex-1 w-full p-2 sm:p-6 overflow-hidden flex justify-center h-full">
+            <div 
+              className="relative w-full max-w-5xl h-full bg-white rounded-lg sm:rounded-xl shadow-2xl overflow-y-auto overscroll-none"
+              style={{ WebkitOverflowScrolling: 'touch' }}
+            >
+              {isPdfLoading && (
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-slate-50/80 backdrop-blur-sm h-full min-h-[50vh]">
+                  <div className="w-12 h-12 border-4 border-[#1a56b0]/20 border-t-[#1a56b0] rounded-full animate-spin mb-4"></div>
+                  <p className="text-[#0d2b4e] font-medium animate-pulse">Loading Catalog...</p>
+                </div>
+              )}
               <iframe 
                 src={`${getCatalogDetails(activeComponent.id)!.url}#toolbar=0`} 
-                className="w-full h-full border-0"
+                className="w-full h-full min-h-[75vh] md:min-h-full border-0 relative z-0"
                 title={`${getCatalogDetails(activeComponent.id)!.title} Catalog PDF`}
+                onLoad={() => setIsPdfLoading(false)}
               />
             </div>
           </div>

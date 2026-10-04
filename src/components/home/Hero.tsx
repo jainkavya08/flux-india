@@ -57,29 +57,6 @@ export function Hero() {
           </p>
         </div>
 
-        {/* CTA Actions */}
-        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button
-            size="lg"
-            variant="primary"
-            onClick={() => setIsBOMModalOpen(true)}
-            leftIcon={<FileSpreadsheet className="w-5 h-5" />}
-            rightIcon={<ArrowRight className="w-4 h-4" />}
-            className="w-full sm:w-auto px-8 py-4 shadow-xl shadow-[#0d2b4e]/15 text-base"
-          >
-            Consolidate Your BOM
-          </Button>
-
-          <Button
-            size="lg"
-            variant="outline"
-            href="/components/panel-building"
-            rightIcon={<Layers className="w-4 h-4" />}
-            className="w-full sm:w-auto px-7 py-4 text-base"
-          >
-            Browse Components
-          </Button>
-        </div>
 
         {/* Trust Badges / Quick Stats Bar */}
         <div className="mt-14 pt-8 border-t border-slate-200/80 max-w-5xl mx-auto">
