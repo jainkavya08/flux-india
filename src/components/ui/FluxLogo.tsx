@@ -63,19 +63,6 @@ export function FluxLogo({
           />
         </div>
 
-        {/* Optional "INDIA" badge pill matching brand standard */}
-        {showIndiaBadge && !markOnly && (
-          <span
-            className={cn(
-              "text-[10px] sm:text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border",
-              isLight
-                ? "text-blue-200 border-blue-400/40 bg-white/10"
-                : "text-[#1a56b0] border-blue-200 bg-blue-50/70"
-            )}
-          >
-            India
-          </span>
-        )}
       </div>
 
       {/* Subtitle Tagline */}

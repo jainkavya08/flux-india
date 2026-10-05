@@ -151,7 +151,7 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col items-center text-center space-y-4 md:px-4">
-            <FluxLogo size="lg" />
+            <FluxLogo size="lg" showIndiaBadge={false} />
 
             <div className="w-full max-w-sm mt-4">
               {isSuccess ? (
@@ -198,7 +198,14 @@ export function Footer() {
               )}
             </div>
 
-
+            <div className="relative py-1 mt-4">
+              <p className="text-sm font-bold font-heading text-[#1a56b0] tracking-wide">
+                &ldquo;One Partner. Infinite Solutions&rdquo;
+              </p>
+              <p className="text-[11px] sm:text-xs text-slate-600 mt-2 max-w-sm mx-auto leading-relaxed">
+                Empowering panel builders, machine manufacturers, and EPCs with genuine OEM components, technical cross-referencing, and solutions for all over the world.
+              </p>
+            </div>
           </div>
 
           {/* Column 3: Contact Info & Pune Location */}

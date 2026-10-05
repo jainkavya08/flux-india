@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { Modal } from "@/components/ui/Modal";
 import { FluxLogo } from "@/components/ui/FluxLogo";
 import { Button } from "@/components/ui/Button";
 import { COMPANY_INFO } from "@/lib/data/company";
@@ -17,6 +18,7 @@ import {
   Phone,
   FileSpreadsheet,
   ArrowRight,
+  MapPin,
   ShieldCheck,
   CheckCircle2,
   Boxes,
@@ -32,6 +34,53 @@ export function Navbar() {
   const [componentsOpen, setComponentsOpen] = useState(false);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const [isTrackModalOpen, setIsTrackModalOpen] = useState(false);
+  const [trackCompanyName, setTrackCompanyName] = useState("");
+  const [trackBomId, setTrackBomId] = useState("");
+  const [trackError, setTrackError] = useState("");
+  const [isTrackLoading, setIsTrackLoading] = useState(false);
+
+  const handleTrackSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setTrackError("");
+    const company = trackCompanyName.trim();
+    const bomId = trackBomId.trim();
+    if (!company || !bomId) {
+      setTrackError("Company Name and BOM ID are required.");
+      return;
+    }
+    
+    setIsTrackLoading(true);
+    try {
+      const res = await fetch("/api/track-bom.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ companyName: company, bomId })
+      });
+      
+      const contentType = res.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const data = await res.json();
+        if (res.ok && data.success) {
+          setIsTrackModalOpen(false);
+          router.push(`/?trackBOM=${encodeURIComponent(bomId)}&company=${encodeURIComponent(company)}`);
+        } else {
+          setTrackError(data.message || "We couldn't find a BOM matching these details. Please check your company name and BOM ID.");
+        }
+      } else {
+        const text = await res.text();
+        console.error("[BOM Tracking Non-JSON Response]", res.status, text.substring(0, 200));
+        setTrackError("The server returned an unexpected response. Please try again.");
+      }
+    } catch (err) {
+      console.error("[BOM Tracking Network Error]", err);
+      setTrackError("A network error occurred. Please try again.");
+    } finally {
+      setIsTrackLoading(false);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -381,18 +430,21 @@ export function Navbar() {
             </Button>
 
             <Button
-              href="/contact"
+              onClick={() => setIsTrackModalOpen(true)}
               variant="primary"
               size="sm"
-              rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
+              rightIcon={<MapPin className="w-3.5 h-3.5" />}
               className="text-xs"
             >
-              Request Quote
+              Track Status
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex sm:hidden items-center gap-2">
+          <div className="flex md:hidden items-center gap-1.5">
+            <Button onClick={() => setIsTrackModalOpen(true)} variant="outline" size="sm" className="text-xs px-3 py-1 border-[#1a56b0]/30 text-[#1a56b0] hover:bg-blue-50/50">
+              Track
+            </Button>
             <Button href="/bom" variant="secondary" size="sm" className="text-xs px-3 py-1">
               BOM
             </Button>
@@ -609,9 +661,7 @@ export function Navbar() {
                 <Button href="/bom" variant="outline" size="md" className="w-full justify-center">
                   Share BOM / Part List
                 </Button>
-                <Button href="/contact" variant="primary" size="md" className="w-full justify-center">
-                  Request Consolidated Quote
-                </Button>
+
                 <a
                   href={COMPANY_INFO.contact.whatsappUrl}
                   target="_blank"
@@ -626,6 +676,54 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <Modal
+        isOpen={isTrackModalOpen}
+        onClose={() => setIsTrackModalOpen(false)}
+        title="Track Your BOM"
+        subtitle="Stay updated on your BOM's technical review, quotation, procurement and delivery progress."
+        maxWidth="md"
+      >
+        <form onSubmit={handleTrackSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-semibold text-[#0d2b4e] mb-1">Company Name</label>
+            <input
+              type="text"
+              required
+              placeholder="Enter your company name"
+              value={trackCompanyName}
+              onChange={(e) => setTrackCompanyName(e.target.value)}
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1a56b0] focus:border-transparent outline-none text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-[#0d2b4e] mb-1">BOM ID</label>
+            <input
+              type="text"
+              required
+              placeholder="e.g. BOM-00001"
+              value={trackBomId}
+              onChange={(e) => setTrackBomId(e.target.value)}
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#1a56b0] focus:border-transparent outline-none text-sm"
+            />
+          </div>
+          
+          {trackError && (
+            <div className="p-3 bg-red-50 border border-red-200 text-red-600 text-xs rounded-lg">
+              {trackError}
+            </div>
+          )}
+
+          <div className="pt-2 flex justify-end gap-3">
+            <Button type="button" variant="outline" onClick={() => setIsTrackModalOpen(false)}>
+              Close
+            </Button>
+            <Button type="submit" variant="primary" isLoading={isTrackLoading}>
+              Track BOM
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </header>
   );
 }

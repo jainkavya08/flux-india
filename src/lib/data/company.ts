@@ -20,7 +20,7 @@ export const COMPANY_INFO = {
     phone: "+91 9665587346",
     phoneDisplay: "+91 9665587346",
     landline: "+91 20 2712 4490",
-    email: "sales@fluxindia.in",
+    email: "info@fluxindia.co.in",
     supportEmail: "contact@fluxindia.in",
     whatsapp: "919665587346",
     whatsappUrl: "https://wa.me/919665587346?text=Hi%20FLUX%20Team%2C%20I%20would%20like%20to%20request%20a%20quotation%20for%20industrial%20components.",

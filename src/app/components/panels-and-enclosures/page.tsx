@@ -194,7 +194,7 @@ export default function PanelsAndEnclosuresPage() {
 
       {/* Full Screen PDF Viewer */}
       {isPdfViewerOpen && activeComponent && getCatalogDetails(activeComponent.id) && (
-        <div className="fixed inset-0 z-[100] flex flex-col bg-slate-900/95 backdrop-blur-sm h-[100dvh]">
+        <div className="fixed inset-0 z-[200] flex flex-col bg-slate-900/95 backdrop-blur-sm h-[100dvh]">
           {/* Toolbar */}
           <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-white border-b border-slate-200 shadow-sm">
             <h2 className="text-sm sm:text-base font-bold text-[#0d2b4e] truncate">

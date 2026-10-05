@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `bom_submissions` (
   `bom_filename` VARCHAR(255) DEFAULT NULL,
   `bom_filepath` VARCHAR(500) DEFAULT NULL,
   `submitted_at` DATETIME NOT NULL,
+  `updated_at` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `status` VARCHAR(30) NOT NULL DEFAULT 'New',
   PRIMARY KEY (`id`),
   INDEX `idx_submitted_at` (`submitted_at` DESC),

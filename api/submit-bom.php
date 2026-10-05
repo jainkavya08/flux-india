@@ -110,9 +110,9 @@ if (isset($_FILES['bom_file']) && $_FILES['bom_file']['error'] !== UPLOAD_ERR_NO
     $extension = strtolower(pathinfo($safeOriginalName, PATHINFO_EXTENSION));
 
     // Strictly whitelist allowed extensions
-    $allowedExtensions = ['pdf', 'csv', 'xls', 'xlsx', 'txt'];
+    $allowedExtensions = ['pdf', 'csv', 'xls', 'xlsx', 'txt', 'jpg', 'jpeg', 'png', 'webp'];
     if (!in_array($extension, $allowedExtensions, true)) {
-        sendJsonResponse(false, 'Invalid file type. Allowed formats: PDF, CSV, Excel (.xls, .xlsx), and TXT.', ['field' => 'bom_file'], 400);
+        sendJsonResponse(false, 'Invalid file type. Allowed formats: PDF, CSV, Excel (.xls, .xlsx), TXT, and Images (JPG, PNG).', ['field' => 'bom_file'], 400);
     }
 
     // Explicitly reject dangerous executable extensions
@@ -140,6 +140,9 @@ if (isset($_FILES['bom_file']) && $_FILES['bom_file']['error'] !== UPLOAD_ERR_NO
             'application/x-ms-excel',
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             'application/octet-stream', // Often sent by browsers for Excel/CSV
+            'image/jpeg',
+            'image/png',
+            'image/webp',
         ];
 
         if (!in_array($detectedMime, $allowedMimes, true)) {

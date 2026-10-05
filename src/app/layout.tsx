@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
@@ -141,6 +142,19 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col font-body bg-[#f4f7fa] text-slate-800 antialiased selection:bg-[#1a56b0] selection:text-white">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-VF3XGC21ND"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-VF3XGC21ND');
+          `}
+        </Script>
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />

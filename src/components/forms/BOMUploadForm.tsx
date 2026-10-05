@@ -16,6 +16,7 @@ import {
   Mail,
   Building,
   User,
+  Camera,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 
@@ -26,9 +27,6 @@ const bomFormSchema = z.object({
   company: z.string().min(2, "Company or Panel Shop name is required"),
   projectType: z.string().optional(),
   targetDate: z.string().optional(),
-  partNumbers: z
-    .string()
-    .min(5, "Please enter parts list, item specs, or BOM line-items"),
   specialInstructions: z.string().optional(),
 });
 
@@ -56,7 +54,6 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
     resolver: zodResolver(bomFormSchema),
     defaultValues: {
       projectType: defaultProjectType || "Panel Building Components",
-      partNumbers: "",
     },
   });
 
@@ -65,12 +62,7 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
     if (file) {
       setSelectedFile(file);
       setSelectedFileName(file.name);
-      // Auto-populate helper text in part numbers box if empty
-      setValue(
-        "partNumbers",
-        `[Attached BOM File: ${file.name} (${(file.size / 1024).toFixed(1)} KB)]\n` +
-          `Project: Multi-brand electrical component inquiry.\nPlease refer to attached line-items for MCCB, ACB, contactors, PLCs and terminal counts.`
-      );
+
     } else {
       setSelectedFile(null);
       setSelectedFileName(null);
@@ -81,13 +73,20 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
     setIsSubmitting(true);
     setServerError(null);
 
+    if (!selectedFile) {
+      setServerError("Please upload a BOM file or take a photo of your requirements.");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const formData = new FormData();
       formData.append("contact_name", data.name);
       formData.append("company_name", data.company);
       formData.append("business_email", data.email);
       formData.append("phone", data.phone);
-      formData.append("requirements", data.partNumbers);
+      // Since we removed the text area, send an empty requirements string or a default note
+      formData.append("requirements", selectedFileName ? `BOM File Attached: ${selectedFileName}` : "BOM Upload via File");
 
       if (selectedFile) {
         formData.append("bom_file", selectedFile);
@@ -182,23 +181,28 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
         <input
           type="file"
           id="bomFileInput"
-          accept=".xlsx,.xls,.csv,.pdf,.txt"
+          accept=".xlsx,.xls,.csv,.pdf,.txt,image/*"
           onChange={handleFileChange}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
         />
         <div className="flex flex-col items-center justify-center pointer-events-none">
-          <div className="w-10 h-10 rounded-full bg-white text-[#1a56b0] shadow-sm flex items-center justify-center mb-2">
-            <UploadCloud className="w-5 h-5" />
+          <div className="flex gap-2 mb-2">
+            <div className="w-10 h-10 rounded-full bg-white text-[#1a56b0] shadow-sm flex items-center justify-center">
+              <UploadCloud className="w-5 h-5" />
+            </div>
+            <div className="w-10 h-10 rounded-full bg-white text-[#1a56b0] shadow-sm flex items-center justify-center sm:hidden">
+              <Camera className="w-5 h-5" />
+            </div>
           </div>
           <p className="text-xs sm:text-sm font-bold text-[#0d2b4e]">
             {selectedFileName ? (
               <span className="text-emerald-700">Attached: {selectedFileName}</span>
             ) : (
-              "Click to upload BOM file (Excel, CSV, PDF)"
+              <>
+                <span className="hidden sm:inline">Click to upload BOM file (Excel, CSV, PDF, Image)</span>
+                <span className="sm:hidden">Tap to upload file or take a photo</span>
+              </>
             )}
-          </p>
-          <p className="text-[11px] text-slate-500 mt-0.5">
-            Or simply type/paste part numbers in the box below
           </p>
         </div>
       </div>
@@ -274,25 +278,6 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
             <p className="text-[11px] text-red-600 mt-1">{errors.phone.message}</p>
           )}
         </div>
-      </div>
-
-      <div>
-        <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-          Part Numbers / Quantities / Requirements *
-        </label>
-        <textarea
-          {...register("partNumbers")}
-          rows={3}
-          placeholder="e.g. 
-1. 3P 250A 36kA MCCB Schneider (Qty: 2)
-2. S7-1200 CPU 1214C DC/DC/DC Siemens (Qty: 1)
-3. 2.2kW VFD Danfoss / ABB (Qty: 3)
-4. Terminal blocks 2.5mm² Push-in (Qty: 200)"
-          className="w-full p-3 text-xs sm:text-sm rounded-xl border border-slate-200 focus:border-[#1a56b0] focus:ring-1 focus:ring-[#1a56b0] outline-none font-mono"
-        />
-        {errors.partNumbers && (
-          <p className="text-[11px] text-red-600 mt-1">{errors.partNumbers.message}</p>
-        )}
       </div>
 
       <div className="pt-2 flex items-center justify-between gap-4">

@@ -30,20 +30,13 @@ export function Hero() {
       <div className="pointer-events-none absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-blue-100/50 blur-3xl -z-0" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        {/* Top subtle category pill */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-[#1a56b0] text-xs font-bold uppercase tracking-widest mb-6 shadow-xs animate-in fade-in duration-500">
-          <span className="w-2 h-2 rounded-full bg-[#1a56b0] animate-pulse" />
-          <span>Engineering &amp; Procurement Hub &bull; Est. 2021</span>
-        </div>
+
 
         {/* Centered FLUX Logo + Wordmark */}
         <div className="flex flex-col items-center justify-center my-2 sm:my-4">
           <FluxLogo size="xl" showTagline={false} showIndiaBadge={true} className="my-2" />
 
-          {/* Subtitle / Value Prop */}
-          <p className="text-xs sm:text-sm font-semibold tracking-widest uppercase text-slate-500 mt-4 max-w-xl mx-auto font-heading">
-            Powering Industrial Automation — Solutions for All Over the World
-          </p>
+
 
           <h1 className="mt-4 text-3xl sm:text-5xl lg:text-6xl font-extrabold font-heading text-[#0d2b4e] tracking-tight max-w-4xl mx-auto leading-[1.15]">
             One Partner.{" "}

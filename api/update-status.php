@@ -33,9 +33,13 @@ if (!$id || $id <= 0) {
     sendJsonResponse(false, 'Invalid submission ID.', [], 400);
 }
 
-$validStatuses = ['New', 'Reviewed', 'Quoted', 'Closed'];
+$validStatuses = [
+    'New', 'Under Review', 'Clarification Required', 'Reviewed', 
+    'Quotation Preparing', 'Quoted', 'Approved', 
+    'Procurement', 'Ready for Dispatch', 'Dispatched', 'In Transit', 'Delivered', 'Closed'
+];
 if (!in_array($status, $validStatuses, true)) {
-    sendJsonResponse(false, 'Invalid status value. Allowed: New, Reviewed, Quoted, Closed.', [], 400);
+    sendJsonResponse(false, 'Invalid status value.', [], 400);
 }
 
 try {
