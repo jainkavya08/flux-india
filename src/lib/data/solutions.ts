@@ -1,3 +1,40 @@
+export interface SolutionCategory {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string;
+  badge: string;
+  itemCount: number;
+  groupCount: number;
+  iconName: "Boxes" | "Cpu" | "Layers" | "ShieldCheck" | "Zap";
+  tags: string[];
+  href: string;
+}
+
+export const SOLUTION_CATEGORIES: SolutionCategory[] = [
+  {
+    id: "switchboard-solutions",
+    slug: "switchboard-solutions",
+    title: "Switchboard Solutions",
+    subtitle:
+      "Consolidated hardware, wiring, metering, and power protection for panel builders, OEMs, and switchboard manufacturers.",
+    badge: "Panel Architecture",
+    groupCount: 7,
+    itemCount: 40,
+    iconName: "Boxes",
+    tags: [
+      "Mechanical Accessories",
+      "Wire & Bus Bar",
+      "Metering & Control",
+      "Power & Control",
+      "Signal & Indication",
+      "Power Factor Controller",
+      "Automation Components",
+    ],
+    href: "/solutions/switchboard-solutions",
+  },
+];
+
 export interface SolutionItem {
   id: string;
   slug: string;

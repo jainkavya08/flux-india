@@ -57,71 +57,77 @@ export default function AboutPage() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 space-y-16">
         {/* Story & Founding Narrative */}
-        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-[#d6e8fa] shadow-card">
+        {/* Story & Founding Narrative */}
+        <div className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-[#d6e8fa] shadow-card">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            <div className="lg:col-span-7 space-y-5">
-              <span className="text-xs font-bold uppercase tracking-widest text-[#1a56b0] bg-[#eaf3fc] border border-[#bcdbf7] px-3 py-1 rounded-full">
-                Founded 2021 &bull; Pune, Maharashtra
-              </span>
+            {/* Left Content Column */}
+            <div className="lg:col-span-7 flex flex-col justify-center">
+              <div>
+                <span className="inline-block text-xs font-bold uppercase tracking-wider text-[#1a56b0] bg-[#eaf3fc] border border-[#bcdbf7] px-3.5 py-1 rounded-full">
+                  Founded 2021 &bull; Pune, Maharashtra
+                </span>
+              </div>
 
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-heading text-[#0d2b4e] tracking-tight">
+              <h2 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-extrabold font-heading text-[#0d2b4e] tracking-tight leading-tight">
                 One Partner. Infinite Solutions.
               </h2>
 
-              <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
+              <p className="mt-4 text-slate-700 text-sm sm:text-base leading-relaxed max-w-2xl">
                 Industrial panel builders, machine builders, and system integrators historically spent excessive engineering hours dealing with 10–15 fragmented component distributors, chasing long lead times, and managing multi-vendor incompatibilities.
               </p>
 
-              <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
+              <p className="mt-3.5 text-slate-700 text-sm sm:text-base leading-relaxed max-w-2xl">
                 <strong>FLUX was established to revolutionize this workflow.</strong> We operate as an integrated technical partner: our electrical engineers review single-line diagrams (SLDs) and BOMs, recommend optimized pin-compatible components from authorized OEM stock, and deliver everything in consolidated, synchronized dispatches.
               </p>
 
-              <div className="pt-2 flex flex-wrap gap-4 text-xs font-semibold text-slate-700">
+              <div className="mt-6 pt-2 flex flex-wrap items-center gap-x-6 gap-y-2.5 text-xs font-semibold text-slate-700">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>100% Genuine OEM Components</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>24-Hour BOM Turnaround</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Solutions for All Over the World</span>
                 </div>
               </div>
             </div>
 
             {/* Right Card / Fast Facts */}
-            <div className="lg:col-span-5 bg-[#f0f7fd] border border-[#bcdbf7] rounded-3xl p-8 text-[#0d2b4e] shadow-sm">
-              <div className="mb-6">
-                <FluxLogo size="lg" />
-              </div>
+            <div className="lg:col-span-5 bg-[#f0f7fd] border border-[#bcdbf7] rounded-3xl p-6 sm:p-8 text-[#0d2b4e] shadow-xs flex flex-col justify-between h-auto">
+              <div>
+                <div className="mb-5">
+                  <FluxLogo size="lg" />
+                </div>
 
-              <h3 className="text-xl font-bold font-heading text-[#0d2b4e] mb-6">
-                Fast Facts &amp; Reach
-              </h3>
+                <h3 className="text-xl font-bold font-heading text-[#0d2b4e] mb-5">
+                  Fast Facts &amp; Reach
+                </h3>
 
-              <div className="space-y-4 text-sm">
-                <div className="flex justify-between pb-3 border-b border-[#d6e8fa]">
-                  <span className="text-slate-600">Established</span>
-                  <span className="font-bold text-[#0d2b4e]">Year 2021</span>
-                </div>
-                <div className="flex justify-between pb-3 border-b border-[#d6e8fa]">
-                  <span className="text-slate-600">Headquarters</span>
-                  <span className="font-bold text-[#0d2b4e]">Pune, Maharashtra</span>
-                </div>
-                <div className="flex justify-between pb-3 border-b border-[#d6e8fa]">
-                  <span className="text-slate-600">Projects Delivered</span>
-                  <span className="font-bold text-[#0d2b4e]">650+ B2B Panels</span>
-                </div>
-                <div className="flex justify-between pb-3 border-b border-[#d6e8fa]">
-                  <span className="text-slate-600">OEM Product SKUs</span>
-                  <span className="font-bold text-[#0d2b4e]">15,000+ Active</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-slate-600">Target Verticals</span>
-                  <span className="font-bold text-[#0d2b4e]">Solar, EV, Auto, Power</span>
+                <div className="space-y-3.5 text-sm">
+                  <div className="flex items-center justify-between gap-4 pb-3 border-b border-[#d6e8fa]">
+                    <span className="text-slate-600 shrink-0">Established</span>
+                    <span className="font-bold text-[#0d2b4e] text-right">Year 2021</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 pb-3 border-b border-[#d6e8fa]">
+                    <span className="text-slate-600 shrink-0">Headquarters</span>
+                    <span className="font-bold text-[#0d2b4e] text-right">Pune, Maharashtra</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 pb-3 border-b border-[#d6e8fa]">
+                    <span className="text-slate-600 shrink-0">Projects Delivered</span>
+                    <span className="font-bold text-[#0d2b4e] text-right">650+ B2B Panels</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 pb-3 border-b border-[#d6e8fa]">
+                    <span className="text-slate-600 shrink-0">OEM Product SKUs</span>
+                    <span className="font-bold text-[#0d2b4e] text-right">15,000+ Active</span>
+                  </div>
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="text-slate-600 shrink-0 pt-0.5">Target Verticals</span>
+                    <span className="font-bold text-[#0d2b4e] text-right leading-snug">Solar, EV, Power, DataCenters, Agriculture</span>
+                  </div>
                 </div>
               </div>
 
@@ -131,7 +137,7 @@ export default function AboutPage() {
                   className="inline-flex items-center gap-2 text-xs font-bold text-[#1a56b0] hover:text-[#0d2b4e] transition-colors"
                 >
                   <span>Visit our Pune engineering office</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 shrink-0" />
                 </Link>
               </div>
             </div>
@@ -182,17 +188,17 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {COMPANY_INFO.milestones.map((m) => (
               <div
                 key={m.year}
-                className="relative bg-[#f8fafc] rounded-2xl p-5 border border-[#d6e8fa] flex flex-col justify-between"
+                className="relative bg-[#f8fafc] rounded-2xl p-6 border border-[#d6e8fa] flex flex-col justify-start hover:border-[#1a56b0]/40 transition-colors shadow-xs"
               >
-                <div className="text-2xl font-extrabold font-heading text-[#1a56b0] mb-2 font-mono">
+                <div className="text-2xl font-extrabold font-heading text-[#1a56b0] font-mono tracking-tight pb-3 mb-4 border-b border-[#e2eaf4]">
                   {m.year}
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-[#0d2b4e] font-heading mb-1">
+                  <h4 className="text-sm font-bold text-[#0d2b4e] font-heading min-h-[2.5rem] flex items-start mb-2 leading-snug">
                     {m.title}
                   </h4>
                   <p className="text-xs text-slate-600 leading-relaxed">{m.desc}</p>

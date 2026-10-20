@@ -1,8 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { BOMUploadForm } from "@/components/forms/BOMUploadForm";
 import { Badge } from "@/components/ui/Badge";
+import { trackBOMStart } from "@/lib/analytics";
 import { COMPANY_INFO } from "@/lib/data/company";
 import {
   FileSpreadsheet,
@@ -17,6 +18,10 @@ import {
 } from "lucide-react";
 
 export default function BOMPage() {
+  useEffect(() => {
+    trackBOMStart();
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#f4f7fa] pb-24">
       {/* Header Banner */}

@@ -19,6 +19,7 @@ import {
   Camera,
 } from "lucide-react";
 import confetti from "canvas-confetti";
+import { trackBOMStart, trackBOMSubmission } from "@/lib/analytics";
 
 const bomFormSchema = z.object({
   name: z.string().min(2, "Full Name is required"),
@@ -101,6 +102,7 @@ export function BOMUploadForm({ onSuccess, defaultProjectType }: BOMUploadFormPr
 
       if (response.ok && result.success) {
         setSubmittedRef(result.referenceNumber || (result.id ? `BOM-${result.id}` : "BOM-ACK"));
+        trackBOMSubmission();
         try {
           confetti({
             particleCount: 80,

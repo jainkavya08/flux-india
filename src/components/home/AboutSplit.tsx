@@ -7,17 +7,8 @@ import { Badge } from "@/components/ui/Badge";
 import {
   ArrowRight,
   ShieldCheck,
-  Zap,
-  Sun,
-  Wind,
-  BatteryCharging,
-  Radio,
-  Sparkles,
-  Building2,
-  Factory,
-  Layers,
-  Cpu,
   PackageCheck,
+  Sparkles,
 } from "lucide-react";
 import { COMPANY_INFO } from "@/lib/data/company";
 

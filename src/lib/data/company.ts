@@ -91,11 +91,6 @@ export const COMPANY_INFO = {
       desc: "Introduced 24-hour technical BOM cross-referencing, onboarding Tier-1 panel building and automation component brands.",
     },
     {
-      year: "2023",
-      title: "Renewable & EV Expansion",
-      desc: "Launched dedicated high-voltage DC components division for 1500V solar parks and DC fast-charging depots.",
-    },
-    {
       year: "2024",
       title: "Global Warehousing & Dispatch Network",
       desc: "Expanded express distribution hubs and freight channels to deliver solutions for all over the world.",

@@ -26,6 +26,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/Button";
 import confetti from "canvas-confetti";
+import { trackContact } from "@/lib/analytics";
 
 const subscribeSchema = z.object({
   email: z.string().email("Please enter a valid business email"),
@@ -141,6 +142,7 @@ export function Footer() {
                   href={COMPANY_INFO.contact.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackContact('whatsapp')}
                   className="w-9 h-9 rounded-full bg-white hover:bg-emerald-600 flex items-center justify-center text-emerald-600 hover:text-white transition-colors duration-200 border border-emerald-200 shadow-xs"
                   aria-label="FLUX WhatsApp"
                 >
@@ -229,6 +231,7 @@ export function Footer() {
               <div className="flex items-center gap-3 md:justify-end">
                 <a
                   href={`tel:${COMPANY_INFO.contact.phone.replace(/[^0-9+]/g, "")}`}
+                  onClick={() => trackContact('phone')}
                   className="hover:text-[#0d2b4e] font-bold text-[#1a56b0] transition-colors flex items-center gap-2"
                 >
                   <Phone className="w-4 h-4 text-[#1a56b0]" />
@@ -239,6 +242,7 @@ export function Footer() {
               <div className="flex items-center gap-3 md:justify-end">
                 <a
                   href={`mailto:${COMPANY_INFO.contact.email}`}
+                  onClick={() => trackContact('email')}
                   className="hover:text-[#0d2b4e] text-slate-700 transition-colors flex items-center gap-2 text-xs font-semibold"
                 >
                   <Mail className="w-4 h-4 text-[#1a56b0]" />

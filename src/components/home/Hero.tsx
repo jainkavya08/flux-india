@@ -2,20 +2,9 @@
 
 import React, { useState } from "react";
 import { FluxLogo } from "@/components/ui/FluxLogo";
-import { Button } from "@/components/ui/Button";
 import { WaveMotif } from "@/components/ui/WaveMotif";
 import { Modal } from "@/components/ui/Modal";
 import { BOMUploadForm } from "@/components/forms/BOMUploadForm";
-import {
-  FileSpreadsheet,
-  ArrowRight,
-  ShieldCheck,
-  Cpu,
-  Layers,
-  Sparkles,
-  Zap,
-  TrendingUp,
-} from "lucide-react";
 import { COMPANY_INFO } from "@/lib/data/company";
 
 export function Hero() {

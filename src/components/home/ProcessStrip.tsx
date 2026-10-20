@@ -17,6 +17,7 @@ import {
   Info,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { trackProcessStage, trackTrackStatusResult, trackBOMStart } from "@/lib/analytics";
 
 interface StepItem {
   id: string;
@@ -128,11 +129,14 @@ function ProcessStripInner() {
       const data = await res.json();
       if (res.ok && data.success) {
         setTrackedData(data.data);
+        trackTrackStatusResult('success', data.data.status);
       } else {
         setTrackingError(data.message || "Failed to load tracking data.");
+        trackTrackStatusResult('not_found');
       }
     } catch(err) {
       setTrackingError("Network error.");
+      trackTrackStatusResult('not_found');
     } finally {
       setIsTrackingLoading(false);
     }
@@ -179,8 +183,10 @@ function ProcessStripInner() {
 
   const handleStepClick = (id: string, title: string) => {
     setActiveStep(title);
+    trackProcessStage(title);
     if (id === "share-bom") {
       setIsBOMModalOpen(true);
+      trackBOMStart();
     } else {
       setActiveWorkflowId(id);
     }
@@ -455,6 +461,7 @@ function ProcessStripInner() {
                     window.location.href = "/contact";
                   } else {
                     setIsBOMModalOpen(true);
+                    trackBOMStart();
                   }
                 }}
               >

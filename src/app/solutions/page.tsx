@@ -1,94 +1,113 @@
 "use client";
 
 import React, { useState } from "react";
-import { SOLUTIONS_DATA, SolutionItem } from "@/lib/data/solutions";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { Modal } from "@/components/ui/Modal";
-import { BOMUploadForm } from "@/components/forms/BOMUploadForm";
 import { ProcessStrip } from "@/components/home/ProcessStrip";
-import {
-  Sun,
-  BatteryCharging,
-  Factory,
-  Building2,
-  Droplets,
-  CheckCircle2,
-  Sparkles,
-  ArrowRight,
-  ShieldCheck,
-  FileSpreadsheet,
-  Layers,
-  Zap,
-} from "lucide-react";
+import { SOLUTION_CATEGORIES } from "@/lib/data/solutions";
+import { SolutionCard } from "@/components/solutions/SolutionCard";
+import { LayoutGrid, List } from "lucide-react";
+import { trackSolutionViewMode } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 
 export default function SolutionsPage() {
-  const [activeSolution, setActiveSolution] = useState<SolutionItem | null>(null);
-  const [isBOMModalOpen, setIsBOMModalOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<"gallery" | "list">("gallery");
 
-  const getSolutionIcon = (id: string) => {
-    switch (id) {
-      case "sol-solar-renewables":
-        return <Sun className="w-6 h-6 text-amber-500" />;
-      case "sol-ev-infrastructure":
-        return <BatteryCharging className="w-6 h-6 text-emerald-500" />;
-      case "sol-automotive-assembly":
-        return <Factory className="w-6 h-6 text-blue-500" />;
-      case "sol-power-distribution":
-        return <Building2 className="w-6 h-6 text-indigo-500" />;
-      case "sol-water-process":
-        return <Droplets className="w-6 h-6 text-cyan-500" />;
-      default:
-        return <Sparkles className="w-6 h-6 text-[#1a56b0]" />;
-    }
+  const handleViewModeChange = (mode: "gallery" | "list") => {
+    setViewMode(mode);
+    trackSolutionViewMode(mode);
   };
 
   return (
-    <div className="min-h-screen bg-[#f4f7fa] pb-24">
+    <div className="min-h-screen bg-[#f4f7fa] pb-20">
       <ProcessStrip />
-      {/* Header Banner */}
-      <section className="bg-[#eaf3fc] border-b border-[#bcdbf7] py-6 sm:py-8 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
-          <Badge variant="blue" className="mb-4">
-            Domain Engineering
-          </Badge>
-          <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-[#0d2b4e] tracking-tight">
-            Industry Solutions &amp; Architectures
-          </h1>
-          <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
-            Proven component blueprints, panel building configurations, and telemetry architectures engineered for the world&apos;s most demanding manufacturing and clean-energy sectors.
-          </p>
-          <div className="mt-8 flex justify-center">
-            <Button
-              variant="primary"
-              size="md"
-              onClick={() => setIsBOMModalOpen(true)}
-              leftIcon={<FileSpreadsheet className="w-4 h-4" />}
+
+      {/* Solutions Gallery & List Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        {/* Gallery Controls Header: Title, Solution Count & View Toggle */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-200/80">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#1a56b0]">
+                Solutions Portfolio
+              </span>
+              <span className="text-xs text-slate-400">•</span>
+              <span className="text-xs font-semibold text-slate-500">
+                {SOLUTION_CATEGORIES.length} Category Available
+              </span>
+            </div>
+            <h1 className="text-2xl sm:text-4xl font-extrabold font-heading text-[#0d2b4e]">
+              Engineered Solution Categories
+            </h1>
+          </div>
+
+          {/* View Mode Toggle */}
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-bold text-slate-500 hidden md:inline-block">
+              View:
+            </span>
+
+            <div
+              className="inline-flex items-center p-1 rounded-2xl bg-white border border-[#d6e8fa] shadow-xs"
+              role="group"
+              aria-label="Solution Categories View Mode"
             >
-              Consult on Your Solution Architecture
-            </Button>
+              <button
+                type="button"
+                onClick={() => handleViewModeChange("gallery")}
+                className={cn(
+                  "flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 outline-none focus:ring-2 focus:ring-[#1a56b0]",
+                  viewMode === "gallery"
+                    ? "bg-[#1a56b0] text-white shadow-xs"
+                    : "text-slate-600 hover:text-[#0d2b4e] hover:bg-slate-50"
+                )}
+                aria-pressed={viewMode === "gallery"}
+                aria-label="Gallery View (Grid)"
+              >
+                <LayoutGrid className="w-3.5 h-3.5" />
+                <span>Gallery View</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleViewModeChange("list")}
+                className={cn(
+                  "flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 outline-none focus:ring-2 focus:ring-[#1a56b0]",
+                  viewMode === "list"
+                    ? "bg-[#1a56b0] text-white shadow-xs"
+                    : "text-slate-600 hover:text-[#0d2b4e] hover:bg-slate-50"
+                )}
+                aria-pressed={viewMode === "list"}
+                aria-label="List View (Rows)"
+              >
+                <List className="w-3.5 h-3.5" />
+                <span>List View</span>
+              </button>
+            </div>
           </div>
         </div>
+
+        {/* Dynamic View Presentation */}
+        {viewMode === "gallery" ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {SOLUTION_CATEGORIES.map((category) => (
+              <SolutionCard
+                key={category.id}
+                solution={category}
+                viewMode="gallery"
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {SOLUTION_CATEGORIES.map((category) => (
+              <SolutionCard
+                key={category.id}
+                solution={category}
+                viewMode="list"
+              />
+            ))}
+          </div>
+        )}
       </section>
-
-      {/* Solutions Detail List */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 py-20 text-center">
-        <h2 className="text-2xl font-bold text-slate-600">Finding solutions soon...</h2>
-      </div>
-
-      {/* BOM Modal */}
-      <Modal
-        isOpen={isBOMModalOpen}
-        onClose={() => setIsBOMModalOpen(false)}
-        title={activeSolution ? `${activeSolution.title} Quotation` : "Solution BOM Consultation"}
-        subtitle="Submit your project details for rapid engineering cross-referencing."
-        maxWidth="lg"
-      >
-        <BOMUploadForm
-          defaultProjectType={activeSolution?.title || "Industry Solution Project"}
-          onSuccess={() => setIsBOMModalOpen(false)}
-        />
-      </Modal>
     </div>
   );
 }

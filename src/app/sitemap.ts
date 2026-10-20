@@ -8,10 +8,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes = [
     "",
-    "/components",
-    "/components/panel-building",
-    "/components/automation",
     "/solutions",
+    "/solutions/switchboard-solutions",
     "/about",
     "/contact",
     "/bom",
@@ -23,6 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${baseUrl}${route}`,
     lastModified: currentDate,
     changeFrequency: route === "" ? "daily" : "weekly",
-    priority: route === "" ? 1.0 : route.startsWith("/components") ? 0.9 : 0.8,
+    priority: route === "" ? 1.0 : 0.8,
   }));
 }

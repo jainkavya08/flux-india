@@ -9,29 +9,19 @@ import { FluxLogo } from "@/components/ui/FluxLogo";
 import { Button } from "@/components/ui/Button";
 import { COMPANY_INFO } from "@/lib/data/company";
 import {
-  ChevronDown,
   Menu,
   X,
-  Layers,
-  Cpu,
-  Zap,
   Phone,
   FileSpreadsheet,
-  ArrowRight,
   MapPin,
-  ShieldCheck,
-  CheckCircle2,
-  Boxes,
-  Activity,
-  Lightbulb,
 } from "lucide-react";
 import { LinkedinIcon, InstagramIcon } from "@/components/ui/SocialIcons";
 import { cn } from "@/lib/utils";
+import { trackTrackStatusStart, trackContact } from "@/lib/analytics";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [componentsOpen, setComponentsOpen] = useState(false);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
   const pathname = usePathname();
   const router = useRouter();
@@ -92,7 +82,6 @@ export function Navbar() {
 
   useEffect(() => {
     setMobileMenuOpen(false);
-    setComponentsOpen(false);
   }, [pathname]);
 
   const navLinks = [
@@ -108,7 +97,6 @@ export function Navbar() {
     return normalizedPath === href || normalizedPath.startsWith(href + "/");
   };
 
-  const isComponentsActive = normalizedPath.startsWith("/components");
 
   return (
     <header
@@ -134,6 +122,7 @@ export function Navbar() {
           <div className="flex items-center gap-4">
             <a
               href={`tel:${COMPANY_INFO.contact.phone.replace(/[^0-9+]/g, "")}`}
+              onClick={() => trackContact('phone')}
               className="flex items-center gap-1.5 hover:text-[#1a56b0] transition-colors"
             >
               <Phone className="w-3.5 h-3.5 text-[#1a56b0]" />
@@ -163,6 +152,7 @@ export function Navbar() {
                 href={COMPANY_INFO.contact.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackContact('whatsapp')}
                 className="flex items-center gap-1 text-emerald-600 hover:text-emerald-700 font-semibold transition-colors"
                 aria-label="WhatsApp Instant Chat"
               >
@@ -184,184 +174,6 @@ export function Navbar() {
             className="hidden md:flex items-center gap-1 lg:gap-2"
             onMouseLeave={() => setHoveredPath(null)}
           >
-            {/* Components Dropdown Menu */}
-            <div
-              className="relative"
-              onMouseEnter={() => {
-                setComponentsOpen(true);
-                setHoveredPath("/components");
-              }}
-              onMouseLeave={() => {
-                setComponentsOpen(false);
-              }}
-            >
-              <motion.button
-                whileTap={{ scale: 0.95 }}
-                className={cn(
-                  "relative flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 outline-none select-none",
-                  isComponentsActive
-                    ? "text-[#1a56b0] font-bold"
-                    : "text-slate-700 hover:text-[#0d2b4e]"
-                )}
-                onClick={() => setComponentsOpen(!componentsOpen)}
-                aria-expanded={componentsOpen}
-              >
-                {/* Active liquidy sliding indicator */}
-                {isComponentsActive && (
-                  <motion.span
-                    layoutId="navbar-active-pill"
-                    className="absolute inset-0 bg-[#eaf3fc] border border-[#bcdbf7] rounded-full shadow-xs"
-                    transition={{
-                      type: "spring",
-                      stiffness: 380,
-                      damping: 26,
-                      mass: 0.85,
-                    }}
-                  />
-                )}
-
-                {/* Hover floating bubble */}
-                {hoveredPath === "/components" && !isComponentsActive && (
-                  <motion.span
-                    layoutId="navbar-hover-bubble"
-                    className="absolute inset-0 bg-slate-100/80 rounded-full"
-                    transition={{
-                      type: "spring",
-                      stiffness: 420,
-                      damping: 30,
-                    }}
-                  />
-                )}
-
-                <span className="relative z-10">Components</span>
-                <ChevronDown
-                  className={cn(
-                    "w-4 h-4 transition-transform duration-200 relative z-10",
-                    componentsOpen && "transform rotate-180",
-                    isComponentsActive ? "text-[#1a56b0]" : "text-slate-400"
-                  )}
-                />
-              </motion.button>
-
-              {/* Mega Dropdown Menu */}
-              <AnimatePresence>
-                {componentsOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 450, damping: 30 }}
-                    className="absolute left-0 top-full pt-2 w-[580px] z-50"
-                  >
-                    <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 p-5 grid grid-cols-2 gap-4">
-                      {/* Panel Accessories */}
-                      <Link
-                        href="/components/panel-accessories"
-                        className="group p-3.5 rounded-xl hover:bg-blue-50/70 border border-transparent hover:border-blue-100 transition-all flex flex-col justify-between"
-                      >
-                        <div>
-                          <div className="flex items-center gap-2 mb-2 text-[#0d2b4e] font-bold group-hover:text-[#1a56b0]">
-                            <div className="w-8 h-8 rounded-lg bg-blue-100/80 text-[#1a56b0] flex items-center justify-center shrink-0">
-                              <Layers className="w-4 h-4" />
-                            </div>
-                            <span className="text-sm font-heading">Panel Accessories</span>
-                          </div>
-                          <p className="text-xs text-slate-500 leading-relaxed">
-                            Cable glands, insulators, lugs, terminals, conduits &amp; ties.
-                          </p>
-                        </div>
-                      </Link>
-
-                      {/* Panels and Enclosures */}
-                      <Link
-                        href="/components/panels-and-enclosures"
-                        className="group p-3.5 rounded-xl hover:bg-blue-50/70 border border-transparent hover:border-blue-100 transition-all flex flex-col justify-between"
-                      >
-                        <div>
-                          <div className="flex items-center gap-2 mb-2 text-[#0d2b4e] font-bold group-hover:text-[#1a56b0]">
-                            <div className="w-8 h-8 rounded-lg bg-blue-100/80 text-[#1a56b0] flex items-center justify-center shrink-0">
-                              <Boxes className="w-4 h-4" />
-                            </div>
-                            <span className="text-sm font-heading">Panels &amp; Enclosures</span>
-                          </div>
-                          <p className="text-xs text-slate-500 leading-relaxed">
-                            Metal and non-metal industrial distribution enclosures.
-                          </p>
-                        </div>
-                      </Link>
-
-                      {/* Automation Components */}
-                      <Link
-                        href="/components/automation"
-                        className="group p-3.5 rounded-xl hover:bg-blue-50/70 border border-transparent hover:border-blue-100 transition-all flex flex-col justify-between"
-                      >
-                        <div>
-                          <div className="flex items-center gap-2 mb-2 text-[#0d2b4e] font-bold group-hover:text-[#1a56b0]">
-                            <div className="w-8 h-8 rounded-lg bg-blue-100/80 text-[#1a56b0] flex items-center justify-center shrink-0">
-                              <Cpu className="w-4 h-4" />
-                            </div>
-                            <span className="text-sm font-heading">Automation Components</span>
-                          </div>
-                          <p className="text-xs text-slate-500 leading-relaxed">
-                            PLCs, HMIs, energy meters, 24V power supplies, PID &amp; timers.
-                          </p>
-                        </div>
-                      </Link>
-
-                      {/* Metering and Control */}
-                      <Link
-                        href="/components/metering-and-control"
-                        className="group p-3.5 rounded-xl hover:bg-blue-50/70 border border-transparent hover:border-blue-100 transition-all flex flex-col justify-between"
-                      >
-                        <div>
-                          <div className="flex items-center gap-2 mb-2 text-[#0d2b4e] font-bold group-hover:text-[#1a56b0]">
-                            <div className="w-8 h-8 rounded-lg bg-blue-100/80 text-[#1a56b0] flex items-center justify-center shrink-0">
-                              <Activity className="w-4 h-4" />
-                            </div>
-                            <span className="text-sm font-heading">Metering &amp; Control</span>
-                          </div>
-                          <p className="text-xs text-slate-500 leading-relaxed">
-                            Advanced metering and precision control instruments.
-                          </p>
-                        </div>
-                      </Link>
-
-                      {/* Signaling and Indication */}
-                      <Link
-                        href="/components/signaling-and-indication"
-                        className="group p-3.5 rounded-xl hover:bg-blue-50/70 border border-transparent hover:border-blue-100 transition-all flex flex-col justify-between"
-                      >
-                        <div>
-                          <div className="flex items-center gap-2 mb-2 text-[#0d2b4e] font-bold group-hover:text-[#1a56b0]">
-                            <div className="w-8 h-8 rounded-lg bg-blue-100/80 text-[#1a56b0] flex items-center justify-center shrink-0">
-                              <Lightbulb className="w-4 h-4" />
-                            </div>
-                            <span className="text-sm font-heading">Signaling & Indication</span>
-                          </div>
-                          <p className="text-xs text-slate-500 leading-relaxed">
-                            Pilot lamps, tower lights, and audible signaling.
-                          </p>
-                        </div>
-                      </Link>
-
-                      {/* Dropdown Footer Banner */}
-                      <div className="col-span-2 bg-slate-50 rounded-xl p-3 flex items-center justify-between border border-slate-100">
-                        <div className="flex items-center gap-2 text-xs text-slate-600 font-medium">
-                          <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                          <span>100% Genuine Authorized OEM Stock</span>
-                        </div>
-                        <Link
-                          href="/bom"
-                          className="text-xs font-semibold text-[#1a56b0] hover:underline"
-                        >
-                          Consolidate BOM →
-                        </Link>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
 
             {navLinks.map((link) => {
               const isActive = isLinkActive(link.href);
@@ -430,7 +242,10 @@ export function Navbar() {
             </Button>
 
             <Button
-              onClick={() => setIsTrackModalOpen(true)}
+              onClick={() => {
+                setIsTrackModalOpen(true);
+                trackTrackStatusStart();
+              }}
               variant="primary"
               size="sm"
               rightIcon={<MapPin className="w-3.5 h-3.5" />}
@@ -442,7 +257,7 @@ export function Navbar() {
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-1.5">
-            <Button onClick={() => setIsTrackModalOpen(true)} variant="outline" size="sm" className="text-xs px-3 py-1 border-[#1a56b0]/30 text-[#1a56b0] hover:bg-blue-50/50">
+            <Button onClick={() => { setIsTrackModalOpen(true); trackTrackStatusStart(); }} variant="outline" size="sm" className="text-xs px-3 py-1 border-[#1a56b0]/30 text-[#1a56b0] hover:bg-blue-50/50">
               Track
             </Button>
             <Button href="/bom" variant="secondary" size="sm" className="text-xs px-3 py-1">
@@ -512,106 +327,7 @@ export function Navbar() {
               }}
               className="px-4 pt-3 pb-6 space-y-3"
             >
-              {/* Component Catalogs Section */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: -8 },
-                  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 350, damping: 28 } },
-                }}
-                className="border-b border-slate-100 pb-2"
-              >
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-2">
-                  Component Catalogs
-                </p>
-                <Link
-                  href="/components/panel-accessories"
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-800 font-medium text-sm transition-all border",
-                    normalizedPath === "/components/panel-accessories"
-                      ? "bg-blue-50/90 text-[#1a56b0] border-[#bcdbf7] font-bold shadow-xs"
-                      : "hover:bg-blue-50 border-transparent"
-                  )}
-                >
-                  <div className="w-7 h-7 rounded-lg bg-blue-100 text-[#1a56b0] flex items-center justify-center">
-                    <Layers className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-slate-900">Panel Accessories</div>
-                    <div className="text-xs text-slate-500">Glands, Insulators, Lugs &amp; Sleeves</div>
-                  </div>
-                </Link>
 
-                <Link
-                  href="/components/panels-and-enclosures"
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-800 font-medium text-sm transition-all mt-1 border",
-                    normalizedPath === "/components/panels-and-enclosures"
-                      ? "bg-blue-50/90 text-[#1a56b0] border-[#bcdbf7] font-bold shadow-xs"
-                      : "hover:bg-blue-50 border-transparent"
-                  )}
-                >
-                  <div className="w-7 h-7 rounded-lg bg-blue-100 text-[#1a56b0] flex items-center justify-center">
-                    <Boxes className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-slate-900">Panels &amp; Enclosures</div>
-                    <div className="text-xs text-slate-500">Metal &amp; Non-Metal Enclosures</div>
-                  </div>
-                </Link>
-
-                <Link
-                  href="/components/automation"
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-800 font-medium text-sm transition-all mt-1 border",
-                    normalizedPath === "/components/automation"
-                      ? "bg-blue-50/90 text-[#1a56b0] border-[#bcdbf7] font-bold shadow-xs"
-                      : "hover:bg-blue-50 border-transparent"
-                  )}
-                >
-                  <div className="w-7 h-7 rounded-lg bg-blue-100 text-[#1a56b0] flex items-center justify-center">
-                    <Cpu className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-slate-900">Automation Components</div>
-                    <div className="text-xs text-slate-500">PLCs, HMIs, Meters &amp; Power Supplies</div>
-                  </div>
-                </Link>
-
-                <Link
-                  href="/components/metering-and-control"
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-800 font-medium text-sm transition-all mt-1 border",
-                    normalizedPath === "/components/metering-and-control"
-                      ? "bg-blue-50/90 text-[#1a56b0] border-[#bcdbf7] font-bold shadow-xs"
-                      : "hover:bg-blue-50 border-transparent"
-                  )}
-                >
-                  <div className="w-7 h-7 rounded-lg bg-blue-100 text-[#1a56b0] flex items-center justify-center">
-                    <Activity className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-slate-900">Metering &amp; Control</div>
-                    <div className="text-xs text-slate-500">Metering &amp; Control instruments</div>
-                  </div>
-                </Link>
-                <Link
-                  href="/components/signaling-and-indication"
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-800 font-medium text-sm transition-all mt-1 border",
-                    normalizedPath === "/components/signaling-and-indication"
-                      ? "bg-blue-50/90 text-[#1a56b0] border-[#bcdbf7] font-bold shadow-xs"
-                      : "hover:bg-blue-50 border-transparent"
-                  )}
-                >
-                  <div className="w-7 h-7 rounded-lg bg-blue-100 text-[#1a56b0] flex items-center justify-center">
-                    <Lightbulb className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-slate-900">Signaling & Indication</div>
-                    <div className="text-xs text-slate-500">Lamps, Tower Lights & Sirens</div>
-                  </div>
-                </Link>
-              </motion.div>
 
               {/* Main Nav Links */}
               <motion.div
@@ -666,6 +382,7 @@ export function Navbar() {
                   href={COMPANY_INFO.contact.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackContact('whatsapp')}
                   className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-sm font-semibold hover:bg-emerald-100/70 transition-colors"
                 >
                   <span className="w-2 h-2 rounded-full bg-emerald-500" />

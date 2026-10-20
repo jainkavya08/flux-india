@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { cn } from "@/lib/utils";
+import { trackContact } from "@/lib/analytics";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -132,6 +133,7 @@ export default function ContactPage() {
                     <p className="text-xs text-slate-500 font-semibold">Phone Support</p>
                     <a
                       href={`tel:${COMPANY_INFO.contact.phone.replace(/[^0-9+]/g, "")}`}
+                      onClick={() => trackContact('phone')}
                       className="font-bold text-[#1a56b0] hover:text-[#0d2b4e] transition-colors"
                     >
                       {COMPANY_INFO.contact.phoneDisplay}
@@ -145,6 +147,7 @@ export default function ContactPage() {
                     <p className="text-xs text-slate-500 font-semibold">Sales Inquiries</p>
                     <a
                       href={`mailto:${COMPANY_INFO.contact.email}`}
+                      onClick={() => trackContact('email')}
                       className="font-bold text-[#1a56b0] hover:text-[#0d2b4e] transition-colors"
                     >
                       {COMPANY_INFO.contact.email}
@@ -172,6 +175,7 @@ export default function ContactPage() {
                   href={COMPANY_INFO.contact.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackContact('whatsapp')}
                   className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors shadow-md"
                 >
                   <MessageSquare className="w-4 h-4" />
