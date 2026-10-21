@@ -32,11 +32,12 @@ export default function SolutionsPage() {
         {/* Responsive View Presentation: Gallery View on desktop/tablet (md+), List View on mobile (<md) */}
         {/* Desktop & Tablet: Gallery View */}
         <div className="hidden md:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {SOLUTION_CATEGORIES.map((category) => (
+          {SOLUTION_CATEGORIES.map((category, index) => (
             <SolutionCard
               key={category.id}
               solution={category}
               viewMode="gallery"
+              cardIndex={index}
             />
           ))}
         </div>

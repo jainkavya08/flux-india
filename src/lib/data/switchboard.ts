@@ -36,12 +36,10 @@ export const SWITCHBOARD_GROUPS: SwitchboardGroup[] = [
     image: "/media/cable_ties.png",
     products: [
       { id: "wire-1", name: "Cable Ties", image: "/media/cable_ties.png" },
-      { id: "wire-2", name: "Bus Bar Sleeves", image: "/media/bands_sleeves.png" },
+      { id: "wire-2", name: "Bus Bar Sleeves", image: "/media/busbarsleeves.png" },
       { id: "wire-3", name: "Spiral Wrapping/ Braided Sleeve", image: "/media/flexible_conduits.png" },
       { id: "wire-4", name: "Lugs/ Terminals", image: "/media/lugs_terminals.png" },
-      { id: "wire-5", name: "Terminal Block" },
       { id: "wire-6", name: "Support Insulator", image: "/media/support_insulators.png" },
-      { id: "wire-7", name: "Cables and wires" },
     ],
   },
   {
@@ -51,10 +49,9 @@ export const SWITCHBOARD_GROUPS: SwitchboardGroup[] = [
     image: "/media/analogmeters.png",
     products: [
       { id: "meter-1", name: "Analog Meters", image: "/media/analogmeters.png" },
-      { id: "meter-2", name: "Digital Meters", image: "/media/automation components/meters.png" },
+      { id: "meter-2", name: "Digital Meters", image: "/media/Panel_meters.png" },
       { id: "meter-3", name: "Current Transformer", image: "/media/ciurrenttransformer.png" },
-      { id: "meter-4", name: "Power Quality Monitoring", image: "/media/Panel_meters.png" },
-      { id: "meter-5", name: "Shunts" },
+      { id: "meter-5", name: "Shunts", image: "/media/shunts.png" },
     ],
   },
   {
@@ -64,11 +61,11 @@ export const SWITCHBOARD_GROUPS: SwitchboardGroup[] = [
     image: "/media/Power_Supply.png",
     products: [
       { id: "power-1", name: "Power Supplies", image: "/media/Power_Supply.png" },
-      { id: "power-2", name: "Control Transformer", image: "/media/transformers.png" },
-      { id: "power-3", name: "Potential Transformer", image: "/media/transformers.png" },
-      { id: "power-4", name: "Voltage Monitoring relay", image: "/media/automation components/Protection_device.png" },
-      { id: "power-5", name: "Current Monitoring relay", image: "/media/automation components/Protection_device.png" },
+      { id: "power-2", name: "Auto transformer", image: "/media/transformers.png" },
+      { id: "power-3", name: "Potential Transformer", image: "/media/potentialtransformer.png" },
+      { id: "power-4", name: "Voltage Monitoring relay", image: "/media/voltagemonitoringrelay.png" },
       { id: "power-6", name: "Earth Leakage relay", image: "/media/earthleakagerelay.png" },
+      { id: "power-7", name: "Automatic Transfer Switch", image: "/media/automatictransferswitch.png" },
     ],
   },
   {

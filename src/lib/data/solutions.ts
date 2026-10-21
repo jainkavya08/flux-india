@@ -20,8 +20,8 @@ export const SOLUTION_CATEGORIES: SolutionCategory[] = [
     subtitle:
       "Consolidated hardware, wiring, metering, and power protection for panel builders, OEMs, and switchboard manufacturers.",
     badge: "Panel Architecture",
-    groupCount: 7,
-    itemCount: 40,
+    groupCount: 6,
+    itemCount: 31,
     iconName: "Boxes",
     image: "/media/switchboard.png",
     tags: [
@@ -30,7 +30,6 @@ export const SOLUTION_CATEGORIES: SolutionCategory[] = [
       "Metering & Control",
       "Power & Control",
       "Signal & Indication",
-      "Power Factor Controller",
       "Automation Components",
     ],
     href: "/solutions/switchboard-solutions",
@@ -59,7 +58,7 @@ export const SOLUTION_CATEGORIES: SolutionCategory[] = [
       "Engineered rooftop solar balance of systems, distribution boards, ACDB/DCDB protection, and inverter integrations.",
     badge: "Renewable Energy",
     groupCount: 1,
-    itemCount: 7,
+    itemCount: 6,
     iconName: "Sun",
     image: "/media/distribution_boxes.png",
     tags: [
@@ -77,6 +76,7 @@ export const SOLUTION_CATEGORIES: SolutionCategory[] = [
     groupCount: 1,
     itemCount: 1,
     iconName: "Droplets",
+    image: "/media/waterpurificationsolution.jpg",
     tags: [
       "Chemicals",
     ],

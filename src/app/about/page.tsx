@@ -43,7 +43,7 @@ export default function AboutPage() {
       <section className="bg-[#eaf3fc] border-b border-[#bcdbf7] py-14 sm:py-18 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center max-w-3xl">
           <Badge variant="blue" className="mb-4">
-            About FLUX India
+            About FLUX
           </Badge>
           <h1 className="text-3xl sm:text-5xl font-extrabold font-heading text-[#0d2b4e] tracking-tight">
             Engineering Sourcing Built for Modern Industry

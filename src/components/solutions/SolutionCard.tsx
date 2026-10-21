@@ -5,6 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { SolutionCategory } from "@/lib/data/solutions";
 import { SWITCHBOARD_GROUPS } from "@/lib/data/switchboard";
+import { HVAC_GROUPS } from "@/lib/data/hvac";
+import { SOLAR_GROUPS } from "@/lib/data/solar";
+import { WATER_PURIFICATION_GROUPS } from "@/lib/data/water-purification";
 import {
   Boxes,
   Cpu,
@@ -24,9 +27,10 @@ import { trackSolutionCardClick } from "@/lib/analytics";
 interface SolutionCardProps {
   solution: SolutionCategory;
   viewMode: "gallery" | "list";
+  cardIndex?: number;
 }
 
-export function SolutionCard({ solution, viewMode }: SolutionCardProps) {
+export function SolutionCard({ solution, viewMode, cardIndex = 0 }: SolutionCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   const getSolutionIcon = (iconName: string, className?: string) => {
@@ -59,7 +63,22 @@ export function SolutionCard({ solution, viewMode }: SolutionCardProps) {
     trackSolutionCardClick(solution.title);
   };
 
-  const isSwitchboard = solution.slug === "switchboard-solutions";
+  const getSolutionGroups = () => {
+    switch (solution.slug) {
+      case "switchboard-solutions":
+        return SWITCHBOARD_GROUPS;
+      case "hvac-solutions":
+        return HVAC_GROUPS;
+      case "solar-solutions":
+        return SOLAR_GROUPS;
+      case "water-purification-solutions":
+        return WATER_PURIFICATION_GROUPS;
+      default:
+        return [];
+    }
+  };
+
+  const groups = getSolutionGroups();
 
   if (viewMode === "list") {
     return (
@@ -109,19 +128,19 @@ export function SolutionCard({ solution, viewMode }: SolutionCardProps) {
           </div>
         </Link>
 
-        {/* Hover preview for Switchboard Solution groups and items */}
-        {isSwitchboard && isHovered && (
-          <div className="absolute top-full left-0 right-0 mt-2 z-30 bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-[#bcdbf7] shadow-xl animate-in fade-in slide-in-from-top-1 duration-200 pointer-events-none">
+        {/* Hover preview revealing solution groups and their items */}
+        {isHovered && groups.length > 0 && (
+          <div className="absolute top-full left-0 right-0 mt-2 z-40 bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-[#bcdbf7] shadow-xl animate-in fade-in slide-in-from-top-1 duration-200 pointer-events-none">
             <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
               <span className="text-[11px] font-bold text-[#1a56b0] uppercase tracking-wider">
-                Switchboard Architecture Groups &amp; Items
+                {solution.title} — Groups &amp; Items
               </span>
               <span className="text-[11px] text-slate-400 font-medium">
-                Click card to open full blueprint
+                {groups.length} {groups.length === 1 ? "Group" : "Groups"}
               </span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-              {SWITCHBOARD_GROUPS.map((grp) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 max-h-56 overflow-y-auto">
+              {groups.map((grp) => (
                 <div
                   key={grp.id}
                   className="bg-[#f8fbfe] border border-[#e2edf8] rounded-lg p-2 text-left"
@@ -129,9 +148,8 @@ export function SolutionCard({ solution, viewMode }: SolutionCardProps) {
                   <div className="text-[11px] font-bold text-[#0d2b4e] truncate">
                     {grp.title}
                   </div>
-                  <div className="text-[10px] text-slate-500 mt-0.5 truncate">
-                    {grp.products.slice(0, 3).map((p) => p.name).join(", ")}
-                    {grp.products.length > 3 ? "..." : ""}
+                  <div className="text-[10px] text-slate-500 mt-0.5 line-clamp-2">
+                    {grp.products.map((p) => p.name).join(", ")}
                   </div>
                 </div>
               ))}
@@ -143,6 +161,10 @@ export function SolutionCard({ solution, viewMode }: SolutionCardProps) {
   }
 
   // Default: Gallery View Card (Matches hand-drawn reference: Image on top, centered title below)
+  // Smart alignment so popup never gets cut off at screen edges:
+  // Cards on right side of 4-col grid align to the right edge
+  const isRightCol = cardIndex >= 2;
+
   return (
     <div
       className="relative group/card h-full"
@@ -187,36 +209,44 @@ export function SolutionCard({ solution, viewMode }: SolutionCardProps) {
         </div>
       </Link>
 
-      {/* Hover preview revealing switchboard solution groups and their items */}
-      {isSwitchboard && isHovered && (
-        <div className="absolute top-full left-0 w-72 sm:w-80 mt-2 z-30 bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-[#bcdbf7] shadow-xl animate-in fade-in slide-in-from-top-1 duration-200 pointer-events-none">
+      {/* Hover preview revealing solution groups and their items in a visible, floating dialog box */}
+      {isHovered && groups.length > 0 && (
+        <div
+          className={`absolute top-full mt-2.5 z-50 w-72 sm:w-80 bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-[#bcdbf7] shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200 pointer-events-none ${
+            isRightCol ? "right-0" : "left-0"
+          }`}
+        >
           <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
-            <span className="text-[11px] font-bold text-[#1a56b0] uppercase tracking-wider">
-              Switchboard Groups &amp; Items
+            <span className="text-[11px] font-bold text-[#1a56b0] uppercase tracking-wider truncate mr-2">
+              {solution.title}
             </span>
-            <span className="text-[10px] text-slate-400">
-              {SWITCHBOARD_GROUPS.length} Groups
+            <span className="text-[10px] font-semibold text-slate-400 shrink-0">
+              {groups.length} {groups.length === 1 ? "Group" : "Groups"}
             </span>
           </div>
-          <div className="space-y-1.5 max-h-56 overflow-hidden">
-            {SWITCHBOARD_GROUPS.slice(0, 5).map((grp) => (
+
+          <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+            {groups.map((grp) => (
               <div
                 key={grp.id}
-                className="bg-[#f8fbfe] border border-[#e2edf8] rounded-lg px-2.5 py-1.5 text-left"
+                className="bg-[#f8fbfe] border border-[#e2edf8] rounded-xl p-2.5 text-left"
               >
-                <div className="text-[11px] font-bold text-[#0d2b4e] truncate">
-                  {grp.title}
+                <div className="text-[11px] font-bold text-[#0d2b4e] flex items-center justify-between gap-1 mb-1">
+                  <span className="truncate">{grp.title}</span>
+                  <span className="text-[10px] text-[#1a56b0] font-semibold shrink-0">
+                    {grp.products.length} items
+                  </span>
                 </div>
-                <div className="text-[10px] text-slate-500 truncate mt-0.5">
+                <div className="text-[10px] text-slate-500 leading-relaxed">
                   {grp.products.map((p) => p.name).join(", ")}
                 </div>
               </div>
             ))}
-            {SWITCHBOARD_GROUPS.length > 5 && (
-              <div className="text-[10px] text-center text-[#1a56b0] font-semibold pt-0.5">
-                +{SWITCHBOARD_GROUPS.length - 5} more groups (click card to view all)
-              </div>
-            )}
+          </div>
+
+          <div className="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-400">
+            <span>Click card to open full solution</span>
+            <ArrowRight className="w-3 h-3 text-[#1a56b0]" />
           </div>
         </div>
       )}

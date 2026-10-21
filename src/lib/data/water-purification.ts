@@ -20,7 +20,7 @@ export const WATER_PURIFICATION_GROUPS: WaterPurificationGroup[] = [
     id: "chemicals",
     letter: "A",
     title: "Chemicals",
-    image: "/media/junction_boxes.png",
+    image: "/media/waterpurificationsolution.jpg",
     products: [
       {
         id: "water-1",

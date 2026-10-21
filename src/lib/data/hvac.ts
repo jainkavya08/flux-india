@@ -25,7 +25,7 @@ export const HVAC_GROUPS: HVACGroup[] = [
       {
         id: "hvac-1",
         name: "FAN",
-        image: "/media/air_vents.png",
+        image: "/media/Fans.png",
         description:
           "Axial enclosure cooling fans, exhaust filter fan units, and louvers for continuous cabinet heat extraction and air circulation.",
       },

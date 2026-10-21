@@ -46,7 +46,7 @@ export const SOLAR_GROUPS: SolarGroup[] = [
       {
         id: "solar-5",
         name: "Inverter",
-        image: "/media/automation components/power_supply.png",
+        image: "/media/inverter.png",
         description:
           "On-grid, off-grid, and hybrid string inverters with high MPPT efficiency and remote SCADA monitoring.",
       },
@@ -60,7 +60,7 @@ export const SOLAR_GROUPS: SolarGroup[] = [
       {
         id: "solar-7",
         name: "Cable Glands",
-        image: "/media/cable_gland.png",
+        image: "/media/cableglands.png",
         description:
           "Weatherproof nylon and brass cable glands ensuring strain relief and IP68 seal for solar panels and combiner boxes.",
       },
