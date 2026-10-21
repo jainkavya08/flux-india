@@ -31,7 +31,7 @@ export default function SolutionsPage() {
               </span>
               <span className="text-xs text-slate-400">•</span>
               <span className="text-xs font-semibold text-slate-500">
-                {SOLUTION_CATEGORIES.length} Category Available
+                {SOLUTION_CATEGORIES.length} {SOLUTION_CATEGORIES.length === 1 ? "Category" : "Categories"} Available
               </span>
             </div>
             <h1 className="text-2xl sm:text-4xl font-extrabold font-heading text-[#0d2b4e]">

@@ -12,6 +12,11 @@ import {
   Zap,
   ArrowRight,
   CheckCircle2,
+  Fan,
+  ThermometerSnowflake,
+  Wind,
+  Sun,
+  Droplets,
 } from "lucide-react";
 import { trackSolutionCardClick } from "@/lib/analytics";
 
@@ -32,6 +37,16 @@ export function SolutionCard({ solution, viewMode }: SolutionCardProps) {
         return <Layers className={classes} />;
       case "Zap":
         return <Zap className={classes} />;
+      case "Fan":
+        return <Fan className={classes} />;
+      case "ThermometerSnowflake":
+        return <ThermometerSnowflake className={classes} />;
+      case "Wind":
+        return <Wind className={classes} />;
+      case "Sun":
+        return <Sun className={classes} />;
+      case "Droplets":
+        return <Droplets className={classes} />;
       default:
         return <ShieldCheck className={classes} />;
     }

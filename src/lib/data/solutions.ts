@@ -6,7 +6,7 @@ export interface SolutionCategory {
   badge: string;
   itemCount: number;
   groupCount: number;
-  iconName: "Boxes" | "Cpu" | "Layers" | "ShieldCheck" | "Zap";
+  iconName: "Boxes" | "Cpu" | "Layers" | "ShieldCheck" | "Zap" | "Fan" | "ThermometerSnowflake" | "Wind" | "Sun" | "Droplets";
   tags: string[];
   href: string;
 }
@@ -32,6 +32,51 @@ export const SOLUTION_CATEGORIES: SolutionCategory[] = [
       "Automation Components",
     ],
     href: "/solutions/switchboard-solutions",
+  },
+  {
+    id: "hvac-solutions",
+    slug: "hvac-solutions",
+    title: "HVAC Solutions",
+    subtitle:
+      "Engineered thermal management accessories, enclosure climate regulation, and cooling solutions for industrial panels.",
+    badge: "Thermal Management",
+    groupCount: 1,
+    itemCount: 5,
+    iconName: "Fan",
+    tags: [
+      "Thermal Management Accessories",
+    ],
+    href: "/solutions/hvac-solutions",
+  },
+  {
+    id: "solar-solutions",
+    slug: "solar-solutions",
+    title: "Solar Solutions",
+    subtitle:
+      "Engineered rooftop solar balance of systems, distribution boards, ACDB/DCDB protection, and inverter integrations.",
+    badge: "Renewable Energy",
+    groupCount: 1,
+    itemCount: 7,
+    iconName: "Sun",
+    tags: [
+      "Rooftop Solar Solution",
+    ],
+    href: "/solutions/solar-solutions",
+  },
+  {
+    id: "water-purification-solutions",
+    slug: "water-purification-solutions",
+    title: "Water Purification Solutions",
+    subtitle:
+      "Industrial water treatment process chemicals, reverse osmosis antiscalants, membrane biocides, and purification consumables.",
+    badge: "Water Treatment",
+    groupCount: 1,
+    itemCount: 1,
+    iconName: "Droplets",
+    tags: [
+      "Chemicals",
+    ],
+    href: "/solutions/water-purification-solutions",
   },
 ];
 
