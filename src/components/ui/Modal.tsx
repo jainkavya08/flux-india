@@ -14,6 +14,8 @@ interface ModalProps {
   maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl";
   headerAction?: React.ReactNode;
   hideCloseButton?: boolean;
+  headerVariant?: "navy" | "light" | "custom";
+  customHeader?: React.ReactNode;
 }
 
 export function Modal({
@@ -25,6 +27,8 @@ export function Modal({
   maxWidth = "lg",
   headerAction,
   hideCloseButton = false,
+  headerVariant = "navy",
+  customHeader,
 }: ModalProps) {
   const [mounted, setMounted] = useState(false);
 
@@ -77,27 +81,61 @@ export function Modal({
         aria-modal="true"
       >
         {/* Modal Header */}
-        <div className="px-6 py-5 bg-[#0d2b4e] border-b border-[#1b3b64] text-white flex items-center justify-between">
-          <div className="flex items-center gap-3 min-w-0">
-            <img src="/b&w.svg" alt="FLUX" className="h-7 w-auto object-contain shrink-0" />
-            <div className="min-w-0">
-              <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight truncate">{title}</h3>
-              {subtitle && <p className="text-[10px] sm:text-xs text-blue-100/80 mt-0.5 truncate">{subtitle}</p>}
-            </div>
-          </div>
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0 ml-2">
-            {headerAction}
+        {customHeader ? (
+          <div className="relative border-b border-slate-100 bg-white">
+            {customHeader}
             {!hideCloseButton && (
               <button
                 onClick={onClose}
-                className="p-2 rounded-full text-blue-100 hover:text-white hover:bg-white/10 transition-colors focus:outline-none"
+                className="absolute top-5 right-5 p-2 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
             )}
           </div>
-        </div>
+        ) : headerVariant === "light" ? (
+          <div className="px-6 py-5 bg-white border-b border-slate-100 flex items-center justify-between">
+            <div className="min-w-0">
+              <h3 className="text-lg sm:text-xl font-bold text-[#0d2b4e] tracking-tight truncate">{title}</h3>
+              {subtitle && <p className="text-[10px] sm:text-xs text-slate-500 mt-0.5 truncate">{subtitle}</p>}
+            </div>
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0 ml-2">
+              {headerAction}
+              {!hideCloseButton && (
+                <button
+                  onClick={onClose}
+                  className="p-2 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="px-6 py-5 bg-[#0d2b4e] border-b border-[#1b3b64] text-white flex items-center justify-between">
+            <div className="flex items-center gap-3 min-w-0">
+              <img src="/b&w.svg" alt="FLUX" className="h-7 w-auto object-contain shrink-0" />
+              <div className="min-w-0">
+                <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight truncate">{title}</h3>
+                {subtitle && <p className="text-[10px] sm:text-xs text-blue-100/80 mt-0.5 truncate">{subtitle}</p>}
+              </div>
+            </div>
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0 ml-2">
+              {headerAction}
+              {!hideCloseButton && (
+                <button
+                  onClick={onClose}
+                  className="p-2 rounded-full text-blue-100 hover:text-white hover:bg-white/10 transition-colors focus:outline-none"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Modal Body */}
         <div className="p-6 sm:p-8 max-h-[75vh] overflow-y-auto">{children}</div>

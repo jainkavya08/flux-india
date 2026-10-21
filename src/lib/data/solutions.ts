@@ -9,6 +9,7 @@ export interface SolutionCategory {
   iconName: "Boxes" | "Cpu" | "Layers" | "ShieldCheck" | "Zap" | "Fan" | "ThermometerSnowflake" | "Wind" | "Sun" | "Droplets";
   tags: string[];
   href: string;
+  image?: string;
 }
 
 export const SOLUTION_CATEGORIES: SolutionCategory[] = [
@@ -22,6 +23,7 @@ export const SOLUTION_CATEGORIES: SolutionCategory[] = [
     groupCount: 7,
     itemCount: 40,
     iconName: "Boxes",
+    image: "/media/switchboard.png",
     tags: [
       "Mechanical Accessories",
       "Wire & Bus Bar",
@@ -43,6 +45,7 @@ export const SOLUTION_CATEGORIES: SolutionCategory[] = [
     groupCount: 1,
     itemCount: 5,
     iconName: "Fan",
+    image: "/media/air_vents.png",
     tags: [
       "Thermal Management Accessories",
     ],
@@ -58,6 +61,7 @@ export const SOLUTION_CATEGORIES: SolutionCategory[] = [
     groupCount: 1,
     itemCount: 7,
     iconName: "Sun",
+    image: "/media/distribution_boxes.png",
     tags: [
       "Rooftop Solar Solution",
     ],
